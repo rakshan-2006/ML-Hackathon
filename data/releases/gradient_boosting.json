@@ -1,0 +1,52 @@
+{
+  "repository": "rakshan-2006/ML-Hackathon",
+  "tag": "gradient-boosting-baseline-2026-11-18",
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/gradient-boosting-baseline-2026-11-18",
+  "model_name": "gradient_boosting",
+  "model_version": "hgb-baseline-ac522dfa",
+  "schema_version": "1.0.0-m1-provisional",
+  "assets": [
+    {
+      "name": "artifact_manifest.json",
+      "size_bytes": 865,
+      "sha256": "7701b9845a844cb023424e19468c0c625b8fcc995f77e347470ae24337ff3a12",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/artifact_manifest.json"
+    },
+    {
+      "name": "cv_folds.json",
+      "size_bytes": 1930,
+      "sha256": "5a29fb78068f245f58f6aca624e032a3e5f5864c9a082ba7e607bd1e05270724",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/cv_folds.json"
+    },
+    {
+      "name": "gradient_boosting_pipeline.joblib",
+      "size_bytes": 84890,
+      "sha256": "59fbdf42057d729811c30d1da01d2380f47d6b42d56c4344da91207a60f544a0",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/gradient_boosting_pipeline.joblib"
+    },
+    {
+      "name": "model_card.json",
+      "size_bytes": 3654,
+      "sha256": "cea940437eb2a6f4011798e7720cb149a4b65f00980f99b5c5dd9f1f2556b526",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/model_card.json"
+    },
+    {
+      "name": "schema.json",
+      "size_bytes": 328,
+      "sha256": "e3971fa7b363337f3b074ee192dfba530866f2f988ac1701071fa3d8601bba8c",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/schema.json"
+    },
+    {
+      "name": "scores_student_test.parquet",
+      "size_bytes": 1503727,
+      "sha256": "6045957eccd0db99a6058b9d77ac6f974ed64515254907e3bf9593f562d3890e",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/scores_student_test.parquet"
+    },
+    {
+      "name": "scores_train_oof.parquet",
+      "size_bytes": 14444804,
+      "sha256": "0f92cbbc9070a122da45aef381d8d8a31173f5e9d5f2188b262798a36eb4e07f",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/gradient-boosting-baseline-2026-11-18/scores_train_oof.parquet"
+    }
+  ]
+}

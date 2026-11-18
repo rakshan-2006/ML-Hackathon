@@ -1,66 +1,58 @@
+"""Model-side preprocessing; always fitted inside a training fold as part of a Pipeline.
 
-from pathlib import Path
+M1 delivers raw physical features with explicit NaNs and no fitted scaling
+(data/README.md). Imputation uses training-fold medians plus missing-value
+indicators, because a missing heading or speed is itself informative.
+"""
 
-import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import FunctionTransformer, StandardScaler
 
-FEATURES = [
-    "dist_m",
-    "cand_rank",
-    "dist_minus_min",
-    "heading_diff_deg",
-    "speed_mps",
-    "arc_len_m",
-    "proj_frac",
-    "n_candidates",
-    "is_oneway",
-    "source_degree",
-    "target_degree",
-    "prev_dist_m",
-    "next_dist_m",
-]
-
-TARGET = "label"
-GROUP = "trip_id"
-
-DATA_PATH = (
-    Path(__file__).resolve().parents[3]
-    / "pathsnap-m1"
-    / "data"
-    / "processed"
-)
+from src.common.schema import FEATURES
 
 
-def load_training_data():
-    """Load labelled training candidates and preserve trip groups."""
-    path = DATA_PATH / "train_candidates.parquet"
-    df = pd.read_parquet(path)
-
-    required_columns = FEATURES + [TARGET, GROUP]
-    missing = set(required_columns) - set(df.columns)
-
+def to_float64(X):
+    """Ordered FEATURES as a float64 array (the bool is_oneway becomes 0/1)."""
+    missing = [f for f in FEATURES if f not in X.columns]
     if missing:
-        raise ValueError(f"Missing required columns: {sorted(missing)}")
+        raise ValueError(f"missing feature columns: {missing}")
+    return X[FEATURES].to_numpy(dtype=np.float64)
 
-    # Null labels represent ambiguous or unaligned candidates.
-    df = df.dropna(subset=[TARGET]).copy()
 
-    X = df[FEATURES].copy()
-    y = df[TARGET].astype("int8")
-    groups = df[GROUP].copy()
+def preprocessing_steps(scale, impute=True):
+    steps = [("to_float", FunctionTransformer(to_float64))]
+    if impute:
+        steps.append(("impute", SimpleImputer(strategy="median", add_indicator=True)))
+    if scale:
+        steps.append(("scale", StandardScaler()))
+    return steps
 
-    # Convert the boolean feature into a numeric feature.
-    X["is_oneway"] = X["is_oneway"].astype("int8")
 
+def make_pipeline(estimator, scale, impute=True):
+    return Pipeline(preprocessing_steps(scale, impute) + [("model", estimator)])
+
+
+PREPROCESSING_POLICY = {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only "
+                      "(models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+}
+
+
+TARGET = 'label'
+GROUP = 'trip_id'
+
+
+def load_training_data(processed_root=None):
+    """Load all trusted training candidates through the canonical M1 loader.
+
+    No imputation or scaling is fitted here; those remain inside model pipelines.
+    """
+    from src.common.paths import PROJECT_ROOT
+    from src.data.model_data import load_model_data
+    root = PROJECT_ROOT / 'data' / 'processed' if processed_root is None else processed_root
+    X, y, groups, _ = load_model_data(root, 'train')
     return X, y, groups
-
-
-if __name__ == "__main__":
-    X, y, groups = load_training_data()
-
-    print("Feature shape:", X.shape)
-    print("Target shape:", y.shape)
-    print("Unique trips:", groups.nunique())
-    print("\nTarget distribution:")
-    print(y.value_counts())
-    print("\nMissing feature values:")
-    print(X.isna().sum())

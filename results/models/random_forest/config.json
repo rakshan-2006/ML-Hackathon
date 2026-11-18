@@ -1,0 +1,28 @@
+{
+  "model_name": "random_forest",
+  "model_version": "random_forest-v1-f7eaa5c635",
+  "family": "Ensemble",
+  "estimator": "RandomForestClassifier",
+  "params": {
+    "n_estimators": 80,
+    "max_depth": 24,
+    "min_samples_split": 4,
+    "min_samples_leaf": 2,
+    "max_features": 0.5,
+    "class_weight": "balanced",
+    "n_jobs": 4
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "class_weight='balanced' weights training classes inversely to their frequency. Scores are not calibrated probabilities at the natural class prevalence.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only (models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": false
+  },
+  "folds_file": "configs/cv_folds.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "command": "python -m src.training.train_models --model random_forest"
+}

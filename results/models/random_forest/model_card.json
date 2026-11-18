@@ -1,0 +1,91 @@
+{
+  "model_name": "random_forest",
+  "model_version": "random_forest-v1-f7eaa5c635",
+  "family": "Ensemble",
+  "estimator": "RandomForestClassifier",
+  "params": {
+    "n_estimators": 80,
+    "max_depth": 24,
+    "min_samples_split": 4,
+    "min_samples_leaf": 2,
+    "max_features": 0.5,
+    "class_weight": "balanced",
+    "n_jobs": 4
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "class_weight='balanced' weights training classes inversely to their frequency. Scores are not calibrated probabilities at the natural class prevalence.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only (models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": false
+  },
+  "folds_file": "configs/cv_folds.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "schema_version": "1.0.0-m1-provisional",
+  "ordered_features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "dataset_release": "m1-preprocessed-2026-11-18",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "dataset_schema_version": "1.0.0-m1-provisional",
+  "label_policy": "Fit on trusted labelled C2 rows only (label not null; ambiguous/unaligned observations excluded). Scores produced for all candidate rows.",
+  "row_counts": {
+    "train_labelled": 1070140,
+    "train_candidates": 1358450,
+    "train_trips": 80,
+    "student_test_labelled": 106730,
+    "student_test_candidates": 130919,
+    "student_test_trips": 10
+  },
+  "probability_coverage": {
+    "oof_rows_scored": 1358450,
+    "student_test_rows_scored": 130919
+  },
+  "results": {
+    "cv_mean": {
+      "candidate_accuracy": 0.9372691429325037,
+      "precision_pos": 0.745479729758346,
+      "recall_pos": 0.8654282733355428,
+      "f1_macro": 0.8817905538017927,
+      "log_loss": 0.1720441899204064,
+      "top1_accuracy": 0.7662187739508909
+    },
+    "student_test": {
+      "candidate_accuracy": 0.9423779630844187,
+      "precision_pos": 0.7617835745718678,
+      "recall_pos": 0.8965990639625585,
+      "f1_macro": 0.8946360067215238,
+      "log_loss": 0.14711895423873764,
+      "top1_accuracy": 0.8377403098363716
+    }
+  },
+  "metric_definitions": "src/evaluation/metrics.py (candidate metrics at threshold 0.5; precision/recall *_pos = positive class, f1_macro = unweighted mean over both classes; Top-1 over trusted observations)",
+  "library_versions": {
+    "python": "3.11.9",
+    "sklearn": "1.7.2",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3"
+  },
+  "limitations": [
+    "Defaults were selected by the original training-only three-fold search; the integrated run evaluates them on the canonical five folds.",
+    "Class-weighted scores are uncalibrated; evaluate log loss before HMM integration.",
+    "No Bayesian optimisation or HMM route reconstruction is included.",
+    "Labels come from M1's derived reference alignment, not verified ground truth.",
+    "Candidate/observation metrics only; no HMM or route-level result."
+  ]
+}

@@ -1,0 +1,43 @@
+# Local input data: never commit supplied/evaluator/reference files
+data/raw/*
+!data/raw/.gitkeep
+data/evaluation/*
+!data/evaluation/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.route
+!tests/fixtures/**/*.route
+
+# Large generated artifacts; small metrics/figures in results/ are intentional
+artifacts/
+models/*
+!models/.gitkeep
+results/**/*.parquet
+results/**/*.joblib
+results/**/*.pkl
+logs/
+tmp/
+*.partial
+*.log
+*.tmp
+*.temp
+
+# Environments and tools
+.venv*/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store

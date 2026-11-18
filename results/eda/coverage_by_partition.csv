@@ -1,0 +1,3 @@
+partition,observations,valid,trusted,ambiguous,unaligned,reference_hits,reference_misses,zero_candidates_valid,candidates,labelled_candidates,positive_candidates,miss_rate_trusted,known_misses_over_all_valid,alignment_coverage_valid
+student_test,19160,19160,16073,3084,3,16025,48,0,130919,106730,16025,0.0029863746655882538,0.0025052192066805845,0.8388830897703549
+train,208417,208417,167184,32224,9009,156681,10503,1417,1358450,1070140,156681,0.06282299741602067,0.05039416170465941,0.802161052121468

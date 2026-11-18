@@ -1,0 +1,34 @@
+{
+  "model_name": "RandomForestClassifier",
+  "model_version": "m2-rf-v1",
+  "schema_version": "1.0.0-m1-provisional",
+  "features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "hyperparameters": {
+    "n_estimators": 80,
+    "max_depth": 24,
+    "min_samples_split": 4,
+    "min_samples_leaf": 2,
+    "max_features": 0.5,
+    "class_weight": "balanced"
+  },
+  "random_seed": 2026,
+  "group_cv": {
+    "folds": 3,
+    "splitter": "GroupKFold",
+    "group_column": "trip_id"
+  }
+}
