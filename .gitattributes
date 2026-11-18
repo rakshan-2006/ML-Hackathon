@@ -1,0 +1,4 @@
+# ASCII-encoded PDF streams still require byte-exact checkout for xref offsets.
+*.pdf binary
+*.png binary
+*.jpg binary
