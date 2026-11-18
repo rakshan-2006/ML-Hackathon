@@ -1,0 +1,9 @@
+# M1 additions; M4 maintains shared exclusions.
+.venv*/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/raw/
+data/processed/
+tmp/
+*.partial
