@@ -31,6 +31,7 @@ DISPLAY_NAMES = {
     "logistic_regression": "Logistic Regression",
     "decision_tree": "Decision Tree",
     "gradient_boosting": "HistGradientBoosting",
+    "random_forest": "Random Forest",
 }
 COLORS = ["#2f6db5", "#d9822b", "#3a9a5b", "#8e5bb5", "#b54a4a"]
 

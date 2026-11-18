@@ -118,6 +118,7 @@ def run(name, params, smoke_only=False):
             raise AssertionError(f"fold {k}: trips in both train and validation: {overlap}")
         model = get_model(name, params, SEED)
         X_tr = cand.loc[tr, FEATURES]
+        print(f"[{name}] fold {k}: fitting {len(X_tr):,} labelled rows", flush=True)
         started = time.perf_counter()
         model.fit(X_tr, y_all[tr])
         fit_s = time.perf_counter() - started
@@ -161,6 +162,7 @@ def run(name, params, smoke_only=False):
 
     # Refit on all labelled training rows; evaluate once on student_test.
     final = get_model(name, params, SEED)
+    print(f"[{name}] refitting on all {len(y_lab):,} labelled training rows", flush=True)
     started = time.perf_counter()
     final.fit(cand.loc[lab, FEATURES], y_lab)
     refit_s = time.perf_counter() - started
@@ -174,9 +176,11 @@ def run(name, params, smoke_only=False):
                     **top1(tcand, p_test, np.ones(len(tcand), bool), test["obs"], test["align"])}
     pd.DataFrame([test_metrics]).to_csv(out / "student_test_metrics.csv", index=False)
 
-    joblib.dump(final, artifact_out / "pipeline.joblib")
+    joblib.dump(final, artifact_out / "pipeline.joblib", compress=3)
     reloaded = joblib.load(artifact_out / "pipeline.joblib")
-    if not np.array_equal(positive_proba(reloaded, tcand[FEATURES]), p_test):
+    # Parallel tree probability reduction can change the last floating-point bits.
+    if not np.allclose(positive_proba(reloaded, tcand[FEATURES]), p_test,
+                       rtol=0, atol=1e-12):
         raise AssertionError("reloaded pipeline does not reproduce student_test predictions")
 
     for filename, frame, p in (("oof_probabilities.parquet", cand, oof),

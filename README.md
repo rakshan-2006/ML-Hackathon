@@ -1,8 +1,8 @@
 # PathSnap
 
 GPS candidate scoring and route reconstruction for the PES University ML hackathon.
-Preprocessing and three model baselines (Logistic Regression, Decision Tree and
-Gradient Boosting) are available. The API/UI currently runs as a walking skeleton;
+Preprocessing and four model baselines (Logistic Regression, Decision Tree,
+Gradient Boosting and Random Forest) are available. The API/UI currently runs as a walking skeleton;
 the production decoder and model-to-API adapter are still required.
 
 ## Start here
@@ -45,7 +45,8 @@ Keep code under `src/`, configuration under `configs/`, and measured outputs und
 .venv/Scripts/python -m src.training.train_models --model logistic_regression
 .venv/Scripts/python -m src.training.train_models --model decision_tree
 .venv/Scripts/python -m src.training.train_gradient_boosting --threads 4
-.venv/Scripts/python -m src.evaluation.compare_models logistic_regression decision_tree gradient_boosting
+.venv/Scripts/python -m src.training.train_models --model random_forest
+.venv/Scripts/python -m src.evaluation.compare_models logistic_regression decision_tree gradient_boosting random_forest
 ```
 
 All models use [configs/cv_folds.csv](configs/cv_folds.csv), the same 80 training
@@ -73,6 +74,7 @@ The default mode is explicitly `stub`; it returns no fabricated predictions.
 - [Member handoffs and reports](docs/reports/)
 - [Comparison of the three implemented models](docs/reports/THREE_MODEL_COMPARISON.md)
 - [Gradient Boosting graph gallery](results/models/gradient_boosting/figures/)
+- [Random Forest training and review notes](docs/reports/m2_random_forest.md)
 - [Measured model results](results/models/)
 
 Historical manifests/cards retain the paths and hashes from their original runs.

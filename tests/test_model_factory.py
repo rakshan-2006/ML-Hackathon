@@ -11,11 +11,12 @@ from src.models import gradient_boosting
 from src.models.model_factory import get_model
 from src.training.cross_validation import load_folds
 
-MODELS = ["logistic_regression", "decision_tree", "gradient_boosting"]
+MODELS = ["logistic_regression", "decision_tree", "gradient_boosting", "random_forest"]
 STEPS = {
     "logistic_regression": ["to_float", "impute", "scale", "model"],
     "decision_tree": ["to_float", "impute", "model"],
     "gradient_boosting": ["to_float", "model"],  # native NaN handling, no imputation
+    "random_forest": ["to_float", "impute", "model"],
 }
 
 

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0-m1-provisional",
+  "features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "label_column": "label",
+  "group_column": "trip_id"
+}

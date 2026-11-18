@@ -15,7 +15,7 @@ its location, not its bytes or membership.
 
 `src.models.model_factory.get_model(name, params=None, seed=2026)` returns a full
 pipeline for each implemented model. LR fits median imputation/missing indicators
-and scaling; DT fits median imputation/missing indicators; histogram GB handles
+and scaling; DT and RF fit median imputation/missing indicators; histogram GB handles
 NaNs natively without a fitted imputer or scaler. Learned processing belongs
 inside each CV training fold. No student-test fitting is permitted.
 
@@ -25,14 +25,19 @@ inside each CV training fold. No student-test fitting is permitted.
 python -m src.training.train_models --model logistic_regression
 python -m src.training.train_models --model decision_tree
 python -m src.training.train_gradient_boosting --threads 4
-python -m src.evaluation.compare_models logistic_regression decision_tree gradient_boosting
+python -m src.training.train_models --model random_forest
+python -m src.evaluation.compare_models logistic_regression decision_tree gradient_boosting random_forest
 ```
 
 The shared runner also accepts `--model gradient_boosting` and `--smoke-only`.
 The dedicated GB runner remains available to reproduce its baseline workflow and
-probability export layout. Both read the same canonical fold assignment. RF and
-KNN modules have not yet been delivered to main; they must implement the shared
-module metadata and `build_estimator(params, seed)` interface.
+probability export layout. Both read the same canonical fold assignment.
+Random Forest uses the shared runner and factory; its old
+`src.models.train_random_forest` command delegates to that runner with five folds.
+See [the RF report](reports/m2_random_forest.md) for original-run provenance and
+the correction to its original conditional Top-1 denominator. KNN has not yet
+been delivered to main; new models must implement the shared module metadata
+and `build_estimator(params, seed)` interface.
 
 Small measured metrics/cards/figures go to `results/models/<name>/`. New fitted
 pipelines and probability exports go to ignored `artifacts/<name>/`. The `models/`
@@ -61,8 +66,8 @@ is not independently verified route accuracy.
 ## Compare and plot
 
 The comparison reader normalizes the two historical CSV naming conventions in
-memory. Original evidence files are not rewritten. Comparisons accept LR, DT and
-GB results and preserve the distinction between fold means and pooled metrics.
+memory. Original evidence files are not rewritten. Comparisons accept LR, DT, GB
+and RF results and preserve the distinction between fold means and pooled metrics.
 
 ```powershell
 python -m src.evaluation.plot_gradient_boosting
@@ -71,3 +76,17 @@ python -m src.evaluation.plot_gradient_boosting
 This recreates the GB PNG/SVG graphs after downloading the data and model assets;
 it does not train the model. See [the GB report](reports/gradient_boosting.md) and
 [graph gallery](../results/models/gradient_boosting/figures/).
+
+### Random Forest
+
+The fourth baseline's fitted pipeline, embedded-feature model card and probability
+exports are published separately from the historical three-fold metadata:
+
+```powershell
+python -m src.data.download_dataset --metadata results/models/random_forest/artifacts.json --output-root artifacts/random_forest
+```
+
+This verifies sizes and SHA-256 hashes. Load with
+`RandomForestPredictor('artifacts/random_forest')` from `src.models.random_forest`,
+or load `pipeline.joblib` through joblib. Fitted preprocessing is already inside.
+See [the RF report](reports/m2_random_forest.md) for the reviewed measurements.
