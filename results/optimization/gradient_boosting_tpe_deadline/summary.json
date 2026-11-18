@@ -1,0 +1,128 @@
+{
+  "method": "Optuna TPESampler (multivariate, grouped conditional space), seeded; first n_startup_trials finished trials are random startup, later trials adaptive",
+  "optuna_version": "4.5.0",
+  "model": "gradient_boosting",
+  "study": "gradient_boosting_tpe_deadline",
+  "seed": 2026,
+  "configured_trials": 5,
+  "requested_trials": 5,
+  "trials_by_state": {
+    "COMPLETE": 4,
+    "PRUNED": 1
+  },
+  "trials_by_phase": {
+    "startup_random": 3,
+    "adaptive_tpe": 2
+  },
+  "objective": {
+    "metric": "f1_macro",
+    "aggregation": "mean_over_validation_folds",
+    "direction": "maximize"
+  },
+  "search_space": {
+    "learning_rate": {
+      "type": "float",
+      "low": 0.05,
+      "high": 0.3,
+      "log": true
+    },
+    "max_iter": {
+      "type": "int",
+      "low": 50,
+      "high": 150,
+      "step": 25
+    },
+    "max_leaf_nodes": {
+      "type": "int",
+      "low": 15,
+      "high": 63,
+      "log": true
+    },
+    "min_samples_leaf": {
+      "type": "int",
+      "low": 20,
+      "high": 400,
+      "log": true
+    },
+    "l2_regularization": {
+      "type": "float",
+      "low": 0.001,
+      "high": 10.0,
+      "log": true
+    },
+    "max_bins": {
+      "type": "categorical",
+      "choices": [
+        63
+      ]
+    },
+    "class_weight": {
+      "type": "categorical",
+      "choices": [
+        null
+      ]
+    }
+  },
+  "folds_file": "configs/cv_folds.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "config_sha256": "3a12c87d734de0a528800b3282a886a1643d32b95caa0c11c33bbce655ae7ecd",
+  "fitting_data": "labelled rows of the 80 train trips only; student_test not read",
+  "threads": 4,
+  "total_trial_seconds": 173.23999999999998,
+  "this_invocation_wall_seconds": 174.9,
+  "best_trial": 0,
+  "best_value": 0.886116850062306,
+  "best_params": {
+    "learning_rate": 0.07407200227375521,
+    "max_iter": 100,
+    "max_leaf_nodes": 61,
+    "min_samples_leaf": 26,
+    "l2_regularization": 0.08263412613109884,
+    "max_bins": 63,
+    "early_stopping": false,
+    "class_weight": null
+  },
+  "best_folds": [
+    {
+      "fold": 0,
+      "fit_s": 7.29,
+      "f1_macro": 0.8691306873463576,
+      "top1_accuracy": 0.7808185927971115,
+      "log_loss": 0.15159158079511936,
+      "candidate_accuracy": 0.9344168340221701
+    },
+    {
+      "fold": 1,
+      "fit_s": 6.59,
+      "f1_macro": 0.8708424609612655,
+      "top1_accuracy": 0.7885319996790672,
+      "log_loss": 0.1586271052487046,
+      "candidate_accuracy": 0.9269468721465441
+    },
+    {
+      "fold": 2,
+      "fit_s": 6.83,
+      "f1_macro": 0.904069638154395,
+      "top1_accuracy": 0.8389830508474576,
+      "log_loss": 0.11441362499029369,
+      "candidate_accuracy": 0.9538165042803874
+    },
+    {
+      "fold": 3,
+      "fit_s": 7.3,
+      "f1_macro": 0.9324806794969949,
+      "top1_accuracy": 0.8694425065009196,
+      "log_loss": 0.08712178159776514,
+      "candidate_accuracy": 0.967078961692224
+    },
+    {
+      "fold": 4,
+      "fit_s": 7.42,
+      "f1_macro": 0.8540607843525178,
+      "top1_accuracy": 0.5587273353224695,
+      "log_loss": 0.15183969727689867,
+      "candidate_accuracy": 0.9396079683669731
+    }
+  ],
+  "selection_bias": "The best objective is the maximum over trials evaluated on the same folds, so it is optimistically biased; it is not a nested-CV estimate."
+}
