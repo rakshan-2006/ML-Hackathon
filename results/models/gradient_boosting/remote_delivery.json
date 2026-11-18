@@ -1,0 +1,18 @@
+{
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/gradient-boosting-baseline-2026-11-18",
+  "public_unauthenticated_download_verified": true,
+  "asset_count": 7,
+  "asset_checks": {
+    "artifact_manifest.json": true,
+    "cv_folds.json": true,
+    "gradient_boosting_pipeline.joblib": true,
+    "model_card.json": true,
+    "schema.json": true,
+    "scores_student_test.parquet": true,
+    "scores_train_oof.parquet": true
+  },
+  "bytes": 16040198,
+  "student_test_predictions_from_downloaded_model_identical": true,
+  "student_test_candidate_rows": 130919,
+  "method": "urllib download with no Authorization header; exact size/SHA-256 checks for every asset; downloaded pipeline reproduced every held-out candidate probability"
+}
