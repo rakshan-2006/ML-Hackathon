@@ -1,0 +1,61 @@
+{
+  "model": "decision_tree",
+  "artifact_sha256": {
+    "oof_probabilities.parquet": "1cb530533a2870c0de1d39a693f1c2c9362d1d450e8ffbc8b7082d112c2f026c",
+    "student_test_probabilities.parquet": "370a3d32551a8f399497d25f7d7fc1caff9dca33f65609be1b1c8c93c8ea0b75",
+    "pipeline.joblib": "6618335312c1310011dad4f9e0c57cfdc8fae0dfec627b94aae34e1b728a01b4"
+  },
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "pipeline_steps": [
+    "to_float",
+    "impute",
+    "model"
+  ],
+  "estimator": "DecisionTreeClassifier",
+  "classes": [
+    0,
+    1
+  ],
+  "train_oof_rows": 1358450,
+  "student_test_rows": 130919,
+  "keys_unique_and_in_c2_order": true,
+  "scores_finite_float64_unit_interval": true,
+  "all_fold_validation_rows_recomputed": true,
+  "student_test_row_recomputed": true,
+  "student_test_rescore_max_abs_diff": 0.0,
+  "per_fold": [
+    {
+      "fold": 0,
+      "f1_macro": 0.8635517419822154,
+      "top1_accuracy": 0.7689553687915288,
+      "log_loss": 0.26520655516864206
+    },
+    {
+      "fold": 1,
+      "f1_macro": 0.865817366489023,
+      "top1_accuracy": 0.7857238372870476,
+      "log_loss": 0.19123938043467928
+    },
+    {
+      "fold": 2,
+      "f1_macro": 0.8959946147490148,
+      "top1_accuracy": 0.8265339639994744,
+      "log_loss": 0.16654380071106517
+    },
+    {
+      "fold": 3,
+      "f1_macro": 0.9303195768481525,
+      "top1_accuracy": 0.8660493435656751,
+      "log_loss": 0.10327655594561524
+    },
+    {
+      "fold": 4,
+      "f1_macro": 0.8238031470365719,
+      "top1_accuracy": 0.5527025476245123,
+      "log_loss": 0.22661319640294078
+    }
+  ],
+  "pooled_oof_f1_macro": 0.8767019098801916,
+  "pooled_oof_log_loss": 0.1906371907565012
+}

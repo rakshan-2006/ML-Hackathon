@@ -1,0 +1,17 @@
+{
+  "selection": "median observation count within each partition; train and student_test only",
+  "trips": {
+    "train": {
+      "trip_id": "00000095",
+      "observations": 1551,
+      "arcs_in_view": 2356,
+      "route_arcs": 306
+    },
+    "student_test": {
+      "trip_id": "00000076",
+      "observations": 1486,
+      "arcs_in_view": 45017,
+      "route_arcs": 374
+    }
+  }
+}

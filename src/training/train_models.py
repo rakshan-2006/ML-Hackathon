@@ -64,6 +64,35 @@ def top1(cand, p, mask, obs, align, trip_ids=None):
     return observation_top1(scored, obs, align)
 
 
+def peak_memory_mb():
+    """Peak resident memory of this process in MB (None if the OS query is unavailable)."""
+    try:
+        if sys.platform == "win32":
+            import ctypes
+            from ctypes import wintypes
+
+            class Counters(ctypes.Structure):
+                _fields_ = [("cb", wintypes.DWORD), ("PageFaultCount", wintypes.DWORD),
+                            ("PeakWorkingSetSize", ctypes.c_size_t), ("WorkingSetSize", ctypes.c_size_t),
+                            ("QuotaPeakPagedPoolUsage", ctypes.c_size_t), ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                            ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                            ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                            ("PagefileUsage", ctypes.c_size_t), ("PeakPagefileUsage", ctypes.c_size_t)]
+            counters = Counters()
+            counters.cb = ctypes.sizeof(Counters)
+            psapi, kernel32 = ctypes.WinDLL("psapi"), ctypes.WinDLL("kernel32")
+            kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+            psapi.GetProcessMemoryInfo.argtypes = [wintypes.HANDLE, ctypes.POINTER(Counters), wintypes.DWORD]
+            if psapi.GetProcessMemoryInfo(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb):
+                return round(counters.PeakWorkingSetSize / 2**20, 1)
+            return None
+        import resource
+        peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss  # KiB on Linux, bytes on macOS
+        return round(peak / (2**20 if sys.platform == "darwin" else 2**10), 1)
+    except (OSError, AttributeError, ImportError):
+        return None
+
+
 def check_probabilities(p, n):
     if p.shape != (n,) or not np.isfinite(p).all() or (p < 0).any() or (p > 1).any():
         raise ValueError("probabilities must be finite, in [0, 1], one per row")
@@ -84,14 +113,16 @@ def smoke_test(name, params, data, folds_all):
     return {"train_rows": 20000, "val_rows": 5000, "seconds": round(time.perf_counter() - started, 3)}
 
 
-def run(name, params, smoke_only=False):
+def run(name, params, smoke_only=False, output_name=None):
+    """output_name stores a variant (e.g. tuned parameters) beside, not over, the baseline."""
     module = model_module(name)
     params = model_params(name, params)
+    label = output_name or name
     config_hash = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()[:10]
-    version = f"{name}-v1-{config_hash}"
-    out = RESULTS / name
+    version = f"{label}-v1-{config_hash}"
+    out = RESULTS / label
     out.mkdir(parents=True, exist_ok=True)
-    artifact_out = ARTIFACTS / name
+    artifact_out = ARTIFACTS / label
     artifact_out.mkdir(parents=True, exist_ok=True)
 
     train, test = load_partition("train"), load_partition("student_test")
@@ -110,6 +141,7 @@ def run(name, params, smoke_only=False):
     y_all[lab] = y_lab
     oof = np.full(len(cand), np.nan)
     rows, timings = [], {"smoke_test": smoke, "folds": []}
+    train_sample = getattr(module, "TRAIN_METRICS_SAMPLE", None)
     for k in range(N_SPLITS):
         tr = lab & (fold_all != k)
         va_all = fold_all == k
@@ -131,7 +163,12 @@ def run(name, params, smoke_only=False):
         elif getattr(module, 'IMPUTE_MISSING', True):
             raise AssertionError('Model must declare how it handles missing features')
 
-        p_tr = positive_proba(model, X_tr)
+        # Train-split metrics: all training rows, or a fixed per-fold sample for models
+        # whose prediction is expensive (module TRAIN_METRICS_SAMPLE).
+        tr_eval = np.flatnonzero(tr)
+        if train_sample and train_sample < len(tr_eval):
+            tr_eval = np.sort(np.random.default_rng(SEED + k).choice(tr_eval, train_sample, replace=False))
+        p_tr = positive_proba(model, cand.loc[tr_eval, FEATURES])
         started = time.perf_counter()
         p_va = positive_proba(model, cand.loc[va_all, FEATURES])
         predict_s = time.perf_counter() - started
@@ -142,7 +179,7 @@ def run(name, params, smoke_only=False):
         val = {**candidate_metrics(y_all[va_lab], oof[va_lab], THRESHOLD),
                **top1(cand, p_va, va_all, train["obs"], train["align"],
                       trip_ids=folds.loc[folds.fold == k, "trip_id"])}
-        trn = candidate_metrics(y_all[tr], p_tr, THRESHOLD)
+        trn = candidate_metrics(y_all[tr_eval], p_tr, THRESHOLD)
         n_val_trips = int(cand.loc[va_all, "trip_id"].nunique())
         rows.append({"fold": k, "split": "train", "n_trips": int(cand.loc[tr, "trip_id"].nunique()), **trn})
         rows.append({"fold": k, "split": "validation", "n_trips": n_val_trips, **val})
@@ -185,7 +222,7 @@ def run(name, params, smoke_only=False):
 
     for filename, frame, p in (("oof_probabilities.parquet", cand, oof),
                                ("student_test_probabilities.parquet", tcand, p_test)):
-        frame[KEY].assign(p_model=p, model_name=name, model_version=version)[PROB_COLUMNS] \
+        frame[KEY].assign(p_model=p, model_name=label, model_version=version)[PROB_COLUMNS] \
             .to_parquet(artifact_out / filename, index=False)
 
     verify_saved_metrics(out, train, test, cv, test_metrics, artifact_out)
@@ -193,10 +230,12 @@ def run(name, params, smoke_only=False):
     timings.update({"cv_total_fit_s": round(sum(f["fit_s"] for f in timings["folds"]), 3),
                     "refit_s": round(refit_s, 3), "student_test_predict_s": round(test_predict_s, 3),
                     "student_test_predict_rows": int(len(tcand)),
-                    "student_test_predict_us_per_row": round(1e6 * test_predict_s / len(tcand), 3)})
+                    "student_test_predict_us_per_row": round(1e6 * test_predict_s / len(tcand), 3),
+                    "peak_memory_mb": peak_memory_mb()})
     (out / "timings.json").write_text(json.dumps(timings, indent=2), encoding="utf-8")
 
-    config = {"model_name": name, "model_version": version, "family": module.FAMILY,
+    config = {"model_name": label, "model_module": name, "model_version": version,
+              "family": module.FAMILY,
               "estimator": type(final.named_steps["model"]).__name__, "params": params,
               "seed": SEED, "decision_threshold": THRESHOLD,
               "class_imbalance": module.CLASS_IMBALANCE,
@@ -206,13 +245,17 @@ def run(name, params, smoke_only=False):
                                 else {**PREPROCESSING_POLICY, "scaled": module.SCALE_FEATURES}),
               "folds_file": str(FOLDS_PATH.relative_to(PROJECT_ROOT)).replace("\\", "/"),
               "folds_sha256": folds_sha256(), "n_splits": N_SPLITS,
-              "command": f"python -m src.training.train_models --model {name}"}
+              "train_metrics_rows": (f"fixed sample of {train_sample} training rows per fold"
+                                     if train_sample else "all training rows"),
+              "command": f"python -m src.training.train_models --model {name}"
+                         + (f" --output-name {label} --params '{json.dumps(params)}'"
+                            if output_name else "")}
     (out / "config.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
     cv_mean = cv[(cv.fold == "mean")].iloc[0]
     manifest = json.loads((DATA / "manifest.json").read_text())
     card = {
-        **{k: config[k] for k in ("model_name", "model_version", "family", "estimator",
+        **{k: config[k] for k in ("model_name", "model_module", "model_version", "family", "estimator",
                                   "params", "seed", "decision_threshold", "class_imbalance",
                                   "preprocessing", "folds_file", "folds_sha256", "n_splits")},
         "schema_version": SCHEMA_VERSION,
@@ -246,8 +289,8 @@ def run(name, params, smoke_only=False):
     (out / "model_card.json").write_text(json.dumps(card, indent=2), encoding="utf-8")
 
     from src.evaluation.visualizations import plot_model_accuracy
-    plot_model_accuracy(name)
-    print(f"[{name}] done -> {out}", flush=True)
+    plot_model_accuracy(label)
+    print(f"[{label}] done -> {out}", flush=True)
 
 
 def verify_saved_metrics(out, train, test, cv, test_metrics, artifact_dir=None):
@@ -281,8 +324,10 @@ def main(argv=None):
     parser.add_argument("--model", required=True)
     parser.add_argument("--params", default="{}", help="JSON overrides of DEFAULT_PARAMS")
     parser.add_argument("--smoke-only", action="store_true")
+    parser.add_argument("--output-name", help="results/artifacts folder for a variant run")
     args = parser.parse_args(argv)
-    run(args.model, json.loads(args.params), smoke_only=args.smoke_only)
+    run(args.model, json.loads(args.params), smoke_only=args.smoke_only,
+        output_name=args.output_name)
 
 
 if __name__ == "__main__":

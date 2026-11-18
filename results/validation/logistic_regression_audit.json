@@ -1,0 +1,62 @@
+{
+  "model": "logistic_regression",
+  "artifact_sha256": {
+    "oof_probabilities.parquet": "0ce315e5355d89b7fd8cf0e39b2e702bf5b5a930baef41bf8f64aba2c4ae1075",
+    "student_test_probabilities.parquet": "95d4edd75cb6f436638f3fd4b10ec900a6793d8fe613b13647e5f694608637d1",
+    "pipeline.joblib": "de7074f3f2c4e6f622229afd015c9ca5b5edd26e8b321b93aca1c1bf0367dcb0"
+  },
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "pipeline_steps": [
+    "to_float",
+    "impute",
+    "scale",
+    "model"
+  ],
+  "estimator": "LogisticRegression",
+  "classes": [
+    0,
+    1
+  ],
+  "train_oof_rows": 1358450,
+  "student_test_rows": 130919,
+  "keys_unique_and_in_c2_order": true,
+  "scores_finite_float64_unit_interval": true,
+  "all_fold_validation_rows_recomputed": true,
+  "student_test_row_recomputed": true,
+  "student_test_rescore_max_abs_diff": 0.0,
+  "per_fold": [
+    {
+      "fold": 0,
+      "f1_macro": 0.8532011934506699,
+      "top1_accuracy": 0.7737492035559331,
+      "log_loss": 0.1858627507652765
+    },
+    {
+      "fold": 1,
+      "f1_macro": 0.8557965735838571,
+      "top1_accuracy": 0.776256318365382,
+      "log_loss": 0.19077819183393427
+    },
+    {
+      "fold": 2,
+      "f1_macro": 0.8819058379023732,
+      "top1_accuracy": 0.8327749310208908,
+      "log_loss": 0.14518319611374458
+    },
+    {
+      "fold": 3,
+      "f1_macro": 0.9161344018937039,
+      "top1_accuracy": 0.8611657258831737,
+      "log_loss": 0.12685198054725108
+    },
+    {
+      "fold": 4,
+      "f1_macro": 0.8292066497431627,
+      "top1_accuracy": 0.5520426899242599,
+      "log_loss": 0.19049474330465263
+    }
+  ],
+  "pooled_oof_f1_macro": 0.8680627846064408,
+  "pooled_oof_log_loss": 0.16785263602722963
+}

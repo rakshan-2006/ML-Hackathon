@@ -103,3 +103,9 @@ def test_factory_rejects_unknown_models_and_params():
         get_model("no_such_model")
     with pytest.raises(ValueError):
         get_model("../x")
+
+
+def test_peak_memory_is_reported():
+    from src.training.train_models import peak_memory_mb
+    value = peak_memory_mb()
+    assert value is None or value > 0

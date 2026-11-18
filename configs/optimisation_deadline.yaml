@@ -1,0 +1,25 @@
+# Deadline-constrained run of the same search (budget reduced from configs/optimisation.yaml
+# because of submission time; recorded, not hidden). 5 trials: 3 seeded random startup
+# + 2 adaptive TPE. Cheaper ranges keep each trial to roughly one minute.
+model: gradient_boosting
+seed: 2026
+n_trials: 5
+n_startup_trials: 3
+threads: 4
+objective:
+  metric: f1_macro
+  aggregation: mean_over_validation_folds
+  direction: maximize
+pruning:
+  enabled: true
+  n_startup_trials: 3
+  n_warmup_steps: 2
+search_space:
+  gradient_boosting:
+    learning_rate: {type: float, low: 0.05, high: 0.3, log: true}
+    max_iter: {type: int, low: 50, high: 150, step: 25}
+    max_leaf_nodes: {type: int, low: 15, high: 63, log: true}
+    min_samples_leaf: {type: int, low: 20, high: 400, log: true}
+    l2_regularization: {type: float, low: 0.001, high: 10.0, log: true}
+    max_bins: {type: categorical, choices: [63]}
+    class_weight: {type: categorical, choices: [null]}

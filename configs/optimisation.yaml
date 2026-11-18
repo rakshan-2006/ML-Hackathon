@@ -1,0 +1,34 @@
+# Bayesian hyperparameter search (src/optimization/bayes_search.py).
+# Fitting uses only the 80 train trips and the canonical folds in configs/cv_folds.csv;
+# student_test is touched only by the final refit run, never by the search.
+model: gradient_boosting
+seed: 2026
+n_trials: 20
+# Trials 0..n_startup_trials-1 are TPE's seeded random startup; later trials are adaptive.
+n_startup_trials: 8
+threads: 4
+objective:
+  metric: f1_macro          # candidate macro-F1 at threshold 0.5 (src/evaluation/metrics.py)
+  aggregation: mean_over_validation_folds
+  direction: maximize
+# Median pruning compares a trial's validation fold k with earlier trials' fold k.
+pruning:
+  enabled: true
+  n_startup_trials: 8
+  n_warmup_steps: 2          # never prune before three folds have been scored
+search_space:
+  gradient_boosting:
+    learning_rate: {type: float, low: 0.02, high: 0.3, log: true}
+    # Conditional: slow learning rates need more boosting iterations.
+    max_iter:
+      type: int
+      step: 50
+      conditional_on: learning_rate
+      below: 0.06
+      if_below: {low: 300, high: 800}
+      otherwise: {low: 100, high: 500}
+    max_leaf_nodes: {type: int, low: 15, high: 127, log: true}
+    min_samples_leaf: {type: int, low: 20, high: 400, log: true}
+    l2_regularization: {type: float, low: 0.001, high: 10.0, log: true}
+    max_bins: {type: categorical, choices: [63, 127, 255]}
+    class_weight: {type: categorical, choices: [null, balanced]}

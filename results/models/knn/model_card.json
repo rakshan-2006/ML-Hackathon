@@ -1,0 +1,93 @@
+{
+  "model_name": "knn",
+  "model_version": "knn-v1-ae48b532af",
+  "family": "Instance-based",
+  "estimator": "KNeighborsClassifier",
+  "params": {
+    "n_neighbors": 5,
+    "weights": "distance",
+    "metric": "minkowski",
+    "p": 2,
+    "algorithm": "kd_tree",
+    "leaf_size": 40,
+    "n_jobs": 4
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "No class weighting or resampling; report positive-class recall and macro-F1 alongside candidate and observation accuracy.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only (models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": true
+  },
+  "folds_file": "configs/cv_folds.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "schema_version": "1.0.0-m1-provisional",
+  "ordered_features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "dataset_release": "m1-preprocessed-2026-11-18",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "dataset_schema_version": "1.0.0-m1-provisional",
+  "label_policy": "Fit on trusted labelled C2 rows only (label not null; ambiguous/unaligned observations excluded). Scores produced for all candidate rows.",
+  "row_counts": {
+    "train_labelled": 1070140,
+    "train_candidates": 1358450,
+    "train_trips": 80,
+    "student_test_labelled": 106730,
+    "student_test_candidates": 130919,
+    "student_test_trips": 10
+  },
+  "probability_coverage": {
+    "oof_rows_scored": 1358450,
+    "student_test_rows_scored": 130919
+  },
+  "results": {
+    "cv_mean": {
+      "candidate_accuracy": 0.929507905489195,
+      "precision_pos": 0.7591338064555495,
+      "recall_pos": 0.7560929911430497,
+      "f1_macro": 0.8579043386325914,
+      "log_loss": 0.8938375209819412,
+      "top1_accuracy": 0.735761189931948
+    },
+    "student_test": {
+      "candidate_accuracy": 0.9417970579968143,
+      "precision_pos": 0.8141768585515784,
+      "recall_pos": 0.7934477379095164,
+      "f1_macro": 0.8847563103931222,
+      "log_loss": 0.7102539994336174,
+      "top1_accuracy": 0.8101785603185466
+    }
+  },
+  "metric_definitions": "src/evaluation/metrics.py (candidate metrics at threshold 0.5; precision/recall *_pos = positive class, f1_macro = unweighted mean over both classes; Top-1 over trusted observations)",
+  "library_versions": {
+    "python": "3.11.9",
+    "sklearn": "1.7.2",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3"
+  },
+  "limitations": [
+    "Prediction latency and stored training data can be large on the full dataset.",
+    "KD-tree search avoids a full query-by-training distance matrix; performance still depends on the feature distribution and query count.",
+    "Train-split metrics use a fixed 50,000-row sample per fold and are optimistic by construction (each training row is its own neighbour).",
+    "Distance-weighted votes of five neighbours give coarse, often exactly 0/1 probabilities, which inflates log loss.",
+    "Untuned baseline; no Bayesian optimisation, calibration or HMM integration.",
+    "Labels come from M1's derived reference alignment, not verified ground truth.",
+    "Candidate/observation metrics only; no HMM or route-level result."
+  ]
+}

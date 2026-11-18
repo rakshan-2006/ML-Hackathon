@@ -1,0 +1,23 @@
+{
+  "kd_tree": {
+    "fit_rows": 855527,
+    "fit_s": 9.06,
+    "query_rows": 5000,
+    "query_s": 10.26,
+    "dims_after_preprocessing": 17
+  },
+  "ball_tree": {
+    "fit_rows": 855527,
+    "fit_s": 7.54,
+    "query_rows": 5000,
+    "query_s": 44.61,
+    "dims_after_preprocessing": 17
+  },
+  "brute": {
+    "fit_rows": 855527,
+    "fit_s": 3.03,
+    "query_rows": 5000,
+    "query_s": 10.56,
+    "dims_after_preprocessing": 17
+  }
+}

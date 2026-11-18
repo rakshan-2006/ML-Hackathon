@@ -4,6 +4,8 @@
     build_estimator(params, seed) -> sklearn classifier with predict_proba
     IMPUTE_MISSING (optional, default True): False keeps NaNs for estimators
     with native missing-value support instead of fold-fitted median imputation
+    TRAIN_METRICS_SAMPLE (optional, default None): score a fixed per-fold sample
+    of training rows for train-split metrics when prediction is expensive
 
 Modules are found by name, so adding a model never edits this file.
 """
