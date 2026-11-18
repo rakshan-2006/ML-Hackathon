@@ -69,6 +69,7 @@ The default mode is explicitly `stub`; it returns no fabricated predictions.
 - [Dataset download, regeneration, schema and leakage rules](docs/data.md)
 - [Model training, comparison and saved pipelines](docs/training.md)
 - [Architecture and layout migration](docs/architecture.md)
+- [Refactor validation](docs/validation.md)
 - [Member handoffs and reports](docs/reports/)
 - [Comparison of the three implemented models](docs/reports/THREE_MODEL_COMPARISON.md)
 - [Gradient Boosting graph gallery](results/models/gradient_boosting/figures/)
