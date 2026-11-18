@@ -1,9 +1,53 @@
-# M1 additions; M4 maintains shared exclusions.
-.venv*/
+# Local data and evaluator/reference material
+data/raw/*
+!data/raw/.gitkeep
+data/evaluation/*
+!data/evaluation/.gitkeep
+*.route
+
+# Generated outputs and logs
+logs/
+results/*
+!results/.gitkeep
+experiments/*
+!experiments/.gitkeep
+*.log
+*.tmp
+*.temp
+
+# Model artifacts are local until an explicit distribution policy is agreed
+models/*.joblib
+models/*.pkl
+
+# Python environments, bytecode, and test/tool caches
+.venv/
+venv/
+env/
 __pycache__/
+*.py[cod]
 .pytest_cache/
-*.pyc
-data/raw/
-data/processed/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editor and operating-system temporary files
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# M1 generated tables, environments, and temporary downloads
+.venv*/
+data/processed/*
+!data/processed/.gitkeep
 tmp/
 *.partial
+
+# Versioned M1 configuration/evidence and synthetic reference fixture
+!experiments/data_config.yaml
+!results/eda/
+!results/eda/**
+!tests/fixtures/**/*.route

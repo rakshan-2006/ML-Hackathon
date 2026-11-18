@@ -1,1 +1,1 @@
-"""Shared data contracts."""
+"""Shared PathSnap configuration and utilities."""

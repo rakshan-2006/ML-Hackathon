@@ -1,1 +1,1 @@
-"""PathSnap."""
+"""PathSnap application packages."""
