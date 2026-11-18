@@ -78,6 +78,7 @@ def test_comparison_reads_all_three_existing_baseline_formats():
 @pytest.mark.parametrize('model_name,params', [
     ('gradient_boosting', {'max_iter': 2, 'min_samples_leaf': 2}),
     ('random_forest', {'n_estimators': 3, 'max_depth': 3, 'n_jobs': 1}),
+    ('knn', {'n_neighbors': 3, 'n_jobs': 1}),
 ])
 def test_shared_runner_trains_and_separates_artifacts(tmp_path, monkeypatch, model_name, params):
     from src.training import train_models as runner

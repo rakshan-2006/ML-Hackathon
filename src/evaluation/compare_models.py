@@ -32,6 +32,7 @@ DISPLAY_NAMES = {
     "decision_tree": "Decision Tree",
     "gradient_boosting": "HistGradientBoosting",
     "random_forest": "Random Forest",
+    "knn": "KNN",
 }
 COLORS = ["#2f6db5", "#d9822b", "#3a9a5b", "#8e5bb5", "#b54a4a"]
 

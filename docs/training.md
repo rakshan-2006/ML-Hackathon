@@ -35,9 +35,30 @@ probability export layout. Both read the same canonical fold assignment.
 Random Forest uses the shared runner and factory; its old
 `src.models.train_random_forest` command delegates to that runner with five folds.
 See [the RF report](reports/m2_random_forest.md) for original-run provenance and
-the correction to its original conditional Top-1 denominator. KNN has not yet
-been delivered to main; new models must implement the shared module metadata
-and `build_estimator(params, seed)` interface.
+the correction to its original conditional Top-1 denominator. KNN implements the
+same factory contract with median imputation, missing indicators, scaling and
+distance-weighted five-neighbour classification. Its full evaluation is pending;
+do not compare the bounded integration check with measured baseline accuracies.
+
+```powershell
+python -m src.training.train_models --model knn --smoke-only
+python -m src.training.train_models --model knn
+```
+
+The first command uses 20,000 training rows and 5,000 rows from held-out trips to
+check wiring and latency. Only the second performs canonical five-fold evaluation,
+final fitting, model export and student-test evaluation. It may take substantially
+longer because KNN queries the stored training examples. KD-tree search and four
+workers avoid the default brute-force query-by-training distance matrix. Legacy
+`experiments/evaluate_knn.py` and `save_knn.py` delegate to the full shared runner;
+`benchmark_knn.py` delegates to the smoke check. These scripts are import-safe and
+support direct or module execution. Outputs use the canonical artifacts/results
+directories; no sibling checkout or root-level model file is required.
+
+Review checks fitted all 1,070,140 labelled rows from the 80 training trips, queried
+128 held-out candidate rows, and verified compressed serialization/reload. This
+is integration evidence, not an accuracy estimate or full five-fold result. See
+[KNN integration evidence](../results/validation/knn_integration.json).
 
 Small measured metrics/cards/figures go to `results/models/<name>/`. New fitted
 pipelines and probability exports go to ignored `artifacts/<name>/`. The `models/`

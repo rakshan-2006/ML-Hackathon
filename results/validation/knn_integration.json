@@ -1,0 +1,25 @@
+{
+  "training_rows": 1070140,
+  "training_trips": 80,
+  "held_out_query_rows": 128,
+  "fit_seconds": 9.05061150000256,
+  "query_seconds": 0.2926195000036387,
+  "serialized_reload_matches": true,
+  "canonical_features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "full_five_fold_evaluation_completed": false,
+  "note": "Full training-data fit plus bounded held-out scoring/serialization check. No accuracy estimate or full-CV claim."
+}

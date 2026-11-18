@@ -5,6 +5,9 @@ Preprocessing and four model baselines (Logistic Regression, Decision Tree,
 Gradient Boosting and Random Forest) are available. The API/UI currently runs as a walking skeleton;
 the production decoder and model-to-API adapter are still required.
 
+KNN is also implemented through the shared factory/trainer. Its full five-fold
+evaluation and comparable accuracy results are pending; see [training](docs/training.md).
+
 ## Start here
 
 Use Python 3.11 or later, from the repository root:
