@@ -51,3 +51,9 @@ tmp/
 !results/eda/
 !results/eda/**
 !tests/fixtures/**/*.route
+
+# Model results: small measured outputs are versioned; large artifacts go to GitHub Releases
+!results/models/
+!results/models/**
+results/models/**/*.parquet
+results/models/**/*.joblib
