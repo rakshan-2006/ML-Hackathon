@@ -38,3 +38,16 @@ htmlcov/
 *.swo
 Thumbs.db
 .DS_Store
+
+# M1 generated tables, environments, and temporary downloads
+.venv*/
+data/processed/*
+!data/processed/.gitkeep
+tmp/
+*.partial
+
+# Versioned M1 configuration/evidence and synthetic reference fixture
+!experiments/data_config.yaml
+!results/eda/
+!results/eda/**
+!tests/fixtures/**/*.route

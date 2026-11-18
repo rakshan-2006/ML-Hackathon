@@ -2,8 +2,24 @@
 
 PathSnap is a PES University hackathon project for distributed map-matching and
 route reconstruction. This repository currently contains the **Member 4 API,
-UI, integration, and deployment foundation**. Inference is in walking-skeleton
-mode until the data and model components are supplied by the other members.
+UI, integration, and deployment foundation** and **M1 model-ready preprocessing**.
+Inference remains in walking-skeleton mode until the model and decoder are
+supplied and the inference adapter is integrated.
+
+## Ready-to-use training data (Member 2)
+
+All 80 train trips and 10 student-test trips have been preprocessed. Download the
+checksummed Parquet files from the [M1 dataset release](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/m1-preprocessed-2026-11-18).
+Cloning the repository alone does not download these assets. Follow
+[data/README.md](data/README.md) for environment setup, the verified downloader,
+and the model-data loader. [report/m1_handoff.md](report/m1_handoff.md) explains
+features, nullable labels, group splits, and M3/M4 interfaces.
+
+The M1 data environment uses Python 3.11. Install `data/requirements-m1.txt` in
+its own environment; its historical reproducibility pins differ from the API/UI
+environment for Folium and pytest. Do not combine both pinned requirement files
+in one install command. The shared schema version is defined only in
+`src/common/schema.py`; model and decoder cards must use that exact version.
 
 ## Project structure
 
@@ -27,7 +43,7 @@ report/                 # Member 4 implementation notes
 
 ## Python environment and dependencies
 
-Python 3.10 or later is required. The initial dependency pins were selected for
+Python 3.11 or later is required. The initial API/UI dependency pins were selected for
 compatibility with the available Python 3.13.15 environment.
 
 ```powershell

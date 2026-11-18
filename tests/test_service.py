@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from src.api.service import ArtifactLoader, ArtifactUnavailableError
+from src.common.schema import SCHEMA_VERSION
 
 
 def test_missing_artifacts_are_reported_clearly(tmp_path: Path) -> None:
@@ -20,7 +21,7 @@ def test_incompatible_schema_version_is_rejected(tmp_path: Path) -> None:
         json.dumps({"schema_version": "incompatible"}), encoding="utf-8"
     )
     (tmp_path / "decoder_config.json").write_text(
-        json.dumps({"schema_version": "1.0"}), encoding="utf-8"
+        json.dumps({"schema_version": SCHEMA_VERSION}), encoding="utf-8"
     )
 
     with pytest.raises(ArtifactUnavailableError, match="incompatible"):
