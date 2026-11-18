@@ -55,3 +55,9 @@ branch or worktree. Preserve the shared 13-feature schema, candidate-to-arc keys
 canonical fold membership and reference-read boundary. Use existing verified
 model outputs to develop the interface. Do not restart KNN or change this run's
 inputs, settings or output files. KNN final metrics will be added once verified.
+
+## Runner verification
+
+The committed runner and repository suite passed 81 tests. The complete KNN
+accuracy evaluation remains a separate long-running computation; its pending
+results are not inferred from the test count.
