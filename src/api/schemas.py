@@ -1,6 +1,6 @@
 """Pydantic request and response models for the public API."""
 
-from typing import Literal
+from typing import Literal, Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -18,7 +18,7 @@ class HealthResponse(BaseModel):
 class PredictRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
-    trip_id: str = Field(min_length=1, max_length=128)
+    trip_id: str = Field(min_length=1,max_length=128,pattern=r'^[A-Za-z0-9_-]+$')
 
 
 class GeoPoint(BaseModel):
@@ -36,8 +36,8 @@ class PredictionResponse(BaseModel):
     gps_coordinates: list[GeoPoint]
     route_hmm: list[RoutePolyline]
     route_classifier: list[RoutePolyline] | None = None
-    metrics: dict[str, float]
-    diagnostics: dict[str, str]
+    metrics: dict[str, float | None]
+    diagnostics: dict[str, Any]
     timings: dict[str, float]
     mode: Literal["stub", "real"]
     is_stub: bool

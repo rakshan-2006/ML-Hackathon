@@ -27,6 +27,9 @@ class Settings:
     log_dir: Path
     model_name: str
     model_version: str
+    data_config_path: Path | None = None
+    require_final: bool = False
+    graph_cache_size: int = 1
 
     @classmethod
     def from_environment(cls) -> "Settings":
@@ -45,6 +48,9 @@ class Settings:
                 "walking-skeleton" if mode == "stub" else "not-configured",
             ),
             model_version=os.environ.get("PATHSNAP_MODEL_VERSION", "not-loaded"),
+            data_config_path=_configured_path('PATHSNAP_DATA_CONFIG','configs/data.yaml'),
+            require_final=os.environ.get('PATHSNAP_REQUIRE_FINAL','0') == '1',
+            graph_cache_size=max(0,int(os.environ.get('PATHSNAP_GRAPH_CACHE_SIZE','1'))),
         )
 
 

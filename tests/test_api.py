@@ -58,6 +58,7 @@ def test_predict_returns_explicit_stub_without_fake_outputs(tmp_path: Path) -> N
 
     assert response.status_code == 200
     body = response.json()
+    assert body['diagnostics'].pop('request_id')==response.headers['X-Request-ID']
     assert {key: value for key, value in body.items() if key != "timings"} == {
         "trip_id": "trip-alpha",
         "n_obs": 0,
@@ -123,19 +124,17 @@ def test_real_mode_fails_startup_when_artifacts_are_missing(tmp_path: Path) -> N
 
 def test_missing_artifact_after_startup_returns_503(tmp_path: Path) -> None:
     settings = make_settings(tmp_path, mode="real")
-    settings.artifacts_dir.mkdir()
-    joblib.dump({"test": True}, settings.artifacts_dir / "best_model.joblib")
-    joblib.dump({"test": True}, settings.artifacts_dir / "preprocessing.joblib")
-    (settings.artifacts_dir / "model_card.json").write_text(
-        json.dumps({"schema_version": SCHEMA_VERSION}), encoding="utf-8"
-    )
-    (settings.artifacts_dir / "decoder_config.json").write_text(
-        json.dumps({"schema_version": SCHEMA_VERSION}), encoding="utf-8"
-    )
+    from tests.runtime_helpers import write_bundle
+    # Real registry validates the three prediction inputs, so provide a valid fixture.
+    import shutil
+    fixture=Path(__file__).parent/'fixtures/tiny_trip'
+    trip=settings.evaluation_dir/'tiny_trip'
+    shutil.copytree(fixture,trip)
+    write_bundle(settings.artifacts_dir)
 
     with TestClient(create_app(settings)) as client:
         (settings.artifacts_dir / "best_model.joblib").unlink()
-        response = client.post("/predict", json={"trip_id": "trip-alpha"})
+        response = client.post("/predict", json={"trip_id": "tiny_trip"})
 
     assert response.status_code == 503
     assert "best_model.joblib" in response.json()["detail"]
