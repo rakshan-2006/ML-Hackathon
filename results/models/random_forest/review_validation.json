@@ -50,5 +50,17 @@
       "reference_misses": 48,
       "top1_accuracy": 0.8377403098363716
     }
-  ]
+  ],
+  "repository_tests_passed": 67,
+  "pip_check": "No broken requirements found",
+  "public_release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/models-random-forest-v1",
+  "public_download_size_and_sha256_verified": [
+    "pipeline.joblib",
+    "model_card.json",
+    "oof_probabilities.parquet",
+    "student_test_probabilities.parquet"
+  ],
+  "downloaded_pipeline_all_student_test_scores_verified": true,
+  "downloaded_pipeline_binary_predictions_and_top1_unchanged": true,
+  "pipeline_compressed_bytes": 58005196
 }

@@ -106,3 +106,9 @@ python -m src.data.download_dataset --metadata results/models/random_forest/arti
 The published pipeline uses joblib compression level 3 (58,005,196 bytes instead
 of 196,336,594 bytes). The compressed file was reloaded and verified against all
 student-test scores; fitted weights and reported results are unchanged.
+
+All four published assets were downloaded through their public release URLs and
+passed byte-count and SHA-256 verification. The downloaded compressed model
+reproduced the binary predictions and observation Top-1 result on all 130,919
+student-test candidates. The final compressed-pipeline code passed all 67 tests
+and pip check.
