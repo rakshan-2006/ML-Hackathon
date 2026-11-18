@@ -1,0 +1,6 @@
+metric,aggregation,classifier_only,classifier_plus_hmm
+Top-1 accuracy (trusted observations),sum n_correct / sum n_evaluated,0.8356871772537796,0.9145150251975362
+Route continuity (connected / transitions),sum n_connected_transitions / sum n_continuity_transitions,0.7544540229885057,0.8847237880496054
+Route breaks,sum n_route_breaks,1709.0,409.0
+Arc-overlap F1 vs reference route,mean of per-trip arc_f1,0.798191705429453,0.9453036442701185
+Order-aware LCS similarity vs reference route,mean of per-trip lcs_similarity,0.6103018465241747,0.902187890589202
