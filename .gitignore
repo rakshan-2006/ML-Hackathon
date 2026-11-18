@@ -51,3 +51,10 @@ tmp/
 !results/eda/
 !results/eda/**
 !tests/fixtures/**/*.route
+
+# Gradient boosting: small results tracked, large artifacts distributed by Release
+artifacts/
+!experiments/cv_folds.json
+!results/models/
+!results/models/gradient_boosting/
+!results/models/gradient_boosting/**
