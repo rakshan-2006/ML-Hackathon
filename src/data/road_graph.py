@@ -1,5 +1,6 @@
 """Directed arrays plus lazy arc adjacency; preserve all raw row identities."""
 from dataclasses import dataclass
+from pathlib import Path
 from time import perf_counter
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -69,4 +70,4 @@ def load_road_graph(trip_dir, projection=None) -> RoadGraph:
     _, weak = connected_components(adj,directed=True,connection='weak')
     _, strong = connected_components(adj,directed=True,connection='strong')
     a,b = ll[u],ll[v]
-    return RoadGraph(str(__import__('pathlib').Path(trip_dir).name),projection,xy,ll,u,v,np.linalg.norm(xy[v]-xy[u],axis=1),bearing_deg(a[:,0],a[:,1],b[:,0],b[:,1]),successors,predecessors,twin,twin<0,indeg,outdeg,weak,strong,np.flatnonzero(indeg+outdeg==0),perf_counter()-start)
+    return RoadGraph(str(Path(trip_dir).name),projection,xy,ll,u,v,np.linalg.norm(xy[v]-xy[u],axis=1),bearing_deg(a[:,0],a[:,1],b[:,0],b[:,1]),successors,predecessors,twin,twin<0,indeg,outdeg,weak,strong,np.flatnonzero(indeg+outdeg==0),perf_counter()-start)

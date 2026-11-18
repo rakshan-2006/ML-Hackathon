@@ -9,7 +9,7 @@ FEATURE_SPEC = {
     'cand_rank': ('int64', 'count', 'Distance then arc-ID rank starting at zero'),
     'dist_minus_min': ('float64', 'm', 'Distance above nearest candidate'),
     'heading_diff_deg': ('float64', 'degree', 'Absolute circular directional heading difference'),
-    'speed_mps': ('float64', 'm/s', 'Previous valid step speed; unknown at gap/stationary boundary'),
+    'speed_mps': ('float64', 'm/s', 'Previous valid step speed; unknown at first point/invalid neighbor/gap'),
     'arc_len_m': ('float64', 'm', 'Directed segment length'),
     'proj_frac': ('float64', 'fraction', 'Clamped fraction from source to target'),
     'n_candidates': ('int64', 'count', 'Retained candidates for observation'),

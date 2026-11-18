@@ -20,4 +20,8 @@ instructions. Interfaces are provisional pending M2/M3/M4 review, not sign-off.
 | M1-13 | tests/fixtures; tests | pytest result |
 | M1-14 | m1_data_features.md; m1_handoff.md | measured report and commands |
 
-Status: implementation in progress. Final acceptance recorded in report.
+Scope update: user requested preprocessing ready for model training and to ignore
+the broader phase process. The table maps the original prompt for orientation;
+it is not a claim that the original full M1 phase acceptance gate is complete.
+Model-ready completion/evidence are recorded in m1_data_features.md. Folium map
+review and the broader report/phase checklist are outside the narrowed scope.

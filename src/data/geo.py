@@ -53,9 +53,9 @@ class TripProjection:
         a = np.asarray(points, dtype=float).reshape(-1, 2)
         result = np.full(a.shape, np.nan)
         mask = valid_lonlat(a)
-        result[mask] = np.column_stack(self.forward.transform(a[mask,0], a[mask,1]))
+        result[mask] = np.column_stack(self.forward.transform(a[mask,0].tolist(), a[mask,1].tolist()))
         return result
 
     def inverse(self, points):
         a = np.asarray(points).reshape(-1, 2)
-        return np.column_stack(self.backward.transform(a[:,0], a[:,1]))
+        return np.column_stack(self.backward.transform(a[:,0].tolist(), a[:,1].tolist()))

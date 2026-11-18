@@ -26,6 +26,9 @@ def test_candidates_features_labels():
     first = c.iloc[0]
     assert first.proj_frac == pytest.approx(.2,abs=1e-5)
     assert first.dist_m == pytest.approx(0,abs=.001)
+    reverse = f[(f.obs_idx==1)&(f.arc_id==1)].heading_diff_deg.iloc[0]
+    forward = f[(f.obs_idx==1)&(f.arc_id==0)].heading_diff_deg.iloc[0]
+    assert reverse>179 and forward<1
     a = reference_membership(align_reference(o,g,load_route(FIXTURE)),c)
     f = build_features(o,c,g,with_labels=True,alignment=a)
     validate_tables(o,f,a,g,30,4)
@@ -92,3 +95,60 @@ def test_inference_never_reads_route(tmp_path,monkeypatch):
     third = pipeline(trip)[-1]
     pd.testing.assert_frame_equal(first,second)
     pd.testing.assert_frame_equal(first,third)
+
+def test_altered_reference_changes_only_offline_labels():
+    g,o,c,f = pipeline()
+    forward = reference_membership(align_reference(o,g,np.array([0,2])),c)
+    unrelated = reference_membership(align_reference(o,g,np.array([5])),c)
+    labelled = build_features(o,c,g,with_labels=True,alignment=forward)
+    changed = build_features(o,c,g,with_labels=True,alignment=unrelated)
+    assert labelled.label.notna().any() and changed.label.isna().all()
+    pd.testing.assert_frame_equal(labelled.drop(columns='label'),changed.drop(columns='label'))
+
+def test_graph_with_no_arcs_has_empty_candidates(tmp_path):
+    (tmp_path/f'{tmp_path.name}.nodes').write_text('0 0\n')
+    (tmp_path/f'{tmp_path.name}.arcs').write_text('')
+    g = load_road_graph(tmp_path)
+    o = clean_track(pd.DataFrame({'lon':[0.],'lat':[0.],'t':[1.]}),g.projection,'00000001')
+    c = generate_candidates(o,g)
+    assert len(c)==0 and o.n_candidates.iloc[0]==0
+    a = align_reference(o,g,np.array([],dtype=int))
+    assert a.ref_arc_id.tolist()==[-1]
+
+def test_sparse_alignment_matches_exhaustive_monotone_objective():
+    from itertools import product
+    from src.data.geo import angular_difference
+    g,o,_,_ = pipeline()
+    route = np.array([0,1,0,2])
+    radius,weight,penalty = 150.,15.,.05
+    choices,reward = [],{}
+    for i,row in enumerate(o.itertuples(index=False)):
+        d,_,_ = project_segments(np.array([row.x,row.y]),g.node_xy[g.arc_from[route]],g.node_xy[g.arc_to[route]])
+        choices.append([-1]+np.flatnonzero(d<=radius).tolist())
+        heading = np.nan_to_num(angular_difference(row.heading_deg,g.arc_bearing[route]),nan=90.)
+        for pos in choices[-1][1:]:
+            reward[i,pos] = 2*radius-d[pos]-weight*heading[pos]/180
+    def score(path):
+        states = [(i,p) for i,p in enumerate(path) if p>=0]
+        positions = [p for i,p in states]
+        if any(a>b for a,b in zip(positions,positions[1:])):
+            return -np.inf
+        return sum(reward[state] for state in states)-penalty*sum(b-a for a,b in zip(positions,positions[1:]))
+    brute = max(score(path) for path in product(*choices))
+    aligned = align_reference(o,g,route)
+    assert score(aligned.ref_route_pos.tolist()) == pytest.approx(brute)
+
+def test_inference_imports_do_not_import_alignment():
+    import subprocess
+    import sys
+    code = '''
+import sys
+from src.data.config import load_config
+from src.data.dataset_loader import load_track
+from src.data.road_graph import load_road_graph
+from src.data.track_cleaning import clean_track
+from src.data.candidate_generation import generate_candidates
+from src.data.feature_engineering import build_features
+assert 'src.data.reference_alignment' not in sys.modules
+'''
+    subprocess.run([sys.executable,'-c',code],check=True)

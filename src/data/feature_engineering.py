@@ -7,8 +7,8 @@ from .geo import angular_difference
 
 def reference_membership(alignment, candidates):
     alignment = alignment.copy()
-    keys = set(zip(candidates.obs_idx.astype(int), candidates.arc_id.astype(int)))
-    alignment['ref_in_candidates'] = [(int(i),int(a)) in keys for i,a in zip(alignment.obs_idx,alignment.ref_arc_id)]
+    keys = set(zip(candidates.trip_id,candidates.obs_idx.astype(int),candidates.arc_id.astype(int)))
+    alignment['ref_in_candidates'] = [(str(t),int(i),int(a)) in keys for t,i,a in zip(alignment.trip_id,alignment.obs_idx,alignment.ref_arc_id)]
     return alignment
 
 def join_labels(candidates,alignment):

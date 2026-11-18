@@ -13,24 +13,14 @@ import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
-import yaml
 from src.common.schema import SCHEMA_VERSION,validate_tables
+from .config import load_config
 from .dataset_loader import list_trips,load_track,load_route,raw_path
 from .road_graph import load_road_graph
 from .track_cleaning import clean_track
 from .candidate_generation import generate_candidates
 from .reference_alignment import align_reference
 from .feature_engineering import build_features,reference_membership
-
-def load_config(path):
-    with Path(path).open() as stream:
-        cfg = yaml.safe_load(stream)
-    required = ['seed','radius_m','max_candidates','gap_threshold_s','alignment_radius_m']
-    if any(k not in cfg for k in required):
-        raise ValueError(f'Config requires {required}')
-    if cfg.get('smoothing','none') != 'none' or cfg.get('projection') != 'network_centered_aeqd_wgs84':
-        raise ValueError('Unsupported projection/smoothing policy')
-    return cfg
 
 def sha256_file(path):
     h = hashlib.sha256()

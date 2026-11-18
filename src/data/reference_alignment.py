@@ -39,6 +39,7 @@ def route_break_positions(route,graph):
     return np.flatnonzero(graph.arc_to[route[:-1]] != graph.arc_from[route[1:]])+1
 
 def align_reference(observations, graph, route, config=None):
+    observations = observations.sort_values('obs_idx').reset_index(drop=True)
     cfg = config or {}
     radius = cfg.get('alignment_radius_m',150.)
     weight = cfg.get('alignment_heading_weight_m',15.)
