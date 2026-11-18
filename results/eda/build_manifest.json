@@ -1,0 +1,5710 @@
+{
+  "schema_version": "1.0.0-m1-provisional",
+  "effective_config": {
+    "seed": 2026,
+    "projection": "network_centered_aeqd_wgs84",
+    "gap_threshold_s": 30,
+    "stationary_m": 1.0,
+    "suspicious_speed_mps": 70,
+    "smoothing": "none",
+    "radius_m": 100.0,
+    "max_candidates": 8,
+    "alignment_radius_m": 150,
+    "alignment_heading_weight_m": 15,
+    "alignment_skip_penalty_m": 0.05,
+    "alignment_ambiguity_margin_m": 3,
+    "sweep_radii_m": [
+      30,
+      60,
+      100
+    ],
+    "sweep_k": [
+      4,
+      8,
+      16
+    ],
+    "selection_partition": "train",
+    "frozen": true
+  },
+  "config_hash": "ad6e100712c57fb898108a9468db670cb96dcc2cd7116c4bd06a6884c6203997",
+  "seed": 2026,
+  "runtime": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "packages": {
+      "numpy": "2.3.4",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "pyproj": "3.7.2",
+      "shapely": "2.2.0",
+      "matplotlib": "3.10.7",
+      "folium": "1.0.0",
+      "PyYAML": "6.0.3",
+      "pytest": "9.0.2",
+      "pyarrow": "25.0.1"
+    }
+  },
+  "code": {
+    "revision": "710d65132cf39004c21375905d35e9f20ef8d73f",
+    "dirty": false
+  },
+  "command": [
+    "python",
+    "-m",
+    "src.data.build_dataset",
+    "--raw-root",
+    "<external-root>",
+    "--output-root",
+    "<output-root>",
+    "--config",
+    "data_config.yaml",
+    "--partitions",
+    "train",
+    "student_test"
+  ],
+  "partitions": {
+    "train": [
+      "00000001",
+      "00000002",
+      "00000003",
+      "00000004",
+      "00000005",
+      "00000006",
+      "00000008",
+      "00000010",
+      "00000011",
+      "00000012",
+      "00000013",
+      "00000014",
+      "00000016",
+      "00000018",
+      "00000019",
+      "00000020",
+      "00000021",
+      "00000022",
+      "00000024",
+      "00000025",
+      "00000026",
+      "00000027",
+      "00000028",
+      "00000029",
+      "00000031",
+      "00000032",
+      "00000033",
+      "00000034",
+      "00000035",
+      "00000036",
+      "00000037",
+      "00000038",
+      "00000039",
+      "00000041",
+      "00000042",
+      "00000043",
+      "00000044",
+      "00000045",
+      "00000046",
+      "00000047",
+      "00000048",
+      "00000050",
+      "00000051",
+      "00000053",
+      "00000054",
+      "00000055",
+      "00000057",
+      "00000058",
+      "00000060",
+      "00000061",
+      "00000062",
+      "00000063",
+      "00000064",
+      "00000066",
+      "00000068",
+      "00000069",
+      "00000070",
+      "00000071",
+      "00000072",
+      "00000074",
+      "00000075",
+      "00000078",
+      "00000079",
+      "00000080",
+      "00000081",
+      "00000082",
+      "00000083",
+      "00000084",
+      "00000085",
+      "00000086",
+      "00000088",
+      "00000089",
+      "00000090",
+      "00000092",
+      "00000093",
+      "00000095",
+      "00000096",
+      "00000097",
+      "00000098",
+      "00000099"
+    ],
+    "student_test": [
+      "00000000",
+      "00000007",
+      "00000009",
+      "00000040",
+      "00000052",
+      "00000056",
+      "00000065",
+      "00000076",
+      "00000077",
+      "00000091"
+    ]
+  },
+  "trips": [
+    {
+      "partition": "train",
+      "trip_id": "00000001",
+      "source": {
+        "track": {
+          "sha256": "72b37792edb378ee758b78d28f006d476acb203e0600827300f2e5fab757abb0",
+          "nonempty_records": 1315,
+          "loaded_rows": 1315,
+          "size_bytes": 40975
+        },
+        "nodes": {
+          "sha256": "32c8209e7ee82ffea8a1109cc8d6e1b4376aa0887fc0f7f3385a73a52b03d4f6",
+          "nonempty_records": 88809,
+          "loaded_rows": 88809,
+          "size_bytes": 1687371
+        },
+        "arcs": {
+          "sha256": "fad1b6878fef1e8790426d73e6191ee9096d94973c7e015c3d7beac78494a1ed",
+          "nonempty_records": 165790,
+          "loaded_rows": 165790,
+          "size_bytes": 1948474
+        },
+        "route": {
+          "sha256": "e09683bf22221c0bb1ae356759cdf58d8b614fd883fd38535f1efbc4873ec874",
+          "nonempty_records": 525,
+          "loaded_rows": 525,
+          "size_bytes": 3119
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1315,
+          "semantic_sha256": "92a67517ebfd5505510a779288c5b92ba5492a2daeaf121c325a200733d6efc5"
+        },
+        "candidates": {
+          "rows": 10060,
+          "semantic_sha256": "0d1ae0e9601bd5ac5a44b8e372c045038a48507a448d1169ad8bc7fd39ea75a5"
+        },
+        "alignment": {
+          "rows": 1315,
+          "semantic_sha256": "e419c11e54b8e1ed9a26a15f81b020904e3953c4efd5615e6b08e7980c7fd6b6"
+        }
+      },
+      "graph_time_s": 1.605439999999362,
+      "nodes": 88809,
+      "arcs": 165790,
+      "elapsed_s": 3.5353616000065813
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000002",
+      "source": {
+        "track": {
+          "sha256": "37581dcf8e8c3692b2ee21c551df785f55acbbe7509d275cfa95ee5a62406e32",
+          "nonempty_records": 7243,
+          "loaded_rows": 7243,
+          "size_bytes": 238085
+        },
+        "nodes": {
+          "sha256": "d168e277e31fefe844a9e81b11acee96023be295afe453c8d5503de7309bc830",
+          "nonempty_records": 7936,
+          "loaded_rows": 7936,
+          "size_bytes": 158720
+        },
+        "arcs": {
+          "sha256": "97268115ec3323f1d4149a98bdb75e620c284ad81c70ec47f1ac3a4862215190",
+          "nonempty_records": 16139,
+          "loaded_rows": 16139,
+          "size_bytes": 156519
+        },
+        "route": {
+          "sha256": "aa78f6284c468a93446a5bc5188819b75a8e4c3a18ecef3772b6d4f050efa377",
+          "nonempty_records": 262,
+          "loaded_rows": 262,
+          "size_bytes": 1398
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 7243,
+          "semantic_sha256": "67a8a787815fedfe327cf402c4d79f9e1018c3ebbf37e84ef0a774dec39538f4"
+        },
+        "candidates": {
+          "rows": 53878,
+          "semantic_sha256": "fb4fea9415c3c3c5cf8bedcfa512fe2977118e873b8d5b368b101bb81ea08e37"
+        },
+        "alignment": {
+          "rows": 7243,
+          "semantic_sha256": "d9af52ef4a9e8d8d5646c790dfa5e9af5e2589aba8005efa3d51ded12f77e052"
+        }
+      },
+      "graph_time_s": 0.11748629999055993,
+      "nodes": 7936,
+      "arcs": 16139,
+      "elapsed_s": 9.253609199993662
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000003",
+      "source": {
+        "track": {
+          "sha256": "655a136db1c4b7b5dcafbf43a44ee4d5c0361b449a4c6cb68bc272388c63a04a",
+          "nonempty_records": 821,
+          "loaded_rows": 821,
+          "size_bytes": 26164
+        },
+        "nodes": {
+          "sha256": "4f5c79f74b63b8a175c53ee08d26def1556a40d66d2e003d94133f9d1add296a",
+          "nonempty_records": 9138,
+          "loaded_rows": 9138,
+          "size_bytes": 182760
+        },
+        "arcs": {
+          "sha256": "15077a8a63c898d79ffc02da2b353b0bff8870ccc923dd11fb1abc7be4775995",
+          "nonempty_records": 18028,
+          "loaded_rows": 18028,
+          "size_bytes": 175733
+        },
+        "route": {
+          "sha256": "b254d993549edbadf689830bad5e0626259d3a6f8c7e1606166396b1e71f6dbd",
+          "nonempty_records": 79,
+          "loaded_rows": 79,
+          "size_bytes": 411
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 821,
+          "semantic_sha256": "15d6bda3021706e8798aba6ce44d3db0824e36bae0fef9046d454292b742f172"
+        },
+        "candidates": {
+          "rows": 6487,
+          "semantic_sha256": "0ef5975497857500074d3ef4ffaba88c0ba24683da2921a2d6a29f89e6e52b2d"
+        },
+        "alignment": {
+          "rows": 821,
+          "semantic_sha256": "0526f9d573ac9aefe78ed185f8e7c88b231193ffef63234337bf52a03866492d"
+        }
+      },
+      "graph_time_s": 0.17495720001170412,
+      "nodes": 9138,
+      "arcs": 18028,
+      "elapsed_s": 1.2378955999884056
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000004",
+      "source": {
+        "track": {
+          "sha256": "44b279c654148b2e8b32619dfb9ecfaec4ff0ece219605ba4b8a7adf763e603f",
+          "nonempty_records": 1064,
+          "loaded_rows": 1064,
+          "size_bytes": 34982
+        },
+        "nodes": {
+          "sha256": "b4f03ecd167b7cf1ed25a04d948d89db5ba98f22fd7ba4ea70565fc3c8e0329b",
+          "nonempty_records": 7350,
+          "loaded_rows": 7350,
+          "size_bytes": 147000
+        },
+        "arcs": {
+          "sha256": "db8e816663e05d7e4253b52892d465b65c463fae817a5ec98d1c460c918e0c4d",
+          "nonempty_records": 15499,
+          "loaded_rows": 15499,
+          "size_bytes": 149738
+        },
+        "route": {
+          "sha256": "4e4c016be390d4ac4cfce950ad948cd2f67bfb31727a10fb37f7d5bdf2e3c5b7",
+          "nonempty_records": 320,
+          "loaded_rows": 320,
+          "size_bytes": 1582
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1064,
+          "semantic_sha256": "0ea31df8eabbb65a8788e6fd6d6d00f191cae637bd282a6a9895280edc2be25b"
+        },
+        "candidates": {
+          "rows": 7299,
+          "semantic_sha256": "f1d3f441433e04bdb9867c9c112a4ce55868d3f21d7cb9febd44e3aa939055b1"
+        },
+        "alignment": {
+          "rows": 1064,
+          "semantic_sha256": "fd0314ac531acea9181443140b715bf4081e6d4f7fed134a01bd60549fb1352b"
+        }
+      },
+      "graph_time_s": 0.14735600000130944,
+      "nodes": 7350,
+      "arcs": 15499,
+      "elapsed_s": 1.4448499999998603
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000005",
+      "source": {
+        "track": {
+          "sha256": "4542e4af6b82466e72731ff504b137522e29a66e528bca4fa871f456cfa4e657",
+          "nonempty_records": 1045,
+          "loaded_rows": 1045,
+          "size_bytes": 33378
+        },
+        "nodes": {
+          "sha256": "b6be90118984fe506f332e72f33e1e31fcd05d83b13b73334175c682bb83bf1d",
+          "nonempty_records": 898,
+          "loaded_rows": 898,
+          "size_bytes": 17960
+        },
+        "arcs": {
+          "sha256": "de12c17d6b03ef650ec0866f1ea77192c1bb3320147614c662d5d1fb7889ea0b",
+          "nonempty_records": 1579,
+          "loaded_rows": 1579,
+          "size_bytes": 12351
+        },
+        "route": {
+          "sha256": "b2535a355a074bcf3386efb93fd08be0567e1c59a4fac6954d379662162a7ccd",
+          "nonempty_records": 105,
+          "loaded_rows": 105,
+          "size_bytes": 421
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1045,
+          "semantic_sha256": "9af611f68848487a050b4dea3ef0f94a355cc46970140c69ab7fb602cee4ea3b"
+        },
+        "candidates": {
+          "rows": 4025,
+          "semantic_sha256": "291df30195d55662918081bbd5fce40c442014eb422a91d4a75e5ba02df4fd18"
+        },
+        "alignment": {
+          "rows": 1045,
+          "semantic_sha256": "3a6474c0bffd4989701d48958d94447402aab6711701691de10a865830718a80"
+        }
+      },
+      "graph_time_s": 0.02232279999589082,
+      "nodes": 898,
+      "arcs": 1579,
+      "elapsed_s": 1.2053532999998424
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000006",
+      "source": {
+        "track": {
+          "sha256": "60c4c4a971b568ba7571b6a60ab97c6e9b7dbfa672698665fd16a57a829bfffa",
+          "nonempty_records": 1450,
+          "loaded_rows": 1450,
+          "size_bytes": 47576
+        },
+        "nodes": {
+          "sha256": "c4bdb8b5fbb36f88e0dcd0e44c4d23b37ec0db4fa92838e6314e4369d009080c",
+          "nonempty_records": 3259,
+          "loaded_rows": 3259,
+          "size_bytes": 65180
+        },
+        "arcs": {
+          "sha256": "533ea854db0e35062fa3cee45e17ce43362341b904da3d635055f5e0cc477a5f",
+          "nonempty_records": 6757,
+          "loaded_rows": 6757,
+          "size_bytes": 62914
+        },
+        "route": {
+          "sha256": "42bcc3baa274a131615c988513f888bf9755cb5d384cac7064655aa0e96ba50f",
+          "nonempty_records": 261,
+          "loaded_rows": 261,
+          "size_bytes": 1184
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1450,
+          "semantic_sha256": "bdc50a51112a0bccb5ed3b4ef17230651ba872bf75a8a615ebc6582279c4c129"
+        },
+        "candidates": {
+          "rows": 10528,
+          "semantic_sha256": "f6d7e09e5abd9c772d0b0bba000d17abcfebc86e564172b22ff1b75eb0352eb9"
+        },
+        "alignment": {
+          "rows": 1450,
+          "semantic_sha256": "c1e8212078be18ed21a28a6bc1d2ecb545f1ca5e08f87c42a57a1b55e7b6d1e1"
+        }
+      },
+      "graph_time_s": 0.059287900003255345,
+      "nodes": 3259,
+      "arcs": 6757,
+      "elapsed_s": 1.8696347000077367
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000008",
+      "source": {
+        "track": {
+          "sha256": "29819fd3de499576eeb8ddc1b9de784335c865534188e4795d2bd2f45a333f5f",
+          "nonempty_records": 3093,
+          "loaded_rows": 3093,
+          "size_bytes": 104055
+        },
+        "nodes": {
+          "sha256": "2210e2539da63be7dbd90acdf2b5a6441cf3a6d7ad17a238621a6ac19e9574a3",
+          "nonempty_records": 4995,
+          "loaded_rows": 4995,
+          "size_bytes": 104895
+        },
+        "arcs": {
+          "sha256": "c439bc84365f93e87c48f33096bc074de4514640d82497d5630f90dd3aab4b88",
+          "nonempty_records": 10421,
+          "loaded_rows": 10421,
+          "size_bytes": 99150
+        },
+        "route": {
+          "sha256": "b4c5c910c7c053d0bf8f94939a1db1d8b01061ec90fda8c6c5fb88e1392d2097",
+          "nonempty_records": 173,
+          "loaded_rows": 173,
+          "size_bytes": 832
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3093,
+          "semantic_sha256": "f2076a6d6c58d47b768c0dd9df52ac2579da44c39a3e0d96abb798486eb9c41c"
+        },
+        "candidates": {
+          "rows": 24734,
+          "semantic_sha256": "ee90921db2c761254fb9222654dd5e4e03e3a8190e40eab5738bf38950bb4591"
+        },
+        "alignment": {
+          "rows": 3093,
+          "semantic_sha256": "bcd0014667fc6752bf49b3a9e242311b9a4f3283b8c7a2954440b9fe9b46f839"
+        }
+      },
+      "graph_time_s": 0.10674709999875631,
+      "nodes": 4995,
+      "arcs": 10421,
+      "elapsed_s": 4.056867599996622
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000010",
+      "source": {
+        "track": {
+          "sha256": "a584810e1e1f2dec56d1567bc596c6fd0a8221196b4ed17fdc111bd2e68a73a3",
+          "nonempty_records": 2711,
+          "loaded_rows": 2711,
+          "size_bytes": 88356
+        },
+        "nodes": {
+          "sha256": "9317902262e6df4bc7678c293dfaa9477ead74f1fa5cb7c95f9e137b01b9f0e3",
+          "nonempty_records": 8502,
+          "loaded_rows": 8502,
+          "size_bytes": 170040
+        },
+        "arcs": {
+          "sha256": "4b8d138c424d3ea7de1d1191bd0825c288a36c0791d37d131c97c07de3c9208f",
+          "nonempty_records": 15715,
+          "loaded_rows": 15715,
+          "size_bytes": 153188
+        },
+        "route": {
+          "sha256": "d6e0f1b45081582839a5bffecc6d65916c90e615618ef58009c6121862e53f4d",
+          "nonempty_records": 210,
+          "loaded_rows": 210,
+          "size_bytes": 1042
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2711,
+          "semantic_sha256": "c378234d143c97ee30d88b9583ff1d5338dbc1e9426be02f4664f011a0659902"
+        },
+        "candidates": {
+          "rows": 21442,
+          "semantic_sha256": "8538d769f7838ba26a225db40cf17e31b023e375e856b1209984ad92536db24f"
+        },
+        "alignment": {
+          "rows": 2711,
+          "semantic_sha256": "05da79d596694e5784f529d9a8e3c0b0800a38e742c31b0de784831d7da10e1b"
+        }
+      },
+      "graph_time_s": 0.12842900000396185,
+      "nodes": 8502,
+      "arcs": 15715,
+      "elapsed_s": 3.406985599998734
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000011",
+      "source": {
+        "track": {
+          "sha256": "6f479a93b989146aacfb0b82c47bf17256bfb5472841f71389a321b7063a6ef2",
+          "nonempty_records": 2828,
+          "loaded_rows": 2828,
+          "size_bytes": 92217
+        },
+        "nodes": {
+          "sha256": "3f230a3280a11824a60d4fa60e51ff82cf863ca8900cfbc1b4bf7e86a2e916ad",
+          "nonempty_records": 2649,
+          "loaded_rows": 2649,
+          "size_bytes": 52980
+        },
+        "arcs": {
+          "sha256": "0a75e472d7ae0b89400baad56de82a556572621bf1a80c6ea9c1a05f4c452ced",
+          "nonempty_records": 5393,
+          "loaded_rows": 5393,
+          "size_bytes": 49400
+        },
+        "route": {
+          "sha256": "9378bd250c223efe1201bb258cf09eb3879f29f508e6c6f125b94ee87773d101",
+          "nonempty_records": 565,
+          "loaded_rows": 565,
+          "size_bytes": 2167
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2828,
+          "semantic_sha256": "8b523dc2e5ad3a4302e2fb83b806d6287720612ca212c2cd49b071c89e9b000b"
+        },
+        "candidates": {
+          "rows": 17036,
+          "semantic_sha256": "f9c1761467862af3cc35e4e1dcf3ece2f872fd4872705c92fe8d431c916496c9"
+        },
+        "alignment": {
+          "rows": 2828,
+          "semantic_sha256": "58879468ec67e34511b6ec743de50ab8a60035b0148fd5e5632088b36b0a3a7d"
+        }
+      },
+      "graph_time_s": 0.05951739998999983,
+      "nodes": 2649,
+      "arcs": 5393,
+      "elapsed_s": 4.0090055000036955
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000012",
+      "source": {
+        "track": {
+          "sha256": "2058678a4869eb211a69509a2491e6bd9c7698a853f8da656b84051ee539cc16",
+          "nonempty_records": 1608,
+          "loaded_rows": 1608,
+          "size_bytes": 51960
+        },
+        "nodes": {
+          "sha256": "e1bea3dcf3f09762b0644903cef8b89d787784691a86cef87e969591197f7657",
+          "nonempty_records": 16376,
+          "loaded_rows": 16376,
+          "size_bytes": 327520
+        },
+        "arcs": {
+          "sha256": "12b19444ecfec6d70f7c33f095ad8ee592645bfe916266ded05f5a581c171806",
+          "nonempty_records": 38599,
+          "loaded_rows": 38599,
+          "size_bytes": 410744
+        },
+        "route": {
+          "sha256": "7e0a011b159a672de417e76f0fb973104942e3be4be13eef8853aa53ab0c931a",
+          "nonempty_records": 205,
+          "loaded_rows": 205,
+          "size_bytes": 859
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1608,
+          "semantic_sha256": "5c6cd1e42d6514540913e68ae6097b5752833726dafc81247b4a8c3499005f93"
+        },
+        "candidates": {
+          "rows": 7637,
+          "semantic_sha256": "f47ed26edfa2882a209420a9055bd4cd3f50a38a91e8c7a16926fbeb1a206c95"
+        },
+        "alignment": {
+          "rows": 1608,
+          "semantic_sha256": "a8df579a707d6a3524428b0180432d686f508e212959cf450b39c079341d35fa"
+        }
+      },
+      "graph_time_s": 0.36549290000402834,
+      "nodes": 16376,
+      "arcs": 38599,
+      "elapsed_s": 2.3049093000008725
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000013",
+      "source": {
+        "track": {
+          "sha256": "bb235b7acfe1fd480cb173e041b015579243ef9a850ea54b72a7e75fcdd55108",
+          "nonempty_records": 2580,
+          "loaded_rows": 2580,
+          "size_bytes": 81487
+        },
+        "nodes": {
+          "sha256": "094330f3e61bc77ebf3d4a2a50d853b073a79d6eef789756581cf68841ae6a61",
+          "nonempty_records": 155003,
+          "loaded_rows": 155003,
+          "size_bytes": 2945057
+        },
+        "arcs": {
+          "sha256": "ecf86efa6abb790a7da68cb062ed2891e9fd122f69f39362c255e633dd52ffdb",
+          "nonempty_records": 307392,
+          "loaded_rows": 307392,
+          "size_bytes": 3856964
+        },
+        "route": {
+          "sha256": "6e6cd74084aea099e3712c224dbf7a2426ab51fba2e87fd794f24dc225160ae4",
+          "nonempty_records": 788,
+          "loaded_rows": 788,
+          "size_bytes": 4835
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2580,
+          "semantic_sha256": "cd2023f56d83ca96d1bf16232475d03e06415c9ca815ce327a2b0e8e1f6c7d43"
+        },
+        "candidates": {
+          "rows": 18847,
+          "semantic_sha256": "d93f30c1f46d53bf3f5754f4a607c33f0d55d9bd83433f2d41eb2ebce177f7b0"
+        },
+        "alignment": {
+          "rows": 2580,
+          "semantic_sha256": "f477da83ab5108794bcc3a7d611e26a3c0467c1501eb61b92f9e8e0cb835a40d"
+        }
+      },
+      "graph_time_s": 3.005406900003436,
+      "nodes": 155003,
+      "arcs": 307392,
+      "elapsed_s": 10.291784700006247
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000014",
+      "source": {
+        "track": {
+          "sha256": "df3d60e824e9d6c2b8b6d9e95ec4595202ef4392f68e55c7e9b98d794e8e15b9",
+          "nonempty_records": 448,
+          "loaded_rows": 448,
+          "size_bytes": 14254
+        },
+        "nodes": {
+          "sha256": "a5355d1f924a4473a40677c30127cb009d370230c8cd4159551aafeafa0f2efc",
+          "nonempty_records": 4067,
+          "loaded_rows": 4067,
+          "size_bytes": 81340
+        },
+        "arcs": {
+          "sha256": "e49a8ce402c854ea4cb152add0bcdde2e23ece35fbe0932229038b8d29a8c9fd",
+          "nonempty_records": 8288,
+          "loaded_rows": 8288,
+          "size_bytes": 78386
+        },
+        "route": {
+          "sha256": "cb692c225a1c161aac0bf428fdb288265b1a6d89129e340328f214f28e31aaaa",
+          "nonempty_records": 164,
+          "loaded_rows": 164,
+          "size_bytes": 743
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 448,
+          "semantic_sha256": "d2e9f15a7923506665143beee6a16b2a3e126fb860ffca364ce969be8df81000"
+        },
+        "candidates": {
+          "rows": 3533,
+          "semantic_sha256": "cb69f5b1a962667db1328fa3a57d37f3f633771bb9a93f3b9ea64360ccca71a6"
+        },
+        "alignment": {
+          "rows": 448,
+          "semantic_sha256": "786f7b1a03b57d508bbb8a0f189658f8b9dafc8bfdd2b8b2596c7337fb895bcb"
+        }
+      },
+      "graph_time_s": 0.16388670000014827,
+      "nodes": 4067,
+      "arcs": 8288,
+      "elapsed_s": 1.9602275999932317
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000016",
+      "source": {
+        "track": {
+          "sha256": "7e59834697febafb25439533b2fbb2d81336f6cec123a0fbe15bc3f66ec1ca03",
+          "nonempty_records": 1305,
+          "loaded_rows": 1305,
+          "size_bytes": 41958
+        },
+        "nodes": {
+          "sha256": "0a84a2cc40b64d8952808c9b5eb0efa53868bded10227551f2fb6e0880fa34dc",
+          "nonempty_records": 8205,
+          "loaded_rows": 8205,
+          "size_bytes": 164100
+        },
+        "arcs": {
+          "sha256": "0acf633e9388c031fb6519721ea04bef7f3677304c32f49e5edeb30306aec658",
+          "nonempty_records": 15098,
+          "loaded_rows": 15098,
+          "size_bytes": 147040
+        },
+        "route": {
+          "sha256": "64089c6f0ddc0130af512f8382a571a774b3ebdb18b554244005c0974dd79534",
+          "nonempty_records": 204,
+          "loaded_rows": 204,
+          "size_bytes": 1026
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1305,
+          "semantic_sha256": "8acfcdf04c0767f722285f10dfdcff9ac4262a04175f685a1500381a1cd01457"
+        },
+        "candidates": {
+          "rows": 10312,
+          "semantic_sha256": "615f8205a13b878bcdd892879446554072c4f709825deb48de4dcca9f3a695c2"
+        },
+        "alignment": {
+          "rows": 1305,
+          "semantic_sha256": "b1fa427022ecdd76493c4372a3192ae43ba84727ed135980499c43df7ef7bcac"
+        }
+      },
+      "graph_time_s": 0.4006792000000132,
+      "nodes": 8205,
+      "arcs": 15098,
+      "elapsed_s": 5.133612199992058
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000018",
+      "source": {
+        "track": {
+          "sha256": "c0be1923097fa1495cdbebfaf82175a5480256b0140035dd3a83c8d692965a20",
+          "nonempty_records": 379,
+          "loaded_rows": 379,
+          "size_bytes": 12039
+        },
+        "nodes": {
+          "sha256": "9c362ab2c895a96d771ca802455198ff30f2454121288c1740ad3be34502a7d1",
+          "nonempty_records": 5980,
+          "loaded_rows": 5980,
+          "size_bytes": 119600
+        },
+        "arcs": {
+          "sha256": "da0f027247a95144e4292bcc6411485a2ce51982685944aa1d0d7d193b5a1610",
+          "nonempty_records": 11545,
+          "loaded_rows": 11545,
+          "size_bytes": 111282
+        },
+        "route": {
+          "sha256": "41eae8580c62b4be8cf21e5c84b8d4e7efaa19e029960d4c3a2a4bb980435b8d",
+          "nonempty_records": 166,
+          "loaded_rows": 166,
+          "size_bytes": 812
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 379,
+          "semantic_sha256": "695a8357522151d196f55b439f16d2c294c927513f663f22cefbe277d5f6216f"
+        },
+        "candidates": {
+          "rows": 2984,
+          "semantic_sha256": "37a0e5659fe95e9f9e990c3180ac3c3b3164cc0d815222f08e3ecf675e022d99"
+        },
+        "alignment": {
+          "rows": 379,
+          "semantic_sha256": "12a7e18dbb3bde5aab63f241e5dcdf82ea45dc7f2882e8afebb5cfc853ed80cf"
+        }
+      },
+      "graph_time_s": 0.21579770000244025,
+      "nodes": 5980,
+      "arcs": 11545,
+      "elapsed_s": 1.9218515999964438
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000019",
+      "source": {
+        "track": {
+          "sha256": "a6aa7d4459763e633abc5789e08fdca5f751aa406265a83e9e8b1618cf8825f7",
+          "nonempty_records": 2354,
+          "loaded_rows": 2354,
+          "size_bytes": 74221
+        },
+        "nodes": {
+          "sha256": "fb3549dadf1d1fb79926754c5616de0f60db81c4e4395a87edadc2aec6bb8e58",
+          "nonempty_records": 52694,
+          "loaded_rows": 52694,
+          "size_bytes": 1001186
+        },
+        "arcs": {
+          "sha256": "d494e390cfc2e308a958d0598c4b0c3cc44d8de53d59d7fcd40c2879528da97b",
+          "nonempty_records": 108517,
+          "loaded_rows": 108517,
+          "size_bytes": 1253806
+        },
+        "route": {
+          "sha256": "073946470ad71ddc31cd076941d4fdca97caa697eb5502376b025e0a0678d58a",
+          "nonempty_records": 545,
+          "loaded_rows": 545,
+          "size_bytes": 3258
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2354,
+          "semantic_sha256": "a5644c917912736e88c583d71f230f0926414fb25c56dee9f57cdada8220abf7"
+        },
+        "candidates": {
+          "rows": 16512,
+          "semantic_sha256": "a0f28a879c4a603259f4013e9603653878e9d96445c485eb0e25b0554155e696"
+        },
+        "alignment": {
+          "rows": 2354,
+          "semantic_sha256": "ccee2315bf81f2e227b6ca98ec8b2a391c7515a5aa85f66ad467c572a867f129"
+        }
+      },
+      "graph_time_s": 2.3168402000010246,
+      "nodes": 52694,
+      "arcs": 108517,
+      "elapsed_s": 9.548243900004309
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000020",
+      "source": {
+        "track": {
+          "sha256": "0cca440851fd97dfc9d555605e3cfbafea4a8bf25ab8b78a68e7c18ce5f2fc7d",
+          "nonempty_records": 2353,
+          "loaded_rows": 2353,
+          "size_bytes": 76542
+        },
+        "nodes": {
+          "sha256": "84a3cac1d22756c5b62670e606a908a43121a47dc766f42bc6d8eededa2e47a2",
+          "nonempty_records": 2739,
+          "loaded_rows": 2739,
+          "size_bytes": 54780
+        },
+        "arcs": {
+          "sha256": "1c3da03f738f04e77d60e603b98752ad1db65176a25477d248f5d8165e56d18c",
+          "nonempty_records": 5958,
+          "loaded_rows": 5958,
+          "size_bytes": 54360
+        },
+        "route": {
+          "sha256": "d8645f39d08e86460ebe2457ff4b332b67f30cd2c8d8aec00f4909900e03861f",
+          "nonempty_records": 142,
+          "loaded_rows": 142,
+          "size_bytes": 664
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2353,
+          "semantic_sha256": "9467d7877ed63924c15a488854406ccb93f210426bf91f062043ecd2fb5b4664"
+        },
+        "candidates": {
+          "rows": 10070,
+          "semantic_sha256": "1963ea717535214587a8d73ec67bf8a41fe22dff418a7cbb7393fa0282543f3a"
+        },
+        "alignment": {
+          "rows": 2353,
+          "semantic_sha256": "eb25f12293ac9cdc235ba3164af25bbb4a88da40e90b646f122f6f688f52b098"
+        }
+      },
+      "graph_time_s": 0.055786700002499856,
+      "nodes": 2739,
+      "arcs": 5958,
+      "elapsed_s": 2.60798220000288
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000021",
+      "source": {
+        "track": {
+          "sha256": "76100a83a65a418c1e3b9a4705ad70d6af82a4ccf2fcb5cbf363280f99d6c50b",
+          "nonempty_records": 15783,
+          "loaded_rows": 15783,
+          "size_bytes": 544091
+        },
+        "nodes": {
+          "sha256": "3b0fd49276bfed5882833f104ecef0acead12c0ea4d1985e0df468da233ef825",
+          "nonempty_records": 732,
+          "loaded_rows": 732,
+          "size_bytes": 15372
+        },
+        "arcs": {
+          "sha256": "959ec87c68b199a23791a8c23c270af90e07f843a47eef4a74d4b2bf7afd661e",
+          "nonempty_records": 1510,
+          "loaded_rows": 1510,
+          "size_bytes": 11638
+        },
+        "route": {
+          "sha256": "307928ef4d8b5a9bfde967678e666cb7a7ed70e75f53dd297e42e62104006a68",
+          "nonempty_records": 277,
+          "loaded_rows": 277,
+          "size_bytes": 1112
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 15783,
+          "semantic_sha256": "2cbeae865887dd8c64e23c8d66c44d2e2a3852014cdcf4c3c57d754c442ea37b"
+        },
+        "candidates": {
+          "rows": 66544,
+          "semantic_sha256": "d57fd6fadae6115d09b328a072a63df5962a812b6525cb7cd31cc33655b1a16e"
+        },
+        "alignment": {
+          "rows": 15783,
+          "semantic_sha256": "a61522dc7107ea3af8ff81a85e845402ab63423f5145a88995d4d4806bd6a24f"
+        }
+      },
+      "graph_time_s": 0.04497599999012891,
+      "nodes": 732,
+      "arcs": 1510,
+      "elapsed_s": 16.896012099998188
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000022",
+      "source": {
+        "track": {
+          "sha256": "e73d68afddccf1688194a809eb0141ce23eaa5f579f9a6fb4452d2c814a3dc7b",
+          "nonempty_records": 474,
+          "loaded_rows": 474,
+          "size_bytes": 15283
+        },
+        "nodes": {
+          "sha256": "19cdaed307d3cc7fb1929a8203e7f4e09d7d5a73657b39de7f9337f9bf25b946",
+          "nonempty_records": 9607,
+          "loaded_rows": 9607,
+          "size_bytes": 192140
+        },
+        "arcs": {
+          "sha256": "94736691f5cd077dd58a0386347ae52269021a5045160506295684f8ca89376a",
+          "nonempty_records": 18982,
+          "loaded_rows": 18982,
+          "size_bytes": 185655
+        },
+        "route": {
+          "sha256": "012a86fad4d97429a4cc2c6e433dd86e5920c35132199b94439da33b042b3b33",
+          "nonempty_records": 376,
+          "loaded_rows": 376,
+          "size_bytes": 1961
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 474,
+          "semantic_sha256": "34c719a204fb7092f8bf2c827e0ea02936c07967f23a6e112d4845a8dad86efc"
+        },
+        "candidates": {
+          "rows": 3680,
+          "semantic_sha256": "3b09bbf1b04b4d8f9edb513be2e7bde71df5b68a024477db0c59ca0e4fcdc32c"
+        },
+        "alignment": {
+          "rows": 474,
+          "semantic_sha256": "06178d76a9e98a4b0fca57e7f560a1721d2944c331863c5e8fb07f3d8a1f8661"
+        }
+      },
+      "graph_time_s": 0.18463899999915157,
+      "nodes": 9607,
+      "arcs": 18982,
+      "elapsed_s": 0.8795781000080751
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000024",
+      "source": {
+        "track": {
+          "sha256": "09a8d6647c02d94cd608d89fd4eb9aa2cdda9f7ec79f60a8df302091e1dd28e2",
+          "nonempty_records": 801,
+          "loaded_rows": 801,
+          "size_bytes": 25266
+        },
+        "nodes": {
+          "sha256": "36baa7efd46d16e05b2a319c0034a371f6781f5b3a940918ed02831c0d01c250",
+          "nonempty_records": 25782,
+          "loaded_rows": 25782,
+          "size_bytes": 489858
+        },
+        "arcs": {
+          "sha256": "951b17be1b3903206ea082407892055074d2186ffd2d36855674f5b79a8c62e2",
+          "nonempty_records": 51609,
+          "loaded_rows": 51609,
+          "size_bytes": 572579
+        },
+        "route": {
+          "sha256": "09ad4c4b2ab74f2974de5df06ea12e4b873a38bfaca57adcd0259db3365b4125",
+          "nonempty_records": 249,
+          "loaded_rows": 249,
+          "size_bytes": 1278
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 801,
+          "semantic_sha256": "1f798f13477f66f3b7c6cc5e9cc2175c5c6ff5076af455b718953cb6adb874d1"
+        },
+        "candidates": {
+          "rows": 5822,
+          "semantic_sha256": "b9261444eb022d47c56cb6efa5ee08c02c8e2a86459c59e9a2b2eaeca853512c"
+        },
+        "alignment": {
+          "rows": 801,
+          "semantic_sha256": "a13ff0ddba0023fae0e0f90684cfe0e9df1f33651ff810452b460f693f8d020d"
+        }
+      },
+      "graph_time_s": 0.4249069000070449,
+      "nodes": 25782,
+      "arcs": 51609,
+      "elapsed_s": 1.4783623999974225
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000025",
+      "source": {
+        "track": {
+          "sha256": "0b73fe4a8ce690219b21d0eb570cd01ec6519b14d29cfae522204a0103809038",
+          "nonempty_records": 1179,
+          "loaded_rows": 1179,
+          "size_bytes": 40421
+        },
+        "nodes": {
+          "sha256": "44fb6cae2eb758fe9dd3874a2a551c15c5774b8b255c1209a618581d17fa672d",
+          "nonempty_records": 38035,
+          "loaded_rows": 38035,
+          "size_bytes": 836770
+        },
+        "arcs": {
+          "sha256": "c080b31e853706d39f4fe20aebef2b71c5cc085c32377997a924e349ebc9c519",
+          "nonempty_records": 85639,
+          "loaded_rows": 85639,
+          "size_bytes": 981332
+        },
+        "route": {
+          "sha256": "7ec2d0d3818257754cca649343259702ad4fe56d7e8955deb32fd9b8ebf0a6fd",
+          "nonempty_records": 283,
+          "loaded_rows": 283,
+          "size_bytes": 1608
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1179,
+          "semantic_sha256": "22aa0d99ec52dc4104679f2d6baec57c2c634c0f1ed9cd9fd80210e869125986"
+        },
+        "candidates": {
+          "rows": 9130,
+          "semantic_sha256": "ed459df18678d57dfee92ed1c6edc6412c2bd79b3e812800a1fdc6ccf60ed08d"
+        },
+        "alignment": {
+          "rows": 1179,
+          "semantic_sha256": "e81ae865e284dd587e74d53e57a8ff70410958ba93cf1f2eb4a342ac50403dbd"
+        }
+      },
+      "graph_time_s": 0.7239172999979928,
+      "nodes": 38035,
+      "arcs": 85639,
+      "elapsed_s": 2.21449539999594
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000026",
+      "source": {
+        "track": {
+          "sha256": "3a183719e7252d0b1e9c567ae4cfab19e029241dddda69bbd7088820fcfbfdd4",
+          "nonempty_records": 361,
+          "loaded_rows": 361,
+          "size_bytes": 11892
+        },
+        "nodes": {
+          "sha256": "9f7679398030f094f851e9b652279ba1c99f4aff837735c00bea242dd95fc247",
+          "nonempty_records": 2580,
+          "loaded_rows": 2580,
+          "size_bytes": 54180
+        },
+        "arcs": {
+          "sha256": "fe4c753404d6da99db8d9c69d6c99dc25a7a3db59b2e92fc17c29735acdf6894",
+          "nonempty_records": 5043,
+          "loaded_rows": 5043,
+          "size_bytes": 46174
+        },
+        "route": {
+          "sha256": "c3b7ac0425cbd44e13873f604a018f6684a127526277c6266e494960334d15a8",
+          "nonempty_records": 197,
+          "loaded_rows": 197,
+          "size_bytes": 926
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 361,
+          "semantic_sha256": "0c47e84bcf22047c3659757e51176fdc4e25729700fce486f3e7eb952347671a"
+        },
+        "candidates": {
+          "rows": 2882,
+          "semantic_sha256": "27d7edafb8064853f81c8eda4d62b9dd030859db1ecce5aecec6f4ca1e17a3c7"
+        },
+        "alignment": {
+          "rows": 361,
+          "semantic_sha256": "282d29cf5d2f27ddb3d6a1b452b916aa3bc8d30bb872849da6fbc43375d9bd29"
+        }
+      },
+      "graph_time_s": 0.04620270000305027,
+      "nodes": 2580,
+      "arcs": 5043,
+      "elapsed_s": 0.5222703000035835
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000027",
+      "source": {
+        "track": {
+          "sha256": "2f8dca994595f3d1b2c53e4de7ad201e5dc8b5a7ab2355f661b00dc348116db9",
+          "nonempty_records": 694,
+          "loaded_rows": 694,
+          "size_bytes": 22100
+        },
+        "nodes": {
+          "sha256": "0784790cef9c86ccea6f797daaeec93ea5165082eefdb6b643ab60eaa63a52b8",
+          "nonempty_records": 2756,
+          "loaded_rows": 2756,
+          "size_bytes": 55120
+        },
+        "arcs": {
+          "sha256": "d40964dd41dabf7b22173928073858a586515bb08e0eb00e37dfc874eacfc99d",
+          "nonempty_records": 5588,
+          "loaded_rows": 5588,
+          "size_bytes": 51182
+        },
+        "route": {
+          "sha256": "dcf148dafebf594cf7a30ba9935e93f6dd818445657b92522892f490db405616",
+          "nonempty_records": 138,
+          "loaded_rows": 138,
+          "size_bytes": 567
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 694,
+          "semantic_sha256": "7969727532aab5ac702e19c1535330278172f252f96e21240b88c072a3073de5"
+        },
+        "candidates": {
+          "rows": 5000,
+          "semantic_sha256": "e80455c896e6d92e5cbdbfd6053ce33bc7f81674029ad4611e0ee9bd55c4a0af"
+        },
+        "alignment": {
+          "rows": 694,
+          "semantic_sha256": "8e2e98f8dd131731abb2caf083e362a8e06bdb7d76e388f1969fd11ae31cbce6"
+        }
+      },
+      "graph_time_s": 0.04886160000751261,
+      "nodes": 2756,
+      "arcs": 5588,
+      "elapsed_s": 0.9441476999927545
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000028",
+      "source": {
+        "track": {
+          "sha256": "0cc3ba7b993b595efa75664138191ea0db860ed0a68ac7b9b02f1e8275b366e3",
+          "nonempty_records": 3565,
+          "loaded_rows": 3565,
+          "size_bytes": 116747
+        },
+        "nodes": {
+          "sha256": "b8f3b4ce24cbbe621f63c77ac4873629fce94c5e318c7cfeec79c24ff4b5faa6",
+          "nonempty_records": 60628,
+          "loaded_rows": 60628,
+          "size_bytes": 1212560
+        },
+        "arcs": {
+          "sha256": "d9dfb36a4cad3ae08b81461f4ff01e0ad8fd3a7b9117f374cc677aad2dd18eeb",
+          "nonempty_records": 127216,
+          "loaded_rows": 127216,
+          "size_bytes": 1481664
+        },
+        "route": {
+          "sha256": "9f6a3c6edd43f38b586a24631a573f47475464d2ac6c0cba974d5440c5c68e77",
+          "nonempty_records": 618,
+          "loaded_rows": 618,
+          "size_bytes": 3491
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3565,
+          "semantic_sha256": "d011244f27ddb2ff009a8e01f1aba5c448d433f3da761762dc1942790bfeb2b2"
+        },
+        "candidates": {
+          "rows": 22434,
+          "semantic_sha256": "67cd86235c50e65fc85da3ca2460a4a92090176d0410e2c188bc1b8c0b2bda78"
+        },
+        "alignment": {
+          "rows": 3565,
+          "semantic_sha256": "d1c45415a0af6b25e526d6f0f9cd4948c0252910459e1fd0d892fd863d72e9d2"
+        }
+      },
+      "graph_time_s": 1.1962285000045085,
+      "nodes": 60628,
+      "arcs": 127216,
+      "elapsed_s": 5.26262080000015
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000029",
+      "source": {
+        "track": {
+          "sha256": "2d258348932b2dd6abc32d17eec4088f6bf6385de28a633f5dd126f3ea640c39",
+          "nonempty_records": 733,
+          "loaded_rows": 733,
+          "size_bytes": 23348
+        },
+        "nodes": {
+          "sha256": "8e9526d50b2f700cc5573cf873f48d7507c912ba6abd8aed722ad58c179b9a1a",
+          "nonempty_records": 10825,
+          "loaded_rows": 10825,
+          "size_bytes": 216500
+        },
+        "arcs": {
+          "sha256": "6de9616a19c7ee79fd029a7713e920a4e0627a7392de1cce00bdd6881f5d5aea",
+          "nonempty_records": 20868,
+          "loaded_rows": 20868,
+          "size_bytes": 207622
+        },
+        "route": {
+          "sha256": "135d452d7da16d67ef789f5025cf55e76c76df7015d41adcd8781f638767340b",
+          "nonempty_records": 204,
+          "loaded_rows": 204,
+          "size_bytes": 1027
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 733,
+          "semantic_sha256": "8f43909ef92567a18132375004620f6d3ffee25a39fda161eed629979389edae"
+        },
+        "candidates": {
+          "rows": 5769,
+          "semantic_sha256": "87db5a27a0c88ae3a45d4aff350c3f9976d614309f735cf86a7907623d28a8b6"
+        },
+        "alignment": {
+          "rows": 733,
+          "semantic_sha256": "adffaa47936e2a038dbdb3087463d2322b08e0144ac1f7937a5a9ac4e7313f7e"
+        }
+      },
+      "graph_time_s": 0.1776774000027217,
+      "nodes": 10825,
+      "arcs": 20868,
+      "elapsed_s": 1.1424881999992067
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000031",
+      "source": {
+        "track": {
+          "sha256": "98ee0fb4ddd7416c7a62a4fbdbe3a7b14474075af266c268e5b9e676b521d12a",
+          "nonempty_records": 4245,
+          "loaded_rows": 4245,
+          "size_bytes": 138978
+        },
+        "nodes": {
+          "sha256": "5e6f9fd74f261f00c85653515ec434f20bdc77b6d6ea9debaafea5b0dc1d9956",
+          "nonempty_records": 59059,
+          "loaded_rows": 59059,
+          "size_bytes": 1181180
+        },
+        "arcs": {
+          "sha256": "16497e39bba253a5e3bdcdb1ae417aa81ffdb6576a7004149fb929ca78c42a1e",
+          "nonempty_records": 125831,
+          "loaded_rows": 125831,
+          "size_bytes": 1464496
+        },
+        "route": {
+          "sha256": "e5c216d53f8ff22cd974eeeac28c0afecb32b90fb1621cd051c488214db0bfd8",
+          "nonempty_records": 432,
+          "loaded_rows": 432,
+          "size_bytes": 2507
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 4245,
+          "semantic_sha256": "d7a574aff816b835f5f9a647e5989e0a995c741638ecc18c186b79e8b568efd8"
+        },
+        "candidates": {
+          "rows": 28522,
+          "semantic_sha256": "a65bba36060d856ddf4456c1be4424482ce114e2718321735033bd750d468d05"
+        },
+        "alignment": {
+          "rows": 4245,
+          "semantic_sha256": "e72cfd52452ede7e823f911f931ef136263b4b014e4c8219885809e355791f0e"
+        }
+      },
+      "graph_time_s": 1.0935966999968514,
+      "nodes": 59059,
+      "arcs": 125831,
+      "elapsed_s": 7.060682799987262
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000032",
+      "source": {
+        "track": {
+          "sha256": "d2a5490ae46daba64a96f576d11ac9bb96ae23c67c29459847f2bb0243241fb0",
+          "nonempty_records": 2464,
+          "loaded_rows": 2464,
+          "size_bytes": 80433
+        },
+        "nodes": {
+          "sha256": "f6a6a61c42bf86a79619dbcf040f6575195488691cb04139e7c10724fa0141e0",
+          "nonempty_records": 124540,
+          "loaded_rows": 124540,
+          "size_bytes": 2490800
+        },
+        "arcs": {
+          "sha256": "0631b69d42d89f49dc8e74fde4724c18820fa978265c98a581268ef2c1c99405",
+          "nonempty_records": 259437,
+          "loaded_rows": 259437,
+          "size_bytes": 3171304
+        },
+        "route": {
+          "sha256": "312e0ed81c47565f042e46d54d7e7e29f170799b50b796a7e16bdbcd03b7ceea",
+          "nonempty_records": 819,
+          "loaded_rows": 819,
+          "size_bytes": 4665
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2464,
+          "semantic_sha256": "f7c5612fb70831bb029b73c73e314afe3b4df20ec2175300fdacd9c3d11ba962"
+        },
+        "candidates": {
+          "rows": 16307,
+          "semantic_sha256": "1fe3107d185e48e24f7dcdcaafd40af50b5e50608c321ce4fd5be8e08d6c2da2"
+        },
+        "alignment": {
+          "rows": 2464,
+          "semantic_sha256": "e2086150f3da9afe50c682b98ad862af97816a2a317121208e1b2809a3e376de"
+        }
+      },
+      "graph_time_s": 5.0515930999972625,
+      "nodes": 124540,
+      "arcs": 259437,
+      "elapsed_s": 12.681792200004566
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000033",
+      "source": {
+        "track": {
+          "sha256": "b5119b9a1dc0a2f2cf83d91d495645c3ac9462c26977c33b348eed66dd1c2c89",
+          "nonempty_records": 5844,
+          "loaded_rows": 5844,
+          "size_bytes": 191805
+        },
+        "nodes": {
+          "sha256": "4fac88efcdc559d7c397eb5583773b78f2d8c85ca1bbfb192bfd67f9b463f792",
+          "nonempty_records": 3340,
+          "loaded_rows": 3340,
+          "size_bytes": 66800
+        },
+        "arcs": {
+          "sha256": "2de605501003c17624c48a93e1ae4be76503335288a2e2db1f55c1750f80855e",
+          "nonempty_records": 6360,
+          "loaded_rows": 6360,
+          "size_bytes": 59740
+        },
+        "route": {
+          "sha256": "128ede841ef8b0036ad1f3d16e544c5f6dc10ddfe061c41def46254fbb76d7f8",
+          "nonempty_records": 169,
+          "loaded_rows": 169,
+          "size_bytes": 818
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 5844,
+          "semantic_sha256": "9abe0d64b225de0c3f1fa2fc2a06d79be3c33a2200fb4ebbf5a02ba4f3e19f06"
+        },
+        "candidates": {
+          "rows": 46618,
+          "semantic_sha256": "02134de00c568e7abc0b36b0160801ef6cbf4a3582130b736ecd85213f8056a8"
+        },
+        "alignment": {
+          "rows": 5844,
+          "semantic_sha256": "58e8ab2a4451ba6ec40a2148c3f32fc2b62ffaf23c3d2ce7546d09662f2ca739"
+        }
+      },
+      "graph_time_s": 0.11810320000222418,
+      "nodes": 3340,
+      "arcs": 6360,
+      "elapsed_s": 15.869065199993202
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000034",
+      "source": {
+        "track": {
+          "sha256": "05296a2874e25e8fa4aa3f6a7a8764c573f0d6735e0db86d36cd00f05cf2650c",
+          "nonempty_records": 3614,
+          "loaded_rows": 3614,
+          "size_bytes": 118210
+        },
+        "nodes": {
+          "sha256": "ce36e88323d0bf30989813fa471da470b3dc40655bdd281a588621480727c9bd",
+          "nonempty_records": 19597,
+          "loaded_rows": 19597,
+          "size_bytes": 391940
+        },
+        "arcs": {
+          "sha256": "dfafb95125beffe71e011c30e921deed2b60ecd03e336be3bedeafe145448dd5",
+          "nonempty_records": 40971,
+          "loaded_rows": 40971,
+          "size_bytes": 444807
+        },
+        "route": {
+          "sha256": "e3abc035249ad6febfdaaf39b4173ceb458f4c792bff03c81f0e1f3352798256",
+          "nonempty_records": 454,
+          "loaded_rows": 454,
+          "size_bytes": 2413
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3614,
+          "semantic_sha256": "056381012b93a7e833775840aa0a40dc5c8d1edae1f3dfcefd14adaa4be5e308"
+        },
+        "candidates": {
+          "rows": 25295,
+          "semantic_sha256": "c54a1b28b4e07f1bd062572ad3905ca91e3422bcbfae82469808d4a392ac63ab"
+        },
+        "alignment": {
+          "rows": 3614,
+          "semantic_sha256": "c25ba3d99214f6ca6642b280f0ed0910aed89e319dd00877ef14e297654a88e2"
+        }
+      },
+      "graph_time_s": 0.767609899994568,
+      "nodes": 19597,
+      "arcs": 40971,
+      "elapsed_s": 7.999251799992635
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000035",
+      "source": {
+        "track": {
+          "sha256": "06acf917ba5e1713774b3986072e15e93af971401e4034dd96c0fc5b8fe89489",
+          "nonempty_records": 1643,
+          "loaded_rows": 1643,
+          "size_bytes": 53112
+        },
+        "nodes": {
+          "sha256": "8528cd4204fa2a87bfd6d1997895fbdd34c92e2a4e8dd9c846d3543e556eca80",
+          "nonempty_records": 21126,
+          "loaded_rows": 21126,
+          "size_bytes": 422520
+        },
+        "arcs": {
+          "sha256": "8ed87a1431a263fa9d8abe4a1a20f2010df3ba953ccd24a119efd21de0e7aaa7",
+          "nonempty_records": 35212,
+          "loaded_rows": 35212,
+          "size_bytes": 386180
+        },
+        "route": {
+          "sha256": "6729cfa54967b4684e4163a9650c755c6a25d334c49f1c6be5ac7384ed6c57a2",
+          "nonempty_records": 403,
+          "loaded_rows": 403,
+          "size_bytes": 2196
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1643,
+          "semantic_sha256": "7816e57ae6dbd2f0816a33fafd3526ac1fb0eeea50706ac5cb4ee945e84bfa6d"
+        },
+        "candidates": {
+          "rows": 13021,
+          "semantic_sha256": "9d49e4e358044055ef8fa5d8ca57545eb55e548a9066dd33ecb35e068ee8cda5"
+        },
+        "alignment": {
+          "rows": 1643,
+          "semantic_sha256": "82d3b5369f67e8188e0b7260096f002d679f8a0336ecea82a55ba8870b63726b"
+        }
+      },
+      "graph_time_s": 0.4130513999989489,
+      "nodes": 21126,
+      "arcs": 35212,
+      "elapsed_s": 2.501605199999176
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000036",
+      "source": {
+        "track": {
+          "sha256": "93fab071a6970121a4381324ec6ca03bd1a45d62293f75d64384f72d48cd2f3a",
+          "nonempty_records": 1368,
+          "loaded_rows": 1368,
+          "size_bytes": 44037
+        },
+        "nodes": {
+          "sha256": "e2bf460d889f9c7a7df291d8f2123d925bfe816be002bd39481e6cc46854273c",
+          "nonempty_records": 4528,
+          "loaded_rows": 4528,
+          "size_bytes": 90560
+        },
+        "arcs": {
+          "sha256": "d33560b83611c0b7210664a390c5d7d3cfbc3e693b74759f25d6f3cfb5ab6e5d",
+          "nonempty_records": 9619,
+          "loaded_rows": 9619,
+          "size_bytes": 91049
+        },
+        "route": {
+          "sha256": "926760b9276a91a7da67922d9ec129444714ee3c99b2b521c9ce5eb00b1e2909",
+          "nonempty_records": 156,
+          "loaded_rows": 156,
+          "size_bytes": 742
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1368,
+          "semantic_sha256": "57ea37c7c7a69c1f2d70c7eaa9561abaea445eff40c33283b30b70492932400e"
+        },
+        "candidates": {
+          "rows": 10480,
+          "semantic_sha256": "fd8efa3abe012cbb5d7c993e8a80ecc735b19e0393d142589050df254f0b6eb9"
+        },
+        "alignment": {
+          "rows": 1368,
+          "semantic_sha256": "fdca4a65b2c7aab5acb686e8aa655826598972a7bc91e4bcbfa409a3e61d50bf"
+        }
+      },
+      "graph_time_s": 0.07436430000234395,
+      "nodes": 4528,
+      "arcs": 9619,
+      "elapsed_s": 1.7763148000085494
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000037",
+      "source": {
+        "track": {
+          "sha256": "e1ecc072483f36d0fc6fb92698f36e9debaeb647691db7b3f49662a062ceedbc",
+          "nonempty_records": 677,
+          "loaded_rows": 677,
+          "size_bytes": 22263
+        },
+        "nodes": {
+          "sha256": "39d5bc51d61559f0e86095723852643d88bcf95b291c30e84c2afdfb8029316c",
+          "nonempty_records": 9472,
+          "loaded_rows": 9472,
+          "size_bytes": 198912
+        },
+        "arcs": {
+          "sha256": "5457a977196c89af9f548523e03c5ab95ef03b596603a595a2cea8181c3e233b",
+          "nonempty_records": 21744,
+          "loaded_rows": 21744,
+          "size_bytes": 212665
+        },
+        "route": {
+          "sha256": "110a5b986847e7e4a3504f4dc4ffaec1deb2bea393926c3d49220f0e9f4d4b34",
+          "nonempty_records": 163,
+          "loaded_rows": 163,
+          "size_bytes": 834
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 677,
+          "semantic_sha256": "f91ea984b737f668f7262fd760fab9440517d53fc8b6d8f396687b3912a83d6f"
+        },
+        "candidates": {
+          "rows": 5414,
+          "semantic_sha256": "dbf25f9d8e546d863f5f13c7c5e8589a0c3a4df124b5d95a805dc457d22864be"
+        },
+        "alignment": {
+          "rows": 677,
+          "semantic_sha256": "89ef524879b86fd76a6692255a3ee57d70a2ccd86cab75bdc0930c7ad317177f"
+        }
+      },
+      "graph_time_s": 0.19106979999924079,
+      "nodes": 9472,
+      "arcs": 21744,
+      "elapsed_s": 1.1722885000053793
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000038",
+      "source": {
+        "track": {
+          "sha256": "df4fbce3326af8cd357ad3810c4b0563d20047eb2e32e7e63f8a0f1d0c10ac9c",
+          "nonempty_records": 1287,
+          "loaded_rows": 1287,
+          "size_bytes": 41486
+        },
+        "nodes": {
+          "sha256": "53d4d74d0a030f54f3c37b8fceecd5eb16c6ee03deffbbb8c1f8fda3c559b13d",
+          "nonempty_records": 21046,
+          "loaded_rows": 21046,
+          "size_bytes": 420920
+        },
+        "arcs": {
+          "sha256": "076045348b89bda5236ab9af6b770a1ac0bb4bb79469c46ca1beb1b4b007a292",
+          "nonempty_records": 42026,
+          "loaded_rows": 42026,
+          "size_bytes": 458962
+        },
+        "route": {
+          "sha256": "8da70fb4bb6a96fe8e134b1c812deaa0e1dcea736a875f03aa8dba9aaea0f5a5",
+          "nonempty_records": 221,
+          "loaded_rows": 221,
+          "size_bytes": 1189
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1287,
+          "semantic_sha256": "2f376bb7ace3e9f40c4bb862e45e652114432bfca041a72f6f1459e32f902fd1"
+        },
+        "candidates": {
+          "rows": 10260,
+          "semantic_sha256": "1cb4abe0beeba920cfc5caa6844bb51d27ee95df4f682beee148ac362e5bd336"
+        },
+        "alignment": {
+          "rows": 1287,
+          "semantic_sha256": "2ea4c9e4413777b875729b06af6e92ef1d66061534adeaf5bb0bf5de4db640f2"
+        }
+      },
+      "graph_time_s": 0.3942361999943387,
+      "nodes": 21046,
+      "arcs": 42026,
+      "elapsed_s": 1.9448321999952896
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000039",
+      "source": {
+        "track": {
+          "sha256": "7f06878c75e21bef6cb18d74e30c2794a5cd24a8d8236990be275f9954513ffc",
+          "nonempty_records": 363,
+          "loaded_rows": 363,
+          "size_bytes": 11566
+        },
+        "nodes": {
+          "sha256": "d91bdf095901c11c8eea04cd002fad1bb5581ddb13da6d6dbe48eb736b2bb1e4",
+          "nonempty_records": 1185,
+          "loaded_rows": 1185,
+          "size_bytes": 23700
+        },
+        "arcs": {
+          "sha256": "b86958eedc70f7de6e43437a16c015612e095dc56b3b951249449cb472f9666b",
+          "nonempty_records": 2388,
+          "loaded_rows": 2388,
+          "size_bytes": 19384
+        },
+        "route": {
+          "sha256": "07ebc5581deef7e0f79866510c04ed4070f1a2c5b7506df7dc065a9e8d4ff9e4",
+          "nonempty_records": 161,
+          "loaded_rows": 161,
+          "size_bytes": 744
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 363,
+          "semantic_sha256": "58ca8ca07623796535a2bd2d5b8dd6e211ae91793051aa990d25719d44b4dca6"
+        },
+        "candidates": {
+          "rows": 2688,
+          "semantic_sha256": "a4091937c09e227f3a4f034ee29478b43312ca1cba0cad4ea021783f90309c7d"
+        },
+        "alignment": {
+          "rows": 363,
+          "semantic_sha256": "84fad7a9451d413a3a2c9cfebbf77e9ec21b4fcb76024966c3159cd99373685b"
+        }
+      },
+      "graph_time_s": 0.025808299993514083,
+      "nodes": 1185,
+      "arcs": 2388,
+      "elapsed_s": 0.4638802000117721
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000041",
+      "source": {
+        "track": {
+          "sha256": "80b0a7145c9db7608449f3311b6bd05fdaae845db9ec7489a882fed3b57a4f43",
+          "nonempty_records": 1019,
+          "loaded_rows": 1019,
+          "size_bytes": 32621
+        },
+        "nodes": {
+          "sha256": "b021bb441cad8273b983200e4679e9884552997ba7bf13e62ae286c88084b26d",
+          "nonempty_records": 7837,
+          "loaded_rows": 7837,
+          "size_bytes": 156740
+        },
+        "arcs": {
+          "sha256": "a6347593ed05d1a6ebc2eca8af3f67ebd6d02b7ae5c27db930c3a1743053aa17",
+          "nonempty_records": 14317,
+          "loaded_rows": 14317,
+          "size_bytes": 139754
+        },
+        "route": {
+          "sha256": "eadcf6dae53fa3e86f315e5f4eaed3eab239574c0069d1f1e9a0d719e7625a8c",
+          "nonempty_records": 340,
+          "loaded_rows": 340,
+          "size_bytes": 1724
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1019,
+          "semantic_sha256": "9d789868dd853213de23eb75fe0853cd2e5aa476a85c0e6db20a598b63d542fb"
+        },
+        "candidates": {
+          "rows": 7727,
+          "semantic_sha256": "d1f3a1d2c5a4dc311b0330275990d802ff90769e664a7fe79dbfe6e8c6560fec"
+        },
+        "alignment": {
+          "rows": 1019,
+          "semantic_sha256": "ced0da5d0b6be1ac27314700cd0423fc068521d61565679b2a876360d18e2c2c"
+        }
+      },
+      "graph_time_s": 0.1345246999990195,
+      "nodes": 7837,
+      "arcs": 14317,
+      "elapsed_s": 1.3227573000040138
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000042",
+      "source": {
+        "track": {
+          "sha256": "54ac9042e147bb627e2ce97e2584ea119708ea3138a3e9e144b6de471e3e7e75",
+          "nonempty_records": 7739,
+          "loaded_rows": 7739,
+          "size_bytes": 262519
+        },
+        "nodes": {
+          "sha256": "b2fc57229ca59416bf8d94f2e00a5f00742289daffaa2a0b4aac27e152055bd9",
+          "nonempty_records": 49376,
+          "loaded_rows": 49376,
+          "size_bytes": 1036896
+        },
+        "arcs": {
+          "sha256": "77987d41d9ce01fd4e7e5217c42c3e0e27e0abb2844cb2612809d42bcc3be043",
+          "nonempty_records": 101128,
+          "loaded_rows": 101128,
+          "size_bytes": 1167708
+        },
+        "route": {
+          "sha256": "78d013f4b600dd4190b337f002e9fdabad232658cf7bc56e4390d40cfaac294c",
+          "nonempty_records": 1440,
+          "loaded_rows": 1440,
+          "size_bytes": 7324
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 7739,
+          "semantic_sha256": "5379039e895816b7f1e0371d7b7b07452b415d0b8bd5e19b064f1740d3cb2ac8"
+        },
+        "candidates": {
+          "rows": 58423,
+          "semantic_sha256": "86e9f799a47834ff8b979076cfcd377239e6b7840029176d4ad6e9502d2dd3b4"
+        },
+        "alignment": {
+          "rows": 7739,
+          "semantic_sha256": "5858ebfe751f24e3d265b9f53eeb46cfca3b55cebfcf5900f725a7dfb6c14c1a"
+        }
+      },
+      "graph_time_s": 0.8612350000039442,
+      "nodes": 49376,
+      "arcs": 101128,
+      "elapsed_s": 10.278362099998049
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000043",
+      "source": {
+        "track": {
+          "sha256": "36620079a815074275d699e82c2a2bccd2aea14ff89d34f9df8136eb9af5d60d",
+          "nonempty_records": 2322,
+          "loaded_rows": 2322,
+          "size_bytes": 73197
+        },
+        "nodes": {
+          "sha256": "bd7c305f8845a622918d30a0f36d24ac28186c7c3ba35dc311cd298c193e9f5a",
+          "nonempty_records": 109070,
+          "loaded_rows": 109070,
+          "size_bytes": 2072330
+        },
+        "arcs": {
+          "sha256": "5f923ce7db3dfb51b7e3bb80b0ac1e5a5f8a5ee0e7f04900d1e22dc7ddcc0ed2",
+          "nonempty_records": 215620,
+          "loaded_rows": 215620,
+          "size_bytes": 2576219
+        },
+        "route": {
+          "sha256": "94b470e30e44d95b253427b38fc1df18ec466a8807900a3c6ef14d240d626843",
+          "nonempty_records": 427,
+          "loaded_rows": 427,
+          "size_bytes": 2772
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2322,
+          "semantic_sha256": "a11085060ddcefecabaaafa2c8eb4cbf425b8712b3ebf2f2cc3c47811875c6ea"
+        },
+        "candidates": {
+          "rows": 16745,
+          "semantic_sha256": "713214930c3cfd4fe952a744a6e2d528dce4b4ca996708385a4dcbca17165da3"
+        },
+        "alignment": {
+          "rows": 2322,
+          "semantic_sha256": "f0c29e27eaf21c8c1c16a7e52bb4f90079b05d84ee75be783670ae7185712967"
+        }
+      },
+      "graph_time_s": 1.9540383999992628,
+      "nodes": 109070,
+      "arcs": 215620,
+      "elapsed_s": 5.2067916999949375
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000044",
+      "source": {
+        "track": {
+          "sha256": "90fea6089da1b158a3efdfe079ed88d74d4e931f5c4c1a7ab22c910ef9e1ed5a",
+          "nonempty_records": 546,
+          "loaded_rows": 546,
+          "size_bytes": 17462
+        },
+        "nodes": {
+          "sha256": "7b59baf36aab9f82fe52559291602bc97c6770bb38e41fa0eb78fb171749f9a4",
+          "nonempty_records": 4386,
+          "loaded_rows": 4386,
+          "size_bytes": 87720
+        },
+        "arcs": {
+          "sha256": "1aea025c8831d8d08feccb66dbb689c85884918ed811837c3e34cfe60630d848",
+          "nonempty_records": 9209,
+          "loaded_rows": 9209,
+          "size_bytes": 87229
+        },
+        "route": {
+          "sha256": "508578c0a3f6fa446b7c9ada6ace6bb2a98761f95373219ad5b71deb50b8e6c4",
+          "nonempty_records": 130,
+          "loaded_rows": 130,
+          "size_bytes": 605
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 546,
+          "semantic_sha256": "f1cfb2b3870f86f9b981e56b0531db1ac76bf0fc11c898d48e48a5f3b4f4400f"
+        },
+        "candidates": {
+          "rows": 4312,
+          "semantic_sha256": "3897a79db9a6dca03ee4a1abaeb361f8690705684b6514234bf49e8548147bff"
+        },
+        "alignment": {
+          "rows": 546,
+          "semantic_sha256": "65aeb41f613c90eec1a25a926c55be6c95fd1c918044d859273fc9c71eca3b2e"
+        }
+      },
+      "graph_time_s": 0.08033509999222588,
+      "nodes": 4386,
+      "arcs": 9209,
+      "elapsed_s": 0.7379211000079522
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000045",
+      "source": {
+        "track": {
+          "sha256": "d4941c8d7d4a2f69b508aeb27ce52c018e913c0e6139d1832aa993b291cd2c20",
+          "nonempty_records": 640,
+          "loaded_rows": 640,
+          "size_bytes": 20372
+        },
+        "nodes": {
+          "sha256": "9ade7a4fe5158f44448a1043e266cd24c6392cc3e1ee212499802faebe36fb4f",
+          "nonempty_records": 2034,
+          "loaded_rows": 2034,
+          "size_bytes": 40680
+        },
+        "arcs": {
+          "sha256": "73f500c9d2dae4d961850d4c938d49cf818b1d762c0ef6939658b5996a4abfdb",
+          "nonempty_records": 4335,
+          "loaded_rows": 4335,
+          "size_bytes": 38492
+        },
+        "route": {
+          "sha256": "c3bbde6c18ac928cc08348a11a808fabcfc247604f429efdaae75d560ffc4f0b",
+          "nonempty_records": 59,
+          "loaded_rows": 59,
+          "size_bytes": 270
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 640,
+          "semantic_sha256": "d732ba490688eebf46e9399e0776867579a2227a021e67ce0990ae1caccbb776"
+        },
+        "candidates": {
+          "rows": 3896,
+          "semantic_sha256": "710c17fda190f9dc26dce28e829a2bca06ced743c13e325cbced5dfab86c258f"
+        },
+        "alignment": {
+          "rows": 640,
+          "semantic_sha256": "c587113c7290fbb075f95761af6a6be751e1ded762fa9d4b8c28656ff36466b2"
+        }
+      },
+      "graph_time_s": 0.03801009999006055,
+      "nodes": 2034,
+      "arcs": 4335,
+      "elapsed_s": 0.8085529000090901
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000046",
+      "source": {
+        "track": {
+          "sha256": "f84a97f45dd770bf9f8a6f3255c0a7ad16a05183fc7aa985fdd3a906fc4e31ea",
+          "nonempty_records": 1401,
+          "loaded_rows": 1401,
+          "size_bytes": 44026
+        },
+        "nodes": {
+          "sha256": "9c27ba8f141c92412a2a329c6fd9493df6d0f2429d37a75a6f1fd74f4297db4e",
+          "nonempty_records": 299,
+          "loaded_rows": 299,
+          "size_bytes": 5681
+        },
+        "arcs": {
+          "sha256": "affe0db7303047b1c855dc765da8314e184cce74db442791fcaf5ac70a0913f6",
+          "nonempty_records": 649,
+          "loaded_rows": 649,
+          "size_bytes": 4700
+        },
+        "route": {
+          "sha256": "116db621271a595accbf9004ef65329ee206e3918771e85a971ed73754cac53b",
+          "nonempty_records": 66,
+          "loaded_rows": 66,
+          "size_bytes": 253
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1401,
+          "semantic_sha256": "b49557702d67a2135456bb55da5e98f07e9ed0db148a6869782ec981f9fc96d9"
+        },
+        "candidates": {
+          "rows": 9076,
+          "semantic_sha256": "fa56debcf8737b7725ebd6f9099dd7d153bb2dd22776181d8984b065f4c00b6c"
+        },
+        "alignment": {
+          "rows": 1401,
+          "semantic_sha256": "4c2d89c34020bc8490c8ffdfaa043938b08aa5510723a8e02c8fe2115601477c"
+        }
+      },
+      "graph_time_s": 0.014855500005069189,
+      "nodes": 299,
+      "arcs": 649,
+      "elapsed_s": 1.5219498999940697
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000047",
+      "source": {
+        "track": {
+          "sha256": "d67ad892a71543fc5cd6d652430e6b4df6e8e6d06287fd9139bdfc32568d0272",
+          "nonempty_records": 1272,
+          "loaded_rows": 1272,
+          "size_bytes": 42141
+        },
+        "nodes": {
+          "sha256": "e0835ba21deedd6f3e73f3ca032b83c33cd6941bc5660827baceb11cbbe95815",
+          "nonempty_records": 18388,
+          "loaded_rows": 18388,
+          "size_bytes": 386148
+        },
+        "arcs": {
+          "sha256": "dbfaa3993356661eed8079ea6c5c739341d329b9614c5c64271287b97e1345f2",
+          "nonempty_records": 39747,
+          "loaded_rows": 39747,
+          "size_bytes": 429909
+        },
+        "route": {
+          "sha256": "8fc3ac38bb6b53bb3893c484b66c9ba18974034c6a3660dc6fcb2ee71f26da20",
+          "nonempty_records": 188,
+          "loaded_rows": 188,
+          "size_bytes": 1101
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1272,
+          "semantic_sha256": "da95789ff8bb53f22113af2c9550ea186bc63ebb47e412748c9a19cb9e9e7625"
+        },
+        "candidates": {
+          "rows": 10134,
+          "semantic_sha256": "c844f6aedbc606ccba307d33e5a651864b0dd00f17886a36b50d7bf53fa05d6d"
+        },
+        "alignment": {
+          "rows": 1272,
+          "semantic_sha256": "43f6efad5ef78071dbf96ea12a548b05240a50e09faf302076554db383f462b1"
+        }
+      },
+      "graph_time_s": 0.35397009999724105,
+      "nodes": 18388,
+      "arcs": 39747,
+      "elapsed_s": 2.0200705000024755
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000048",
+      "source": {
+        "track": {
+          "sha256": "ffea1d47ced75e2f0ff15ad7496772261680be77c66e67a3a3a8342983960056",
+          "nonempty_records": 1240,
+          "loaded_rows": 1240,
+          "size_bytes": 39816
+        },
+        "nodes": {
+          "sha256": "55a997ae4a57087ec27f576405014e72206f52deb26d5be5f64cdbf8f146feb2",
+          "nonempty_records": 1308,
+          "loaded_rows": 1308,
+          "size_bytes": 26160
+        },
+        "arcs": {
+          "sha256": "8bc962859883a92d2a13a7088a1d8a6571aa3ed14e0bd58baadfbb18d85d5381",
+          "nonempty_records": 2592,
+          "loaded_rows": 2592,
+          "size_bytes": 21500
+        },
+        "route": {
+          "sha256": "b5a9d60e9152eaae21399b86164be70b707a460bf40d39e869e90e1569e7a71b",
+          "nonempty_records": 149,
+          "loaded_rows": 149,
+          "size_bytes": 619
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1240,
+          "semantic_sha256": "be730be3af5801cfb9c11ef02856c00f335a5f06ce963ada62baa63b239b197f"
+        },
+        "candidates": {
+          "rows": 8922,
+          "semantic_sha256": "3c2da2fba06121434f88990f3768c23738db7e0fdf5adecf4ab8676215aae43f"
+        },
+        "alignment": {
+          "rows": 1240,
+          "semantic_sha256": "f689265609de4079b05cbbeac917aa32a89bbb6b845fcb7b4cff3e8b19738311"
+        }
+      },
+      "graph_time_s": 0.033621200011111796,
+      "nodes": 1308,
+      "arcs": 2592,
+      "elapsed_s": 3.699331900003017
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000050",
+      "source": {
+        "track": {
+          "sha256": "8ecf8af9cdb565f9911289fc16a4b53fc8e67e4b259f38249c42c2d6aa143f16",
+          "nonempty_records": 518,
+          "loaded_rows": 518,
+          "size_bytes": 15950
+        },
+        "nodes": {
+          "sha256": "ec6e3803e0d937795bbe6081cf5da60f4ce72944144bfe88a7cc41f17bd791d3",
+          "nonempty_records": 2206,
+          "loaded_rows": 2206,
+          "size_bytes": 41914
+        },
+        "arcs": {
+          "sha256": "c31d089acc81876371213a9acc5b30ce1a4da60fcbdb400fffe88a81ec7cc300",
+          "nonempty_records": 4576,
+          "loaded_rows": 4576,
+          "size_bytes": 41113
+        },
+        "route": {
+          "sha256": "c62939eb9466eab4030d584f48368e911425edd87508259d26090706070cd61b",
+          "nonempty_records": 94,
+          "loaded_rows": 94,
+          "size_bytes": 445
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 518,
+          "semantic_sha256": "8766c7f887d0566204dac40483dda9a482405c69b7029e1f39104be9ee88c1bd"
+        },
+        "candidates": {
+          "rows": 3894,
+          "semantic_sha256": "dcb67d3e336016613eb19e5ff2d7162e37b90025ca54517c53abb40d23da93fd"
+        },
+        "alignment": {
+          "rows": 518,
+          "semantic_sha256": "244d47aa5c74ec1cc44f2e98dfe7466bb189f16894c5c9949af6962ce90894ef"
+        }
+      },
+      "graph_time_s": 0.11307180000585504,
+      "nodes": 2206,
+      "arcs": 4576,
+      "elapsed_s": 2.0582487000065157
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000051",
+      "source": {
+        "track": {
+          "sha256": "d474452fb0c6c1b6b21cb541ee08c7b793cdb2bbb546102bfac8cc036cb35b9b",
+          "nonempty_records": 984,
+          "loaded_rows": 984,
+          "size_bytes": 31382
+        },
+        "nodes": {
+          "sha256": "24cc3335d4f44c1746a0aa462229b97dbe4074115783c9ee850ab7f6c7c4bcde",
+          "nonempty_records": 4181,
+          "loaded_rows": 4181,
+          "size_bytes": 83620
+        },
+        "arcs": {
+          "sha256": "1d7346c983bd3a1013a9c39d5b281b1c3543c0d6f3aa6e34aaa59139fd0825c9",
+          "nonempty_records": 8494,
+          "loaded_rows": 8494,
+          "size_bytes": 80296
+        },
+        "route": {
+          "sha256": "a45ba03a870f0a8529967d6ae601037ad09a660b29a575645b7bec7b506e7776",
+          "nonempty_records": 299,
+          "loaded_rows": 299,
+          "size_bytes": 1396
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 984,
+          "semantic_sha256": "cdd0306bb51de059cb8bf431447aedc570f82aefa8dfbc5c3a3961a94be63afa"
+        },
+        "candidates": {
+          "rows": 7852,
+          "semantic_sha256": "7940101f9b52dcc56a7b41e7a3b7ade4c6d5879a3d5cddb1402760dca61bf466"
+        },
+        "alignment": {
+          "rows": 984,
+          "semantic_sha256": "f9e3abca673a8b83d74c15da69bdd4d5bdc51a7e3f9825e6d7c3692d0cb563c8"
+        }
+      },
+      "graph_time_s": 0.15189209999516606,
+      "nodes": 4181,
+      "arcs": 8494,
+      "elapsed_s": 2.5564889999950537
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000053",
+      "source": {
+        "track": {
+          "sha256": "2d3b9794f971ab2443b451b97bf19273bebc61c1bcbff3d90ebd2e07b772256c",
+          "nonempty_records": 1304,
+          "loaded_rows": 1304,
+          "size_bytes": 41940
+        },
+        "nodes": {
+          "sha256": "2ef1a6b64e5144575d119577f8053516c35a0cd4e05aa7bd0d5cd2b3935905fd",
+          "nonempty_records": 77905,
+          "loaded_rows": 77905,
+          "size_bytes": 1558100
+        },
+        "arcs": {
+          "sha256": "6d5f525668a09e8c41e2438aa1b1d7d009e97e1412627044cac0b86a0e510bce",
+          "nonempty_records": 148707,
+          "loaded_rows": 148707,
+          "size_bytes": 1742799
+        },
+        "route": {
+          "sha256": "3ecb6ef982578ad729006f36c6976fe1e87792c013ca95a19822035efad4af09",
+          "nonempty_records": 754,
+          "loaded_rows": 754,
+          "size_bytes": 4266
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1304,
+          "semantic_sha256": "2e1aad57c52c83b7b878255671abf398e82e4937e7c25fee88639b6852f3b405"
+        },
+        "candidates": {
+          "rows": 10392,
+          "semantic_sha256": "fe5d95aca603eff5acd0f615437fe7becf92891545756a50180bcffc8954f455"
+        },
+        "alignment": {
+          "rows": 1304,
+          "semantic_sha256": "326c039aa4424c01cb7be5b9fa58bad3916b98675e4a7e001be4af1f5fae09b2"
+        }
+      },
+      "graph_time_s": 1.7827020999975502,
+      "nodes": 77905,
+      "arcs": 148707,
+      "elapsed_s": 3.6025376000034157
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000054",
+      "source": {
+        "track": {
+          "sha256": "3440408b6f14d34bed8df89672317bbe9f40ebb564ee1a3c465c351ded8a2b3b",
+          "nonempty_records": 19313,
+          "loaded_rows": 19313,
+          "size_bytes": 626431
+        },
+        "nodes": {
+          "sha256": "0998a983b81c463c0bcf40dd38126dd1538240198f7cdf01346938a9e580e02a",
+          "nonempty_records": 63822,
+          "loaded_rows": 63822,
+          "size_bytes": 1212618
+        },
+        "arcs": {
+          "sha256": "71cd5f64f399744c22b80d54f143abd9aaf8bc39b42c00ed489dd5b117659065",
+          "nonempty_records": 116916,
+          "loaded_rows": 116916,
+          "size_bytes": 1357489
+        },
+        "route": {
+          "sha256": "b46fae727d18fa10a09df6809527efabedd50f133a31181b8a71040ca8c556ae",
+          "nonempty_records": 422,
+          "loaded_rows": 422,
+          "size_bytes": 2512
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 19313,
+          "semantic_sha256": "c203a4677bbf3a8f86e60c8e2e9830f4422e99cc56b9852cea518585587efd85"
+        },
+        "candidates": {
+          "rows": 72582,
+          "semantic_sha256": "40852e95a8c29f7933077b2afd85f2efca7dc8b177c55c3bd4b44b3dbdc25141"
+        },
+        "alignment": {
+          "rows": 19313,
+          "semantic_sha256": "1dc262c005061a98df32e8631b7717e97283a6e603ab7fe2bb724cd4b263c964"
+        }
+      },
+      "graph_time_s": 1.07989420001104,
+      "nodes": 63822,
+      "arcs": 116916,
+      "elapsed_s": 15.144849499993143
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000055",
+      "source": {
+        "track": {
+          "sha256": "51fae80bb8eca26e544c7721c03d314d6e711b3c6488e92e192731fba3539f6b",
+          "nonempty_records": 2472,
+          "loaded_rows": 2472,
+          "size_bytes": 80469
+        },
+        "nodes": {
+          "sha256": "010ef500a29549b48b886f4d19ca96164b83ec6462c67ca60c1776f6eb048aee",
+          "nonempty_records": 98511,
+          "loaded_rows": 98511,
+          "size_bytes": 1970220
+        },
+        "arcs": {
+          "sha256": "a9fea9f7641416f93d6714485492fbde4861c954878fc65007492a235b85ae70",
+          "nonempty_records": 198961,
+          "loaded_rows": 198961,
+          "size_bytes": 2345205
+        },
+        "route": {
+          "sha256": "bae428960eaafbacccb810337859093e36cdfe179794d53d8b2a93fdbf59fbfe",
+          "nonempty_records": 475,
+          "loaded_rows": 475,
+          "size_bytes": 2633
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2472,
+          "semantic_sha256": "027889fe78364c91951b8917349ae57e48f2316cce8552a486d1e146677dc256"
+        },
+        "candidates": {
+          "rows": 16054,
+          "semantic_sha256": "82c653c06dba1b7aad6431996f6affb8d50173f665223e141ab3242255d945cd"
+        },
+        "alignment": {
+          "rows": 2472,
+          "semantic_sha256": "aed54aa8bec06e6fbfbaa72a5c8ea9e8377648333753c43c28bb03deffe04ceb"
+        }
+      },
+      "graph_time_s": 2.105420799998683,
+      "nodes": 98511,
+      "arcs": 198961,
+      "elapsed_s": 5.854291000010562
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000057",
+      "source": {
+        "track": {
+          "sha256": "5a3859332b78dae3982ca2f5419812cc0b3a6f45736680d69f0380f2bdfa636c",
+          "nonempty_records": 1645,
+          "loaded_rows": 1645,
+          "size_bytes": 53226
+        },
+        "nodes": {
+          "sha256": "66e9e5b8a1e65044b8490fa4bc7c67b0b40b975bfbc86dc6711dce8453c4440f",
+          "nonempty_records": 8929,
+          "loaded_rows": 8929,
+          "size_bytes": 178580
+        },
+        "arcs": {
+          "sha256": "ac2d099bbbc504915f875704502754d12457d9b4769046be9a454ddac754bd62",
+          "nonempty_records": 18777,
+          "loaded_rows": 18777,
+          "size_bytes": 183016
+        },
+        "route": {
+          "sha256": "1207685b2431aceb6a2b6bd40c2937fd117d83a378de510d741810be741da58b",
+          "nonempty_records": 300,
+          "loaded_rows": 300,
+          "size_bytes": 1544
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1645,
+          "semantic_sha256": "7cc2d52a8af20bb6928d0884b41c634a115e87c118674b65ac9b6f062d099aa8"
+        },
+        "candidates": {
+          "rows": 12906,
+          "semantic_sha256": "31f767534ca6e1c058c52c0269984030b2a6ba87f221b27cfc28b3e6946b09b4"
+        },
+        "alignment": {
+          "rows": 1645,
+          "semantic_sha256": "281382146e24d6e81a5279119e35528a223291d29813641206cf82a8dedc91d9"
+        }
+      },
+      "graph_time_s": 0.49130219999642577,
+      "nodes": 8929,
+      "arcs": 18777,
+      "elapsed_s": 5.340454700010014
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000058",
+      "source": {
+        "track": {
+          "sha256": "e7ac27154e96b14fc8e2110d3cbe9724294e6380d4a49a6abd0ed0d549abfb01",
+          "nonempty_records": 599,
+          "loaded_rows": 599,
+          "size_bytes": 18462
+        },
+        "nodes": {
+          "sha256": "71979a479d163803fe574407aa004eba70fe3004576f5a8e24ae8b3161490937",
+          "nonempty_records": 22367,
+          "loaded_rows": 22367,
+          "size_bytes": 424973
+        },
+        "arcs": {
+          "sha256": "b3064ab099617f90707052a84b324f9a62031416802c06a9e5cf660dae6ab3cf",
+          "nonempty_records": 39383,
+          "loaded_rows": 39383,
+          "size_bytes": 432913
+        },
+        "route": {
+          "sha256": "2db898c3b2156733eb878f0700f7ec22279c5138b81c911f8a760a309f92d88f",
+          "nonempty_records": 345,
+          "loaded_rows": 345,
+          "size_bytes": 1960
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 599,
+          "semantic_sha256": "bb42d017b0576af522aa0a0a66a7203fc9c39a22a6bc5f37b6b077e3a1d5a5ef"
+        },
+        "candidates": {
+          "rows": 4787,
+          "semantic_sha256": "20376a9bb0919c2e184e8b220cd32d6bbc5ac17849fd49dd82a553246806c393"
+        },
+        "alignment": {
+          "rows": 599,
+          "semantic_sha256": "b1fc50b3cae8df6ff1b6a42980903fe0d58e913ca45df7d6346b575444bde3c4"
+        }
+      },
+      "graph_time_s": 0.41216110000095796,
+      "nodes": 22367,
+      "arcs": 39383,
+      "elapsed_s": 1.4203313999896636
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000060",
+      "source": {
+        "track": {
+          "sha256": "f4e54b0cd5f58be9f04ea05a5fa7b98802cd38a19bcd7110df9121ac3fed8e1d",
+          "nonempty_records": 854,
+          "loaded_rows": 854,
+          "size_bytes": 27358
+        },
+        "nodes": {
+          "sha256": "d82aa7861c1d630bf67a1fd45b95195cc095f2ef515fb6669e8dad80615db356",
+          "nonempty_records": 15128,
+          "loaded_rows": 15128,
+          "size_bytes": 302560
+        },
+        "arcs": {
+          "sha256": "4be0452a11b646896197474e7f5ab7ef4b7923d22c2afb63abc33c57c88a8c61",
+          "nonempty_records": 30077,
+          "loaded_rows": 30077,
+          "size_bytes": 316381
+        },
+        "route": {
+          "sha256": "247420c8f2f4fca95872ca5e8a32ff2521ce2e96a4a3bc529c8787560d8b6c3a",
+          "nonempty_records": 520,
+          "loaded_rows": 520,
+          "size_bytes": 2817
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 854,
+          "semantic_sha256": "df6a438a98a9546488c3f9add9af76bfebf2c4e631f343a7eab03479a97e83f6"
+        },
+        "candidates": {
+          "rows": 6832,
+          "semantic_sha256": "0d5e4c9dedaa60f8ac58f120df8af96bfc251e23a7a1a7767eeb483e6ea3dd5e"
+        },
+        "alignment": {
+          "rows": 854,
+          "semantic_sha256": "2a48913f5c4d13a01c7c6a56631ed14a01f070c2aa1970e6543a0e79747dcdb0"
+        }
+      },
+      "graph_time_s": 0.2960610000009183,
+      "nodes": 15128,
+      "arcs": 30077,
+      "elapsed_s": 1.376140000007581
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000061",
+      "source": {
+        "track": {
+          "sha256": "6bec6ff4ff51e727f75cd2d4af624aa802ad0b7db9ef018fa66cad93279f4d79",
+          "nonempty_records": 1430,
+          "loaded_rows": 1430,
+          "size_bytes": 44661
+        },
+        "nodes": {
+          "sha256": "502891ac2228962a9ca1d3ab1ab57a3b5970972f32545f4cebb0b0648688f109",
+          "nonempty_records": 4947,
+          "loaded_rows": 4947,
+          "size_bytes": 93993
+        },
+        "arcs": {
+          "sha256": "69e16685279b30569675591ed020ea0479fe38376003e90bf3a324eb24f24a0d",
+          "nonempty_records": 10339,
+          "loaded_rows": 10339,
+          "size_bytes": 98255
+        },
+        "route": {
+          "sha256": "4d0e62985ad5f946c5984e42fe16edb87a006349232b9261e7e2cba7b71aebea",
+          "nonempty_records": 296,
+          "loaded_rows": 296,
+          "size_bytes": 1405
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1430,
+          "semantic_sha256": "8ae5c6c87e27c990367839572f635f8cb6affbf1cff2e35654488691302d2033"
+        },
+        "candidates": {
+          "rows": 11432,
+          "semantic_sha256": "6480639a6c5424f3eb443c2e4905d813e30ad1d9e651a6283c5923e752d8cf15"
+        },
+        "alignment": {
+          "rows": 1430,
+          "semantic_sha256": "181133d14c8549aeb75781b6468585828f0603bdcc399304ba592c041846de0e"
+        }
+      },
+      "graph_time_s": 0.1112827000033576,
+      "nodes": 4947,
+      "arcs": 10339,
+      "elapsed_s": 2.0652597000007518
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000062",
+      "source": {
+        "track": {
+          "sha256": "5762937b27f2df797ca608ce65adf42a0bbfebf82aa15053102c2c94074bc98e",
+          "nonempty_records": 3378,
+          "loaded_rows": 3378,
+          "size_bytes": 110441
+        },
+        "nodes": {
+          "sha256": "1d742b46466d4f332c465995a2a64895720d3482bb913b985cf8df54466faff8",
+          "nonempty_records": 30613,
+          "loaded_rows": 30613,
+          "size_bytes": 612260
+        },
+        "arcs": {
+          "sha256": "39ad7f312aaf4138af0947acc4b2e230c045237a2ce4068c5a17ceca41dd1d26",
+          "nonempty_records": 62836,
+          "loaded_rows": 62836,
+          "size_bytes": 709529
+        },
+        "route": {
+          "sha256": "7ba2be63052c8bff2b41a798c5a7a82e73eeb8b1f76e93d678bd1d820e9c0c73",
+          "nonempty_records": 497,
+          "loaded_rows": 497,
+          "size_bytes": 2539
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3378,
+          "semantic_sha256": "f6e69c971503ad845a2d11887b5e581599f7eb8681a440ae633ac094a354e6b8"
+        },
+        "candidates": {
+          "rows": 25952,
+          "semantic_sha256": "5d02afe93d43a2ffc845755e5aa6af6c1816a432c491593f0234d5e46206f751"
+        },
+        "alignment": {
+          "rows": 3378,
+          "semantic_sha256": "b5da2c3dfc4d714f6a1091b0b6fc82d8589e333eb41df8bde2dce2d047cf8b48"
+        }
+      },
+      "graph_time_s": 0.530394499990507,
+      "nodes": 30613,
+      "arcs": 62836,
+      "elapsed_s": 4.610048299990012
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000063",
+      "source": {
+        "track": {
+          "sha256": "93bf6b53d34e79bbf208cf9069a205b9215f90d9759037798edf7296b16a8ad1",
+          "nonempty_records": 2781,
+          "loaded_rows": 2781,
+          "size_bytes": 90744
+        },
+        "nodes": {
+          "sha256": "8e699ea5f2ca3c7ed1ba7a49cc3061bb44719d05a1485ce5baf8162fa84781ec",
+          "nonempty_records": 2617,
+          "loaded_rows": 2617,
+          "size_bytes": 52340
+        },
+        "arcs": {
+          "sha256": "030d978396b18bcf42918d8586295e576d115c769bb55d28066838225ac8f7d4",
+          "nonempty_records": 5553,
+          "loaded_rows": 5553,
+          "size_bytes": 50518
+        },
+        "route": {
+          "sha256": "5d74612c710106d6ed503ea3d9a7a892e64c2b00fac52648a02d4a7e90ed6e6e",
+          "nonempty_records": 565,
+          "loaded_rows": 565,
+          "size_bytes": 2737
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2781,
+          "semantic_sha256": "8ec4ef19334f23dcb23d4528c2a0995ce9d27e9c10c3820b3838ceb497e38937"
+        },
+        "candidates": {
+          "rows": 20720,
+          "semantic_sha256": "f1ccab86161a88afce90413c262fbadeefae21379c6d39c0d5bc591743ff1255"
+        },
+        "alignment": {
+          "rows": 2781,
+          "semantic_sha256": "9aee2398a539952fc514f903917292eb09c95d53aab774dd2a0d544a01c218d6"
+        }
+      },
+      "graph_time_s": 0.08772700000554323,
+      "nodes": 2617,
+      "arcs": 5553,
+      "elapsed_s": 3.703334999998333
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000064",
+      "source": {
+        "track": {
+          "sha256": "30b68853bac5015a43af712f4995ecb0170f3aa3f0f9e0215b66765ba4afdea6",
+          "nonempty_records": 2093,
+          "loaded_rows": 2093,
+          "size_bytes": 68000
+        },
+        "nodes": {
+          "sha256": "8d26ead9b0258610bd8bc8bac2e245bfd92b1b899b0b1a03046f964e7ef2a768",
+          "nonempty_records": 28258,
+          "loaded_rows": 28258,
+          "size_bytes": 565160
+        },
+        "arcs": {
+          "sha256": "146b1a99021400100886b5d3b6a6b135e2fdc96e475710b5416a9b6a3528cf7e",
+          "nonempty_records": 56986,
+          "loaded_rows": 56986,
+          "size_bytes": 639121
+        },
+        "route": {
+          "sha256": "45df5bac3a3e8b9c73c6ea2e91cb8c683130b9cfa2ece09e4c379cdf9ae9824f",
+          "nonempty_records": 692,
+          "loaded_rows": 692,
+          "size_bytes": 3593
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2093,
+          "semantic_sha256": "f6f037d91aae39256383395576035173dde7d65e95b98374a40153c21ff7f398"
+        },
+        "candidates": {
+          "rows": 14698,
+          "semantic_sha256": "f784633fb6a0ab1374ae9990f1737ace5202202136dd6dd4aa5fd8ee4fa83d13"
+        },
+        "alignment": {
+          "rows": 2093,
+          "semantic_sha256": "71c865b7f20460f59f0e57cd27525e21d9ebf5d74ee17197ac67dba59d8c4b2a"
+        }
+      },
+      "graph_time_s": 0.4465531000023475,
+      "nodes": 28258,
+      "arcs": 56986,
+      "elapsed_s": 2.9559969999972964
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000066",
+      "source": {
+        "track": {
+          "sha256": "827864560b6f9ef256c08687b3cdeac2b9e0dd69bb422a4df6a26af02d3dc90d",
+          "nonempty_records": 4325,
+          "loaded_rows": 4325,
+          "size_bytes": 141618
+        },
+        "nodes": {
+          "sha256": "ac1a616fd9c52ddee61f4955e3aa319e2603f30c03749c149650105e10e92c60",
+          "nonempty_records": 9609,
+          "loaded_rows": 9609,
+          "size_bytes": 192180
+        },
+        "arcs": {
+          "sha256": "cd83e00e9d193b45a113dc76d769a0059460b24c7f5b280071c336aa8423431a",
+          "nonempty_records": 20071,
+          "loaded_rows": 20071,
+          "size_bytes": 196148
+        },
+        "route": {
+          "sha256": "a235521ed0a285e3599d049ea311062a895a8818637b15f37ee4157a71aba1ad",
+          "nonempty_records": 365,
+          "loaded_rows": 365,
+          "size_bytes": 1610
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 4325,
+          "semantic_sha256": "b7cfe62eec2ec7a37aac2ad9f40d38ba8eec24801f07899cdedba65d5fab799b"
+        },
+        "candidates": {
+          "rows": 21095,
+          "semantic_sha256": "cc3b93b5d3128ba9e9448fe326a18d003985cdfce5e79bf2bd70e65993c20e5e"
+        },
+        "alignment": {
+          "rows": 4325,
+          "semantic_sha256": "eeabc3b282a3f5c22bd71a6a6f321d5c39cbf5f46fbaa2074a3722d99b7cdb3e"
+        }
+      },
+      "graph_time_s": 0.17530270000861492,
+      "nodes": 9609,
+      "arcs": 20071,
+      "elapsed_s": 4.490410700003849
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000068",
+      "source": {
+        "track": {
+          "sha256": "ae80ee78c75daac1b1bae09f30f95caa677ba95fcabaa0a73ba308149b906c84",
+          "nonempty_records": 747,
+          "loaded_rows": 747,
+          "size_bytes": 23821
+        },
+        "nodes": {
+          "sha256": "a7f18b507e630c0e4270c963ce6857ec416c2199e0c3f50bc45686931fbfd08d",
+          "nonempty_records": 3537,
+          "loaded_rows": 3537,
+          "size_bytes": 70740
+        },
+        "arcs": {
+          "sha256": "c1b7d7ef681bf444944670c5e91a4ee00a8fa947eec0002e13e65577ec41c292",
+          "nonempty_records": 7058,
+          "loaded_rows": 7058,
+          "size_bytes": 66008
+        },
+        "route": {
+          "sha256": "6e60a977f8347616f30d88a08ff4d19e1786f5bb62241c7f3e71b5691a3a1a9d",
+          "nonempty_records": 240,
+          "loaded_rows": 240,
+          "size_bytes": 1124
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 747,
+          "semantic_sha256": "6faf298d5c3433506699e4385527f78ef496d12c2abcd508a40aaa534fb5693f"
+        },
+        "candidates": {
+          "rows": 5852,
+          "semantic_sha256": "29bb3d92dd1d08ec05d0fb4efa73386b76d1a56b5eb2311ac7c16f76ff857678"
+        },
+        "alignment": {
+          "rows": 747,
+          "semantic_sha256": "aabcc3ed9a76872506af46ff3a7a0abfc37c34941332f1ba9d0c041cc9463d27"
+        }
+      },
+      "graph_time_s": 0.08927140000741929,
+      "nodes": 3537,
+      "arcs": 7058,
+      "elapsed_s": 0.9958440000045812
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000069",
+      "source": {
+        "track": {
+          "sha256": "486a85284d080e2dc2ad1725310c27504b4fbc0cbfce9a486fc7f2a46761963e",
+          "nonempty_records": 2067,
+          "loaded_rows": 2067,
+          "size_bytes": 69326
+        },
+        "nodes": {
+          "sha256": "c40255169d93107992f9cf3786567e21b86fde6ff1434026f51a7e0ce5e5ebe4",
+          "nonempty_records": 8556,
+          "loaded_rows": 8556,
+          "size_bytes": 179676
+        },
+        "arcs": {
+          "sha256": "97e163b18a4e0e056583a33af228d01aa915031c92b26ce8fe0ea9262657e36d",
+          "nonempty_records": 17193,
+          "loaded_rows": 17193,
+          "size_bytes": 167859
+        },
+        "route": {
+          "sha256": "3297c290a366aac2ac50a6f44964bc6a67004087bade3e5c18f4886c29391a14",
+          "nonempty_records": 467,
+          "loaded_rows": 467,
+          "size_bytes": 2423
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2067,
+          "semantic_sha256": "07a9372bcbfa803327c718c290df85de8985f9d2ad03b81c081bd40a5215b262"
+        },
+        "candidates": {
+          "rows": 16162,
+          "semantic_sha256": "c1760183fe33f2064ab283b7d1813fe25060a15e5366e24090edb16272ff879a"
+        },
+        "alignment": {
+          "rows": 2067,
+          "semantic_sha256": "8883359f27cb9865a3f0972028eb72a065f66a3156dd9a9dcce9baeb41ebb1cb"
+        }
+      },
+      "graph_time_s": 0.15755849999550264,
+      "nodes": 8556,
+      "arcs": 17193,
+      "elapsed_s": 2.609802499995567
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000070",
+      "source": {
+        "track": {
+          "sha256": "e3ae00c7f9a0baa637551935be7a1a940cbbd0d7b60b35f3da79c1e64d568eb7",
+          "nonempty_records": 2076,
+          "loaded_rows": 2076,
+          "size_bytes": 67432
+        },
+        "nodes": {
+          "sha256": "8877da3b562c5494a68298980c7eab02de293a8626ec9a8673553e514831bb70",
+          "nonempty_records": 1799,
+          "loaded_rows": 1799,
+          "size_bytes": 35980
+        },
+        "arcs": {
+          "sha256": "2859e26d75f44f8780ecc1e6ce877400e41b2cce315fb8a7f00438b49f64abac",
+          "nonempty_records": 3776,
+          "loaded_rows": 3776,
+          "size_bytes": 33026
+        },
+        "route": {
+          "sha256": "e07f19661efa6eeac0e7c43f7329df0916cb2bf6e8ff7d6b6e95add690cbcb36",
+          "nonempty_records": 149,
+          "loaded_rows": 149,
+          "size_bytes": 635
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2076,
+          "semantic_sha256": "1a1abac88fb475ba44605a59407ca601301ba878743028c9f11af853623ce13d"
+        },
+        "candidates": {
+          "rows": 13696,
+          "semantic_sha256": "25684351b6f2415e476866e4ff553f314474b9d67199258ad610c68655bbb5b1"
+        },
+        "alignment": {
+          "rows": 2076,
+          "semantic_sha256": "67b8240456263529014d7768e345d23043ce4f4ae8932697aaa93794c312d8bb"
+        }
+      },
+      "graph_time_s": 0.03324300001258962,
+      "nodes": 1799,
+      "arcs": 3776,
+      "elapsed_s": 2.3850381999945967
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000071",
+      "source": {
+        "track": {
+          "sha256": "0093652aa4aa786996810c092da88d7e464dc28ccbdd0301aa21fdf13be53506",
+          "nonempty_records": 850,
+          "loaded_rows": 850,
+          "size_bytes": 28146
+        },
+        "nodes": {
+          "sha256": "55c47007a6021393beba19af5e98f459b4b1fd4b6abcbf5932fe08827b60267d",
+          "nonempty_records": 6265,
+          "loaded_rows": 6265,
+          "size_bytes": 131565
+        },
+        "arcs": {
+          "sha256": "244a04f0ee94b32e1f30b8f8fe85062db9c148e10ef99a1d3236128a0bfba4eb",
+          "nonempty_records": 14868,
+          "loaded_rows": 14868,
+          "size_bytes": 144454
+        },
+        "route": {
+          "sha256": "94b8e3de202e17beb03c6d8b35eca244fe33bf6ab17401eaf20a3b9a3fe7bdb2",
+          "nonempty_records": 186,
+          "loaded_rows": 186,
+          "size_bytes": 938
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 850,
+          "semantic_sha256": "b27ce03daf381e95db27409512f352dd00fd72436867ba161fbe2c8e2d7965b2"
+        },
+        "candidates": {
+          "rows": 6528,
+          "semantic_sha256": "f9da139421ff4729bf27e0cb71588d4908ab8ac96220ac6e95a082933e71e0f0"
+        },
+        "alignment": {
+          "rows": 850,
+          "semantic_sha256": "57df3570c4e6a17eb4a048aee97f05702c47873c1725834cf69862ed2478f262"
+        }
+      },
+      "graph_time_s": 0.13308450000477023,
+      "nodes": 6265,
+      "arcs": 14868,
+      "elapsed_s": 1.2369887999957427
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000072",
+      "source": {
+        "track": {
+          "sha256": "d81b12f3a74c8998474a99056390b24aaeb42528133da759a20a92a6c0d97a81",
+          "nonempty_records": 969,
+          "loaded_rows": 969,
+          "size_bytes": 30900
+        },
+        "nodes": {
+          "sha256": "dbf5f917ce0c2e455f763fa24b4a95e9f22e3a9b6f6f442a432027f36193bfe2",
+          "nonempty_records": 3275,
+          "loaded_rows": 3275,
+          "size_bytes": 65500
+        },
+        "arcs": {
+          "sha256": "5580fdb8dae8b312fc709781125a1baea0fc26000f069dd7991e4add1340467d",
+          "nonempty_records": 7063,
+          "loaded_rows": 7063,
+          "size_bytes": 65412
+        },
+        "route": {
+          "sha256": "88b6a5029f2a94b719415c9fbb8bb50bb59dc58dd5c5a63187f57e7a53a3b2a4",
+          "nonempty_records": 131,
+          "loaded_rows": 131,
+          "size_bytes": 604
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 969,
+          "semantic_sha256": "4c3851056866e68fd6b2715aec94d6dfcb99c77120e0b32c5d7eaac39d3c4a4f"
+        },
+        "candidates": {
+          "rows": 7554,
+          "semantic_sha256": "89dc74535428867197877b3cd4977b9e38cc1eef968b7c63a91c0499bd8bccc9"
+        },
+        "alignment": {
+          "rows": 969,
+          "semantic_sha256": "f56e49cb7a8088f76537425dc94fd63609262293d6f83c96a0970ffdfb541bbe"
+        }
+      },
+      "graph_time_s": 0.09025850000034552,
+      "nodes": 3275,
+      "arcs": 7063,
+      "elapsed_s": 1.3487473999994108
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000074",
+      "source": {
+        "track": {
+          "sha256": "8460e48e959b017d00638d11faa163d68d29cbf8da12ee0ae78793943d643655",
+          "nonempty_records": 1929,
+          "loaded_rows": 1929,
+          "size_bytes": 62720
+        },
+        "nodes": {
+          "sha256": "ff8f399b69026b19b24f1688633025031d30a66b341b94dcc820016781531fc2",
+          "nonempty_records": 34654,
+          "loaded_rows": 34654,
+          "size_bytes": 693080
+        },
+        "arcs": {
+          "sha256": "56255864a98040db0f705e5b52bdb7528787762d9a829ef758bbcf8e974dc8c2",
+          "nonempty_records": 61055,
+          "loaded_rows": 61055,
+          "size_bytes": 695624
+        },
+        "route": {
+          "sha256": "09dcd752e937e28e04ffa8e462e308ceda58d72fb88215fea914d83b1c280211",
+          "nonempty_records": 305,
+          "loaded_rows": 305,
+          "size_bytes": 1580
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1929,
+          "semantic_sha256": "3387f1250184eacae78e923373888f773ae5cdcecdeeab44912f3beebde79092"
+        },
+        "candidates": {
+          "rows": 12839,
+          "semantic_sha256": "592ba56d595645a3056c772d5c80cf260bc9825e5516497c635c8f809658c106"
+        },
+        "alignment": {
+          "rows": 1929,
+          "semantic_sha256": "d52a402664c471a6374bccce500d229030b08457ebb31390470db031a79af5a6"
+        }
+      },
+      "graph_time_s": 0.5128512000082992,
+      "nodes": 34654,
+      "arcs": 61055,
+      "elapsed_s": 2.840410500008147
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000075",
+      "source": {
+        "track": {
+          "sha256": "e84350f0dd10867cfcf3afea329113847a827e881dc4535db6401f5ccb8aa607",
+          "nonempty_records": 1628,
+          "loaded_rows": 1628,
+          "size_bytes": 52623
+        },
+        "nodes": {
+          "sha256": "a5aa16bc0268e87d7e66bcf80ad03fe2ca739c2f0b9dd96049f4f10918ed78fb",
+          "nonempty_records": 1022,
+          "loaded_rows": 1022,
+          "size_bytes": 20440
+        },
+        "arcs": {
+          "sha256": "c6b5a2f754183b413cf8d2b80666cd2547232b77ccbff5dc807d1a607e2761f7",
+          "nonempty_records": 2124,
+          "loaded_rows": 2124,
+          "size_bytes": 16578
+        },
+        "route": {
+          "sha256": "67f891d95af65d871130c9c4212450c62b8bf0ce7811d0d5557bc87f8836cbb6",
+          "nonempty_records": 108,
+          "loaded_rows": 108,
+          "size_bytes": 429
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1628,
+          "semantic_sha256": "071eaae83bade6c6fbae41dbb30e7f47680bde206fe502544a930ec576d99d08"
+        },
+        "candidates": {
+          "rows": 12894,
+          "semantic_sha256": "3bc2fb44f52069c33c9421b577b42ef0891814d61c122854c1769f1544872a1b"
+        },
+        "alignment": {
+          "rows": 1628,
+          "semantic_sha256": "58ef8080ff7e3508beb7a04f194fe1229725b5955cd61e657ef1dd8f7d529d72"
+        }
+      },
+      "graph_time_s": 0.031116300000576302,
+      "nodes": 1022,
+      "arcs": 2124,
+      "elapsed_s": 2.3439156000094954
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000078",
+      "source": {
+        "track": {
+          "sha256": "85515c4e46f83465d89a51f6dce5913a9ec69f185573e3ac208967451466739c",
+          "nonempty_records": 2909,
+          "loaded_rows": 2909,
+          "size_bytes": 95989
+        },
+        "nodes": {
+          "sha256": "6f8918eece529f72026ad75ad52c79869d0eb930773f8c8fb67eab7aca609771",
+          "nonempty_records": 75230,
+          "loaded_rows": 75230,
+          "size_bytes": 1429370
+        },
+        "arcs": {
+          "sha256": "0ea32371062711791e62a4f0517879647cf2f635971ec9cf84a0fc324a8e7b14",
+          "nonempty_records": 151458,
+          "loaded_rows": 151458,
+          "size_bytes": 1772302
+        },
+        "route": {
+          "sha256": "b419525214e2631c24259c67bc7445ef3417d05abc6243d72dc1e697177b762b",
+          "nonempty_records": 1765,
+          "loaded_rows": 1765,
+          "size_bytes": 9975
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2909,
+          "semantic_sha256": "dadd44e60ea97c88bd246119a429fcb8e9d7685bfe1158f431504bbf400102fe"
+        },
+        "candidates": {
+          "rows": 22782,
+          "semantic_sha256": "7ae5caf429eeae45ca548cc06788c7676ae48a6e1d5cfff9f5f3ea439ba458af"
+        },
+        "alignment": {
+          "rows": 2909,
+          "semantic_sha256": "faeedc95142b000b4756909ddbec1f12264440b35036622914a3104859a603d7"
+        }
+      },
+      "graph_time_s": 1.4126647000084631,
+      "nodes": 75230,
+      "arcs": 151458,
+      "elapsed_s": 5.378795700002229
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000079",
+      "source": {
+        "track": {
+          "sha256": "25545b71c2f681ee11ed6890bc931edf3113c8720c23180f798d5cb952be6fee",
+          "nonempty_records": 689,
+          "loaded_rows": 689,
+          "size_bytes": 21940
+        },
+        "nodes": {
+          "sha256": "c74868599a5260fff9036215009112f2bbad285af9fc87195328d4432129d2c6",
+          "nonempty_records": 39031,
+          "loaded_rows": 39031,
+          "size_bytes": 780620
+        },
+        "arcs": {
+          "sha256": "00e5d05a51b70574dea8ce81c63e8b481027f4c06d3e1cf78a39c2f17782cba5",
+          "nonempty_records": 72116,
+          "loaded_rows": 72116,
+          "size_bytes": 823242
+        },
+        "route": {
+          "sha256": "64155fe34ad04098e47c3b33916e9b6c508cd71eeff17046a19f843a14ab0223",
+          "nonempty_records": 182,
+          "loaded_rows": 182,
+          "size_bytes": 1021
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 689,
+          "semantic_sha256": "5d62b3e334df8ab0575322b836cb129c79ff0363c7213fdba72ee351dbad22d2"
+        },
+        "candidates": {
+          "rows": 5512,
+          "semantic_sha256": "c5fc6cd44b2e1828cdf3ceaf9248e125ba9493d0786ad3e66d5274e0513a2cd2"
+        },
+        "alignment": {
+          "rows": 689,
+          "semantic_sha256": "67a89a5187bb0818fc8d325909402ebb10701d41a272557c4e4f07c2a4936856"
+        }
+      },
+      "graph_time_s": 0.6955656000063755,
+      "nodes": 39031,
+      "arcs": 72116,
+      "elapsed_s": 1.823033500011661
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000080",
+      "source": {
+        "track": {
+          "sha256": "49049dc5ed6bfc364d271dc72579f1ae019aa8efe859dbe8c165f6f6b26dbc74",
+          "nonempty_records": 2510,
+          "loaded_rows": 2510,
+          "size_bytes": 86965
+        },
+        "nodes": {
+          "sha256": "97eae352ea610fc1c3053cce5c5546cf876b70bbe18a8d415fbb64dbd6d87ca5",
+          "nonempty_records": 10014,
+          "loaded_rows": 10014,
+          "size_bytes": 220308
+        },
+        "arcs": {
+          "sha256": "8635f3995a4d3244f63ac47894aeeafc659b0c49d5fb767aa3c10fdb6795e162",
+          "nonempty_records": 18746,
+          "loaded_rows": 18746,
+          "size_bytes": 183081
+        },
+        "route": {
+          "sha256": "cb2e59e0177a88bacdf9954021da454c48a5c78e1e37259e4f7d376f627f8f9d",
+          "nonempty_records": 139,
+          "loaded_rows": 139,
+          "size_bytes": 745
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2510,
+          "semantic_sha256": "96c984d21790768fe8abf139a5be2ffd11d1c0895dd90ec07b53ca242ae78dc6"
+        },
+        "candidates": {
+          "rows": 18574,
+          "semantic_sha256": "5f36ac28b803fec4fa22fffaa39825e5a25918258829de1b6f8d80dc5bbf38ab"
+        },
+        "alignment": {
+          "rows": 2510,
+          "semantic_sha256": "f8a907625a6c145d84c0c44a13bd454e7c5d32eca3f34837264829bd7ddac59e"
+        }
+      },
+      "graph_time_s": 0.174268699993263,
+      "nodes": 10014,
+      "arcs": 18746,
+      "elapsed_s": 7.252382399994531
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000081",
+      "source": {
+        "track": {
+          "sha256": "6b80278fd75e07bca6504f39ea54fe054b13a0bb41049e77ea34128ef704f554",
+          "nonempty_records": 3224,
+          "loaded_rows": 3224,
+          "size_bytes": 108757
+        },
+        "nodes": {
+          "sha256": "49deb22f0feac26ab88ab9cc3262b99bf1f261c0c33a181b0e52d9c22ced9105",
+          "nonempty_records": 2791,
+          "loaded_rows": 2791,
+          "size_bytes": 58611
+        },
+        "arcs": {
+          "sha256": "70ab679c2f353c2de6854cc8750639a589c10a42702bde4174adec5e168d8e55",
+          "nonempty_records": 5048,
+          "loaded_rows": 5048,
+          "size_bytes": 45987
+        },
+        "route": {
+          "sha256": "8d5f13fe085034c2cef925453447bbc9d47ec53443f4f74b597c4ca2e491d877",
+          "nonempty_records": 778,
+          "loaded_rows": 778,
+          "size_bytes": 3811
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3224,
+          "semantic_sha256": "21222287cf43de406a21ef41d5b129b5d4dbc2504b9b6e9766f1131894437993"
+        },
+        "candidates": {
+          "rows": 24176,
+          "semantic_sha256": "cba5e40cdb43a7b1a5e963ad3f0857ea5a84acad34a760d7ab94c87ae297d549"
+        },
+        "alignment": {
+          "rows": 3224,
+          "semantic_sha256": "9ca07ce8f3adcc016ab99cf04efbba67d5631126f6f4fee896b662b0b69f3d3c"
+        }
+      },
+      "graph_time_s": 0.09690020000562072,
+      "nodes": 2791,
+      "arcs": 5048,
+      "elapsed_s": 5.234110800010967
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000082",
+      "source": {
+        "track": {
+          "sha256": "5070cff4528aff650fe4f16fa004358386ccf3e5a3ee99f3561dca923f4290a5",
+          "nonempty_records": 4268,
+          "loaded_rows": 4268,
+          "size_bytes": 139737
+        },
+        "nodes": {
+          "sha256": "587dac654b11edb757a27e37495d54f9472416a1c61c91b748d0f55069fb9ab6",
+          "nonempty_records": 15696,
+          "loaded_rows": 15696,
+          "size_bytes": 313920
+        },
+        "arcs": {
+          "sha256": "e8f7125c67c6317eeeaeaa17fc0797441faca0febdd2d2626e3d67c5ad02ad11",
+          "nonempty_records": 31754,
+          "loaded_rows": 31754,
+          "size_bytes": 335529
+        },
+        "route": {
+          "sha256": "1c9c077454787773d53a38dcbcdd4faf90de31a4cf5c036693951b577ba145ac",
+          "nonempty_records": 204,
+          "loaded_rows": 204,
+          "size_bytes": 1031
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 4268,
+          "semantic_sha256": "4bf3adb5c57ac6d591485a10a07a068ca31f48f05420341d569d42d0101da52c"
+        },
+        "candidates": {
+          "rows": 27875,
+          "semantic_sha256": "c4ff3c5800017d21eedad1653f9699fe564514bcff983a419cdd2df193830dd4"
+        },
+        "alignment": {
+          "rows": 4268,
+          "semantic_sha256": "02057a12c63086c50680ba78b0dbf12edcb8b4167999288bd77cb20fef5b5360"
+        }
+      },
+      "graph_time_s": 0.2305116000061389,
+      "nodes": 15696,
+      "arcs": 31754,
+      "elapsed_s": 4.819639099994674
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000083",
+      "source": {
+        "track": {
+          "sha256": "4f373f30cfca928915d76885187fe9a95999f862e2a40283938f823b2f991dbc",
+          "nonempty_records": 1507,
+          "loaded_rows": 1507,
+          "size_bytes": 48624
+        },
+        "nodes": {
+          "sha256": "48ec48b23dc991de96aeef555ca0746534faff87f06aa0cb1ff362d95272ff5c",
+          "nonempty_records": 12907,
+          "loaded_rows": 12907,
+          "size_bytes": 258140
+        },
+        "arcs": {
+          "sha256": "859e26c751441edcc483b4df5fba5cb14b624165f364a188f9269d2f9a10ed3a",
+          "nonempty_records": 25393,
+          "loaded_rows": 25393,
+          "size_bytes": 261480
+        },
+        "route": {
+          "sha256": "e3284092daf393c16b865bb4f19c65886842553ed20c0c6d1deb1fd14ca9d28d",
+          "nonempty_records": 143,
+          "loaded_rows": 143,
+          "size_bytes": 754
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1507,
+          "semantic_sha256": "7b309c85984030303a5ce69fcbf6faddde733e4798e68d70bb913047f51910f9"
+        },
+        "candidates": {
+          "rows": 11984,
+          "semantic_sha256": "b7b0f6e54a14bea40699b95f3aaa701eec85a47c71f00acba38e2977f6f5a003"
+        },
+        "alignment": {
+          "rows": 1507,
+          "semantic_sha256": "082c7d8a89cf4c19fc1dc51068e101b382aac69124924d80afd8b9b64b598542"
+        }
+      },
+      "graph_time_s": 0.24817610000900459,
+      "nodes": 12907,
+      "arcs": 25393,
+      "elapsed_s": 2.241019100008998
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000084",
+      "source": {
+        "track": {
+          "sha256": "1507fbcd9c6aef228e365dfb639c300f97fe5f969c6fe8d998a5b17aae471833",
+          "nonempty_records": 16031,
+          "loaded_rows": 16031,
+          "size_bytes": 550391
+        },
+        "nodes": {
+          "sha256": "81b97347a5308713cbe09ed7e97d35f23472503a733727499eff49611cab5d2c",
+          "nonempty_records": 24898,
+          "loaded_rows": 24898,
+          "size_bytes": 522858
+        },
+        "arcs": {
+          "sha256": "fe4158e00cdb44ee9882fbf5a92616cb3d1d95c7b138b56638b825665fb2e9e0",
+          "nonempty_records": 50888,
+          "loaded_rows": 50888,
+          "size_bytes": 564977
+        },
+        "route": {
+          "sha256": "ea8920f176e4bd80ef0b1974a8573f1fe73f4a583e3819367db898b34a4ff729",
+          "nonempty_records": 627,
+          "loaded_rows": 627,
+          "size_bytes": 3642
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 16031,
+          "semantic_sha256": "f1274af33796d938df92aa9c998311ea77eee376f9a25b6d9f6aa2d321e42cb6"
+        },
+        "candidates": {
+          "rows": 98181,
+          "semantic_sha256": "70682af36d42eb957616166df0bdc8fd513ca00b0be3e67af16343eaa616aa70"
+        },
+        "alignment": {
+          "rows": 16031,
+          "semantic_sha256": "4f0b5fd1be68e13232a55bb3d13797b88beb576f4f531cea6e5141ae8fb2e718"
+        }
+      },
+      "graph_time_s": 0.40573690000746865,
+      "nodes": 24898,
+      "arcs": 50888,
+      "elapsed_s": 28.439740800007712
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000085",
+      "source": {
+        "track": {
+          "sha256": "ee80599104807f998ac7eddf0c9e1a6ed40b83a994352f0e693c70880eeda5b1",
+          "nonempty_records": 1092,
+          "loaded_rows": 1092,
+          "size_bytes": 35101
+        },
+        "nodes": {
+          "sha256": "10297a7300f7a2f29dabc1aa4dfbd6418dc5e97d75c61aff658548cf18489885",
+          "nonempty_records": 690,
+          "loaded_rows": 690,
+          "size_bytes": 13800
+        },
+        "arcs": {
+          "sha256": "55e0a8991cbf649be9264f76cd23b8405a78830bbeb88ae57e861d6031901fc9",
+          "nonempty_records": 1554,
+          "loaded_rows": 1554,
+          "size_bytes": 11900
+        },
+        "route": {
+          "sha256": "fcbdd1efc475de095fbda62b473ff9fbc5851a969098e09655dc369c68633886",
+          "nonempty_records": 170,
+          "loaded_rows": 170,
+          "size_bytes": 703
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1092,
+          "semantic_sha256": "ddc2955b082b35ca488e15385db1df5088f624fb2b611926a1689d8d791de730"
+        },
+        "candidates": {
+          "rows": 7516,
+          "semantic_sha256": "c5df588d05dfe8030ff66b4454bb32ba924ca3a3e636a3d5cb18b381d8b30119"
+        },
+        "alignment": {
+          "rows": 1092,
+          "semantic_sha256": "5bbac9f19dd15919c018851e062ba6126f57423422ed08c6c3ed023ab49732fd"
+        }
+      },
+      "graph_time_s": 0.027527600002940744,
+      "nodes": 690,
+      "arcs": 1554,
+      "elapsed_s": 1.4091785000055097
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000086",
+      "source": {
+        "track": {
+          "sha256": "4ced816558887214846e887d043eca58cd20404c32f9a9416898bf4660d0c50e",
+          "nonempty_records": 4143,
+          "loaded_rows": 4143,
+          "size_bytes": 135612
+        },
+        "nodes": {
+          "sha256": "6c1a75da00051312c3c7885c81a5cdb8cfae491d148e360da95ce2a5622567bf",
+          "nonempty_records": 114868,
+          "loaded_rows": 114868,
+          "size_bytes": 2297360
+        },
+        "arcs": {
+          "sha256": "a92f7ea7243b1c463773f65c8c7093e6a5bf1bc40e0f8debdd595118a4ef404f",
+          "nonempty_records": 237656,
+          "loaded_rows": 237656,
+          "size_bytes": 2866510
+        },
+        "route": {
+          "sha256": "0539acd2df308c6a23a810bf7514ae5148f85caf51554d99cef80c1d205c1a39",
+          "nonempty_records": 671,
+          "loaded_rows": 671,
+          "size_bytes": 3888
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 4143,
+          "semantic_sha256": "101355f95cb6cef6fd08698aa089ed406df3b9d60fb733622123ae492f84785d"
+        },
+        "candidates": {
+          "rows": 23803,
+          "semantic_sha256": "ae3dedaa6c9d01d7f5153e8bf953ff8b4a401efe6e6feb0571a0bd05bdb4129c"
+        },
+        "alignment": {
+          "rows": 4143,
+          "semantic_sha256": "bf3510b05861ab4d71d96d8226891bd8e5c5cc9c9d5f16da9d94a3b07d07988e"
+        }
+      },
+      "graph_time_s": 2.328632500008098,
+      "nodes": 114868,
+      "arcs": 237656,
+      "elapsed_s": 7.469817199991667
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000088",
+      "source": {
+        "track": {
+          "sha256": "665bf729fa8e1bbd60bdc0efbd1132255191a85b9b36a0ac09768973985045e8",
+          "nonempty_records": 876,
+          "loaded_rows": 876,
+          "size_bytes": 28145
+        },
+        "nodes": {
+          "sha256": "5e0d317e17b0bd964cf7bccf226b3783114bc80849060db55d21550cfcd7d8dd",
+          "nonempty_records": 11373,
+          "loaded_rows": 11373,
+          "size_bytes": 227460
+        },
+        "arcs": {
+          "sha256": "5c16dc7c7e9da83233d2eb5519cde4a8177f23e3b8792b8f5c0a27ba1ce21a5b",
+          "nonempty_records": 24376,
+          "loaded_rows": 24376,
+          "size_bytes": 244274
+        },
+        "route": {
+          "sha256": "3c622f3160589b34a1c5e39e60263251f10628c9b69d68bc1b9cbd91fc0ad6c9",
+          "nonempty_records": 163,
+          "loaded_rows": 163,
+          "size_bytes": 797
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 876,
+          "semantic_sha256": "bba03547fe75d9ce6edb040262f583007a6644af95fbffed1b8ac184890f4dd5"
+        },
+        "candidates": {
+          "rows": 6951,
+          "semantic_sha256": "382102985dca23e489f9c2c7cfbcdf3f76c4de4c8b86b85c80f0014a6efdca93"
+        },
+        "alignment": {
+          "rows": 876,
+          "semantic_sha256": "fe1114f079a6d2928c0b08b875cceee31df0a12426e714b5b80ae801c164fafd"
+        }
+      },
+      "graph_time_s": 0.2575649000064004,
+      "nodes": 11373,
+      "arcs": 24376,
+      "elapsed_s": 1.2881977000070037
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000089",
+      "source": {
+        "track": {
+          "sha256": "31a5365ad8b06fd70f4d706e88e51e1c9cb2ba6595d60bcb44e714da335411f4",
+          "nonempty_records": 1228,
+          "loaded_rows": 1228,
+          "size_bytes": 39841
+        },
+        "nodes": {
+          "sha256": "f899c7f3513687e500772aea515a3d7dc4fbc975a35af15edb8d687c0b643e48",
+          "nonempty_records": 15972,
+          "loaded_rows": 15972,
+          "size_bytes": 319440
+        },
+        "arcs": {
+          "sha256": "e430a298aa21cc45075feed6f6923f11393f90cf4ea9b12d33037cf00d0beac9",
+          "nonempty_records": 32823,
+          "loaded_rows": 32823,
+          "size_bytes": 346899
+        },
+        "route": {
+          "sha256": "4b1846f688aee549c71134dc3f3210236ab87ab981cdacee49b5a9e68d75965a",
+          "nonempty_records": 265,
+          "loaded_rows": 265,
+          "size_bytes": 1510
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1228,
+          "semantic_sha256": "53c24957dfab02dce3ce60c63984d55b09be50286dd01ccf568a57b585ec8c6e"
+        },
+        "candidates": {
+          "rows": 9824,
+          "semantic_sha256": "614bb9f78cb5a7997132b3eadbf9212759f50c9250f14d708d2ae7703ada5fc7"
+        },
+        "alignment": {
+          "rows": 1228,
+          "semantic_sha256": "92ac4a0a9764caf30b2e02c405c60fb0c38b9de8a60f52d5bfbf71e60e9b725e"
+        }
+      },
+      "graph_time_s": 0.2893130000011297,
+      "nodes": 15972,
+      "arcs": 32823,
+      "elapsed_s": 1.9794500999996671
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000090",
+      "source": {
+        "track": {
+          "sha256": "1385de861d99229a24b91f119e41f86444c0f185589145874fcc18e120b8e1da",
+          "nonempty_records": 536,
+          "loaded_rows": 536,
+          "size_bytes": 17093
+        },
+        "nodes": {
+          "sha256": "3e56276605101eb1ef34e2d7caf5aaf17edce64a4edc209f4ce1b22fa6c7aac0",
+          "nonempty_records": 4010,
+          "loaded_rows": 4010,
+          "size_bytes": 80200
+        },
+        "arcs": {
+          "sha256": "a17d265800b653c1df168dbf8459a27297f3648b3fc57e6aabf85366bb36a5fb",
+          "nonempty_records": 7942,
+          "loaded_rows": 7942,
+          "size_bytes": 74737
+        },
+        "route": {
+          "sha256": "b67d7585e5f31d3e6cdae018517357fe7d71bd9d195bb678fb24c6c0ac4b0281",
+          "nonempty_records": 235,
+          "loaded_rows": 235,
+          "size_bytes": 1118
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 536,
+          "semantic_sha256": "067a93eb3896503576c762f4ddf5baffd32aab76c028b777e5036b5480958e9e"
+        },
+        "candidates": {
+          "rows": 4254,
+          "semantic_sha256": "0f42693b7f3070389bbc7e1b50628078039675e830177aee7ebb5e028f6b1a72"
+        },
+        "alignment": {
+          "rows": 536,
+          "semantic_sha256": "07e13ad9670c8a78f0d0304ca9a31ad5f2540ce1dbddc850726ecfd47cb55eba"
+        }
+      },
+      "graph_time_s": 0.10012960000312887,
+      "nodes": 4010,
+      "arcs": 7942,
+      "elapsed_s": 0.9672278999933042
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000092",
+      "source": {
+        "track": {
+          "sha256": "f22be12ced50a112f14b9d7b17a3a4f67dc5a72c04a2c8a79fa7876f521588b2",
+          "nonempty_records": 7892,
+          "loaded_rows": 7892,
+          "size_bytes": 259329
+        },
+        "nodes": {
+          "sha256": "8ee5439674cb6a1f1c087aa00eda4396bfbe18a31bf50e917f81b35e64ff6771",
+          "nonempty_records": 26468,
+          "loaded_rows": 26468,
+          "size_bytes": 529360
+        },
+        "arcs": {
+          "sha256": "f4624472b4bb9d1ec3d9adddd8c11f1400c046c74ab2b93664eaafc0887cb6fb",
+          "nonempty_records": 53348,
+          "loaded_rows": 53348,
+          "size_bytes": 594531
+        },
+        "route": {
+          "sha256": "c6c06f8601410eb3a4ace019da8a379fe790d01b1cf3b6b755806b1bda755c18",
+          "nonempty_records": 2266,
+          "loaded_rows": 2266,
+          "size_bytes": 12121
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 7892,
+          "semantic_sha256": "9e037d70bdfa3a4d9aac7e43c9ce35b08ced24f2368a37c9834fdb45a5b190e6"
+        },
+        "candidates": {
+          "rows": 58449,
+          "semantic_sha256": "2fd610b0325b3e0b87b8bfc1aaca6f6e404416ea167c5d0b7aa67961558da8e8"
+        },
+        "alignment": {
+          "rows": 7892,
+          "semantic_sha256": "8770d5f53661e6ee76b6488cf115310224d5cecd8630a9208d109b535e6fe394"
+        }
+      },
+      "graph_time_s": 0.46190139999089297,
+      "nodes": 26468,
+      "arcs": 53348,
+      "elapsed_s": 10.090346600001794
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000093",
+      "source": {
+        "track": {
+          "sha256": "3b0c57efd5f70cbfc054b40a9e0402f4cfc9dfea38deba48ae53539378548396",
+          "nonempty_records": 1211,
+          "loaded_rows": 1211,
+          "size_bytes": 38891
+        },
+        "nodes": {
+          "sha256": "1cda5a9bb074487f8160d923369b27a877e85af193f59896ac6072fe7bcc406c",
+          "nonempty_records": 45161,
+          "loaded_rows": 45161,
+          "size_bytes": 903220
+        },
+        "arcs": {
+          "sha256": "558253bab46669b033349caf7848f5d15196a9f3a6fe7fe6fa398c1acbcf737a",
+          "nonempty_records": 85122,
+          "loaded_rows": 85122,
+          "size_bytes": 981048
+        },
+        "route": {
+          "sha256": "0d9379ac54c15f431c1f99f929d672a43029915cbeb1b45c85db4534674a1c63",
+          "nonempty_records": 590,
+          "loaded_rows": 590,
+          "size_bytes": 3236
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1211,
+          "semantic_sha256": "53c89e3403860458ff54b187ad48305ff6cea422237555b54bc5e5dc39a1e941"
+        },
+        "candidates": {
+          "rows": 9678,
+          "semantic_sha256": "8660db6c4d326e06bde0ae90d2dd98c68457c58ee13b71d6e6fa640320f0c14e"
+        },
+        "alignment": {
+          "rows": 1211,
+          "semantic_sha256": "8fe90507e42adf8ae1a1d315906490a68b64ecda1c1e1815ff194e520d56523a"
+        }
+      },
+      "graph_time_s": 0.7582104000030085,
+      "nodes": 45161,
+      "arcs": 85122,
+      "elapsed_s": 2.326313099998515
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000095",
+      "source": {
+        "track": {
+          "sha256": "54a7869420bd0fccc4bba483664746e909331c5fe7ef2e29a25782e42eff2af9",
+          "nonempty_records": 1551,
+          "loaded_rows": 1551,
+          "size_bytes": 50080
+        },
+        "nodes": {
+          "sha256": "9ee84b9f480778ee4b6f1a7fca11535fe2e78cee9660e0e97d7f332406736ea1",
+          "nonempty_records": 1888,
+          "loaded_rows": 1888,
+          "size_bytes": 37760
+        },
+        "arcs": {
+          "sha256": "6da38ca9a39b2019b24876fb62114b23e02f8181878afb8e9bf65326e811ca08",
+          "nonempty_records": 3723,
+          "loaded_rows": 3723,
+          "size_bytes": 32672
+        },
+        "route": {
+          "sha256": "55c87f3a3c3244a942f0e75e23cefceba3a39ead2a9202e0f54eeaa4d6f9bcaa",
+          "nonempty_records": 306,
+          "loaded_rows": 306,
+          "size_bytes": 1392
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1551,
+          "semantic_sha256": "88d74b53855b4233e70730cfcb5d180077a7786ce613fba780284fa1c0b4d06a"
+        },
+        "candidates": {
+          "rows": 12320,
+          "semantic_sha256": "56b8bfc3e9c737d84e578c1feaac3e482e9eacf99f16b5cc7ec50d7ccbade455"
+        },
+        "alignment": {
+          "rows": 1551,
+          "semantic_sha256": "24058cfc5d3c10a2b12891598b1eb802878784720d6de8a60a9d3de0ae18beb5"
+        }
+      },
+      "graph_time_s": 0.03634819999570027,
+      "nodes": 1888,
+      "arcs": 3723,
+      "elapsed_s": 2.147031299988157
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000096",
+      "source": {
+        "track": {
+          "sha256": "ae97f238b97e7987e185b01764059d77be55e4ddd683c095b2ae325f981acca5",
+          "nonempty_records": 3271,
+          "loaded_rows": 3271,
+          "size_bytes": 110107
+        },
+        "nodes": {
+          "sha256": "287e807caf251fa22ed06932e324795dcb740c75a3d142416f3478b092d1bdee",
+          "nonempty_records": 16893,
+          "loaded_rows": 16893,
+          "size_bytes": 354753
+        },
+        "arcs": {
+          "sha256": "e2fbd16cf42e942906f006bcfb8c63ddb7dc5c11f124fa15c8c3f4ada711a61d",
+          "nonempty_records": 32276,
+          "loaded_rows": 32276,
+          "size_bytes": 341148
+        },
+        "route": {
+          "sha256": "bacf93b5aaf0d6fa17718437d21024d7137d0e8a23b74430283686c2f61874a4",
+          "nonempty_records": 456,
+          "loaded_rows": 456,
+          "size_bytes": 2689
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3271,
+          "semantic_sha256": "fd8763e5824904d7b0fed164e0e6f7ec281a987b9ec23a1f92f85429a96079c9"
+        },
+        "candidates": {
+          "rows": 19427,
+          "semantic_sha256": "e933e109c6ba28bef8b46d95fca3939e171db31afa029573d0bde1239d12e20f"
+        },
+        "alignment": {
+          "rows": 3271,
+          "semantic_sha256": "48a46491f07d6849e11af7f7cd93fd87717c248b14f1d476efe17a9ce8b5d178"
+        }
+      },
+      "graph_time_s": 0.2942874000000302,
+      "nodes": 16893,
+      "arcs": 32276,
+      "elapsed_s": 3.9244266000023345
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000097",
+      "source": {
+        "track": {
+          "sha256": "f1e4453e857ed46e59df91897e0e7e7e8c60a80354243b59a876b1a8fbf8bf97",
+          "nonempty_records": 1740,
+          "loaded_rows": 1740,
+          "size_bytes": 56324
+        },
+        "nodes": {
+          "sha256": "e4ac2d36d8988dfdf68339396ff4ac9d7c70e5363d833c53c0dcea5815fc0806",
+          "nonempty_records": 23566,
+          "loaded_rows": 23566,
+          "size_bytes": 471320
+        },
+        "arcs": {
+          "sha256": "1187c66e784ec16a71ea5fe2b85eb34c3ac1d7fcc7822e9d1f7546ebfc96e6e3",
+          "nonempty_records": 48503,
+          "loaded_rows": 48503,
+          "size_bytes": 534894
+        },
+        "route": {
+          "sha256": "4ac289867d8e351238d993631e8a23650cadbf60178f44cc23331998be23bb72",
+          "nonempty_records": 444,
+          "loaded_rows": 444,
+          "size_bytes": 2383
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1740,
+          "semantic_sha256": "a76e8f8b4ed700adbf019b54a83ab06b54bd142ded1bf40c13c87baeabc578bd"
+        },
+        "candidates": {
+          "rows": 12690,
+          "semantic_sha256": "b41b63fc80030fb72cf2474f2efeaaa0203cfb45a374259e4079e907f977a443"
+        },
+        "alignment": {
+          "rows": 1740,
+          "semantic_sha256": "164eef26cbcd1d7cba4d2a1e91281ad35609e87092f33230433087bbce964ce9"
+        }
+      },
+      "graph_time_s": 0.4554935000051046,
+      "nodes": 23566,
+      "arcs": 48503,
+      "elapsed_s": 2.374042700001155
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000098",
+      "source": {
+        "track": {
+          "sha256": "be823c12d87d0a194b35d0d3885e7f169e675fb5fe5a843e107b6c400e10a272",
+          "nonempty_records": 5584,
+          "loaded_rows": 5584,
+          "size_bytes": 194487
+        },
+        "nodes": {
+          "sha256": "591dd002acc063e82546e6a613a5db9d3a36f1d5e8f80919932690468175a4f8",
+          "nonempty_records": 43440,
+          "loaded_rows": 43440,
+          "size_bytes": 955680
+        },
+        "arcs": {
+          "sha256": "cceeabd80e42932660ddb1bc9d5d5bc4da70dceb41fd437e4c6e98c48e34d9b5",
+          "nonempty_records": 88137,
+          "loaded_rows": 88137,
+          "size_bytes": 1012774
+        },
+        "route": {
+          "sha256": "de42d4391dd2704c3867389545a8234455a7536bc44444d3aa10b4f7cebb5ea6",
+          "nonempty_records": 1003,
+          "loaded_rows": 1003,
+          "size_bytes": 5838
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 5584,
+          "semantic_sha256": "939f70a4aec37220fab9e79b954e230fadca48cd9c66ee665581e45488663663"
+        },
+        "candidates": {
+          "rows": 36848,
+          "semantic_sha256": "83b322a003fe77b4caac9d46b4f79fa168854fb13375f2bae64e9a88258d9c54"
+        },
+        "alignment": {
+          "rows": 5584,
+          "semantic_sha256": "d62d8df9b309e401d9475f6c3f06fa9ad8a59555a2bd5d4f3f05e826475273f5"
+        }
+      },
+      "graph_time_s": 0.7537805000029039,
+      "nodes": 43440,
+      "arcs": 88137,
+      "elapsed_s": 6.757661099996767
+    },
+    {
+      "partition": "train",
+      "trip_id": "00000099",
+      "source": {
+        "track": {
+          "sha256": "f78fdfba0f2da81e74cb3690402ef8cee69a5221757c99b9d9704ece23c32edf",
+          "nonempty_records": 2322,
+          "loaded_rows": 2322,
+          "size_bytes": 77848
+        },
+        "nodes": {
+          "sha256": "ddd89b363cebfed3c5ec074ac710e5cf75a89fad5d4a0b58bf06c36b2a49a6b2",
+          "nonempty_records": 34252,
+          "loaded_rows": 34252,
+          "size_bytes": 719292
+        },
+        "arcs": {
+          "sha256": "9ffebfeb3c1dacfef1ce413504854d858ac406856e3b0530e68d9760b96ddb72",
+          "nonempty_records": 72870,
+          "loaded_rows": 72870,
+          "size_bytes": 826029
+        },
+        "route": {
+          "sha256": "73391389a469cf035e96ceb37e37d390aba0ba72616d88c16297e7a72dde7801",
+          "nonempty_records": 886,
+          "loaded_rows": 886,
+          "size_bytes": 4759
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2322,
+          "semantic_sha256": "ec5426015525eb30f218b5c10aa24678c8a5320500312047334dcb188b801e60"
+        },
+        "candidates": {
+          "rows": 18400,
+          "semantic_sha256": "5cd79d2a2d740f6df57dfd98ca49b435f83a1f7ca7f684534144dd076f4d2e70"
+        },
+        "alignment": {
+          "rows": 2322,
+          "semantic_sha256": "5eeda0201321ce4df0ff5795faee9fe9130deff4be73ad87b4faf789593d67d9"
+        }
+      },
+      "graph_time_s": 0.6513095999980578,
+      "nodes": 34252,
+      "arcs": 72870,
+      "elapsed_s": 3.77650469999935
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000000",
+      "source": {
+        "track": {
+          "sha256": "10a2eb387890cfa01d80c8aec5d010b6775e09e50be03c0271b9e7f83288055b",
+          "nonempty_records": 2503,
+          "loaded_rows": 2503,
+          "size_bytes": 81492
+        },
+        "nodes": {
+          "sha256": "79cf3601a40e2854c637ff9a0de49b80cfbf53861fcc47e48efea8236d5f63c7",
+          "nonempty_records": 8542,
+          "loaded_rows": 8542,
+          "size_bytes": 170840
+        },
+        "arcs": {
+          "sha256": "db080c619345c4fda7d0f54487b55e1681ef6f41c512e89eddc1c82d51897d3e",
+          "nonempty_records": 18196,
+          "loaded_rows": 18196,
+          "size_bytes": 176989
+        },
+        "route": {
+          "sha256": "c5c67899752d0fa2b90ece6b821f84290566988d5dec5fc6201e443fcbf20abe",
+          "nonempty_records": 179,
+          "loaded_rows": 179,
+          "size_bytes": 881
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2503,
+          "semantic_sha256": "82b7e2362746f0db286be5c2d0672af8d8f5e79ecf4c4131866c49ac11c6c2bd"
+        },
+        "candidates": {
+          "rows": 11944,
+          "semantic_sha256": "eb99001aacb7a1f96fd8c52452417d5b623c05e32a12d1318b1d6bac0edc3e95"
+        },
+        "alignment": {
+          "rows": 2503,
+          "semantic_sha256": "e6a490c2dd38bde7fd76510f937ac2c4adf885f3d2611524c37a0164623b21c0"
+        }
+      },
+      "graph_time_s": 0.1569868999940809,
+      "nodes": 8542,
+      "arcs": 18196,
+      "elapsed_s": 3.095671199989738
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000007",
+      "source": {
+        "track": {
+          "sha256": "4089bc8f8d8347b92061b5bb2d36af26baa384d3fbed9184bb219e3f6f543e8d",
+          "nonempty_records": 1354,
+          "loaded_rows": 1354,
+          "size_bytes": 43575
+        },
+        "nodes": {
+          "sha256": "d74f7c5f352c9bb493c850e057591bd7881b3afac54920dba43b149594174469",
+          "nonempty_records": 2061,
+          "loaded_rows": 2061,
+          "size_bytes": 41220
+        },
+        "arcs": {
+          "sha256": "cdf6b8a43ab15db0d50419bfcc2485ce81e47e53cb6ce3143abe82cae7829484",
+          "nonempty_records": 4369,
+          "loaded_rows": 4369,
+          "size_bytes": 38998
+        },
+        "route": {
+          "sha256": "761d8649f9220a7aa6282425114aef81b642665e642e69d7776a4446faf8eacc",
+          "nonempty_records": 123,
+          "loaded_rows": 123,
+          "size_bytes": 486
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1354,
+          "semantic_sha256": "d2fe9cb7a63761d11e0c205332496c54e1b05d86255f530cdeccfb4c69e25ef2"
+        },
+        "candidates": {
+          "rows": 6993,
+          "semantic_sha256": "996e906252c2f97d820db2718859984fb0c74f72d1e1de4930a5770e8abd1944"
+        },
+        "alignment": {
+          "rows": 1354,
+          "semantic_sha256": "c6ce420d81c06eb3dc0d5d54bfd4cd2b04bea5d04363f1e6c159956ee330b81f"
+        }
+      },
+      "graph_time_s": 0.04848110000602901,
+      "nodes": 2061,
+      "arcs": 4369,
+      "elapsed_s": 1.6301452000043355
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000009",
+      "source": {
+        "track": {
+          "sha256": "74853acd9fdbb2b80b8cd164cc63932e25fd0fca6fce86fd9c9fc6aa171a8451",
+          "nonempty_records": 1049,
+          "loaded_rows": 1049,
+          "size_bytes": 33513
+        },
+        "nodes": {
+          "sha256": "f8ff92932d7a12874f412453c9cbe4f09cf1c2796f62843c8da95e1e104a4a99",
+          "nonempty_records": 6745,
+          "loaded_rows": 6745,
+          "size_bytes": 134900
+        },
+        "arcs": {
+          "sha256": "563870614e8fabaedb4077308db7598ef6c4314b2d9680a49e28dccb451b9e90",
+          "nonempty_records": 13106,
+          "loaded_rows": 13106,
+          "size_bytes": 126694
+        },
+        "route": {
+          "sha256": "9424170099cc2edfbfe9f8fae750a6f90f68cc19ba9a426d58254360566f2823",
+          "nonempty_records": 429,
+          "loaded_rows": 429,
+          "size_bytes": 2217
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1049,
+          "semantic_sha256": "cc076fed28cb69511b5b30ca9a7ce26e8642a590b9782afc7cc4967142d00c63"
+        },
+        "candidates": {
+          "rows": 8328,
+          "semantic_sha256": "1af6638b6917f40239cf609afd343e772a8b61351f18995150cfcc4c6fcf8031"
+        },
+        "alignment": {
+          "rows": 1049,
+          "semantic_sha256": "08e539fc29da256cd875253462decadec0a611694f8309c8c02f70f6cd2ea5a6"
+        }
+      },
+      "graph_time_s": 0.1696486000000732,
+      "nodes": 6745,
+      "arcs": 13106,
+      "elapsed_s": 1.6415452000073856
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000040",
+      "source": {
+        "track": {
+          "sha256": "c1e15b30e0fea83573156cb8650177822f852417cbe899c3cacd67201ea4dcd5",
+          "nonempty_records": 2995,
+          "loaded_rows": 2995,
+          "size_bytes": 97728
+        },
+        "nodes": {
+          "sha256": "babf74fb5f7ee1bb5f0852f79880b95c8790d8e130ad5118b99cebd1289216ae",
+          "nonempty_records": 12945,
+          "loaded_rows": 12945,
+          "size_bytes": 258900
+        },
+        "arcs": {
+          "sha256": "00762d8cc20cc2c7c07aa7d04b4e6622c33fa36712c1b4407edfdd52976cb8ad",
+          "nonempty_records": 27026,
+          "loaded_rows": 27026,
+          "size_bytes": 277927
+        },
+        "route": {
+          "sha256": "6a8eab82d804989098609da65cc82321f25278f2734b6f50ec45d605e4b75433",
+          "nonempty_records": 309,
+          "loaded_rows": 309,
+          "size_bytes": 1506
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 2995,
+          "semantic_sha256": "6be6d0bac2ea49546a204bfe2b988450fc036efb34d2d1bf4fa50202504207cb"
+        },
+        "candidates": {
+          "rows": 16334,
+          "semantic_sha256": "849d8cf34a66f5d17bde7d391bee14522f6928bf2136fe68987af4234b3cfb37"
+        },
+        "alignment": {
+          "rows": 2995,
+          "semantic_sha256": "d9d752bf2bfc48b2c2a0375d5fc9707286fa5fa5d7594bba5449b7396bae055d"
+        }
+      },
+      "graph_time_s": 0.2828314000071259,
+      "nodes": 12945,
+      "arcs": 27026,
+      "elapsed_s": 3.912027300000773
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000052",
+      "source": {
+        "track": {
+          "sha256": "a3a0deefec3bb92edd2c0b89cb7f18d2382f14a807802cb3090b4b3998789e49",
+          "nonempty_records": 262,
+          "loaded_rows": 262,
+          "size_bytes": 8278
+        },
+        "nodes": {
+          "sha256": "cf074f1ef8a1c819db2e2d93cb25d384a0c68334b0d538edf5ab169fe7d49208",
+          "nonempty_records": 1770,
+          "loaded_rows": 1770,
+          "size_bytes": 35400
+        },
+        "arcs": {
+          "sha256": "03e8a181b3b01d746050aa6f0a814f03e73cdb5248b1104f14793c65bbc94293",
+          "nonempty_records": 3577,
+          "loaded_rows": 3577,
+          "size_bytes": 30902
+        },
+        "route": {
+          "sha256": "f05f9e6c42f1dd58b94fa1c7ec6b91d4a32d417cf7c89b10fbe04a962b741366",
+          "nonempty_records": 95,
+          "loaded_rows": 95,
+          "size_bytes": 474
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 262,
+          "semantic_sha256": "128f90f8c08f9da0c1dc87cac8d118a767a2cc284055797d3d13e5f88c231197"
+        },
+        "candidates": {
+          "rows": 2032,
+          "semantic_sha256": "9dd25339952e415ce0b911396a1e457e4aee4e74adf49d90b503c20c16ccf229"
+        },
+        "alignment": {
+          "rows": 262,
+          "semantic_sha256": "af0879d381c375cb768c7e188105d451e7c4fa2b647fd8709e819fb739911aa2"
+        }
+      },
+      "graph_time_s": 0.05805190000683069,
+      "nodes": 1770,
+      "arcs": 3577,
+      "elapsed_s": 0.4547909999964759
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000056",
+      "source": {
+        "track": {
+          "sha256": "fe2e441173a411fb0f936f595ff4cef9fc8e6c31a9aa0f4f3d4c942a8fa37a22",
+          "nonempty_records": 3958,
+          "loaded_rows": 3958,
+          "size_bytes": 133479
+        },
+        "nodes": {
+          "sha256": "e849ec35af05f1cd0d49f96c78eac85b592b87a03a3ff0bccfd6cc5e6546a823",
+          "nonempty_records": 14759,
+          "loaded_rows": 14759,
+          "size_bytes": 309939
+        },
+        "arcs": {
+          "sha256": "ef3ebff321a2aba16dfc720bf82aa302bf024c282238807a81fe69d9dc07b2c9",
+          "nonempty_records": 27631,
+          "loaded_rows": 27631,
+          "size_bytes": 288046
+        },
+        "route": {
+          "sha256": "84595280ca9999010c3dbb0d9ff3f0d65d5f716d29fb6b24b0c5cb54a64e295a",
+          "nonempty_records": 1323,
+          "loaded_rows": 1323,
+          "size_bytes": 7628
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3958,
+          "semantic_sha256": "21810ac5e1717a5b71e91b4725235f92e7b0b145306d5d1805db6396f68faa92"
+        },
+        "candidates": {
+          "rows": 29982,
+          "semantic_sha256": "ef7a41825012cb2b6bed6ae032c40cb1efbeea2678644ac6d426624fa23cf5d1"
+        },
+        "alignment": {
+          "rows": 3958,
+          "semantic_sha256": "5cdd78dc7cdee137a1159d88f35927b574377f145ad0f9c96f7fea97fe9b9f35"
+        }
+      },
+      "graph_time_s": 0.3221186000009766,
+      "nodes": 14759,
+      "arcs": 27631,
+      "elapsed_s": 6.514170399997965
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000065",
+      "source": {
+        "track": {
+          "sha256": "d9c4a821d1f58a41c380736bde94e834cfb46950b0cd29049bb34adfccdc40fc",
+          "nonempty_records": 768,
+          "loaded_rows": 768,
+          "size_bytes": 24512
+        },
+        "nodes": {
+          "sha256": "c6295ba51065404db33cb464f6fa89ea6ef7f90ef628681c7ff4fbff7ee0b394",
+          "nonempty_records": 6448,
+          "loaded_rows": 6448,
+          "size_bytes": 128960
+        },
+        "arcs": {
+          "sha256": "4c55f3ff6f98881d3e9a4271d7d9bcce50384b5f3faa0342769aa36727e67fd0",
+          "nonempty_records": 13184,
+          "loaded_rows": 13184,
+          "size_bytes": 128022
+        },
+        "route": {
+          "sha256": "ff6f829a6c01b203ae29ddfe3191df9b732ef593c302350b3af94260fd385326",
+          "nonempty_records": 145,
+          "loaded_rows": 145,
+          "size_bytes": 701
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 768,
+          "semantic_sha256": "b53c3b0e29524c5e3d73d7eb70852361492c9e575a5450f9eb06cb80ee8caa0b"
+        },
+        "candidates": {
+          "rows": 6101,
+          "semantic_sha256": "b63eae37450d39c52eb5bc2676bbf39b51dcec753cf8142bc04bee3996e5c985"
+        },
+        "alignment": {
+          "rows": 768,
+          "semantic_sha256": "1709d5ee0ba8b15c4ef5bf604ee5633005299eff55847230b6f1a63a7c165b8a"
+        }
+      },
+      "graph_time_s": 0.12854560000414494,
+      "nodes": 6448,
+      "arcs": 13184,
+      "elapsed_s": 1.1954548000067007
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000076",
+      "source": {
+        "track": {
+          "sha256": "f8dba4bdd1755ad8b5a88999729c9951b2e1b78c055f93c156eccf3b871f0875",
+          "nonempty_records": 1486,
+          "loaded_rows": 1486,
+          "size_bytes": 48392
+        },
+        "nodes": {
+          "sha256": "156116bc90f777452a068839f4b411b584996f22901b411e94f74c446b116497",
+          "nonempty_records": 26635,
+          "loaded_rows": 26635,
+          "size_bytes": 532700
+        },
+        "arcs": {
+          "sha256": "65ec9beda355208dbd2f1fd38f5de94679545dce6c85e7b02154a7aa3e867802",
+          "nonempty_records": 56027,
+          "loaded_rows": 56027,
+          "size_bytes": 624245
+        },
+        "route": {
+          "sha256": "cbc21c01eb08faa5e3bcf220cdbfe1c5178c39641ba58d98ced6c99a93487897",
+          "nonempty_records": 374,
+          "loaded_rows": 374,
+          "size_bytes": 2098
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 1486,
+          "semantic_sha256": "887c0c14f6f7880b71cc812a69d0068359580c697782f66af9937361a2247b02"
+        },
+        "candidates": {
+          "rows": 11856,
+          "semantic_sha256": "549e9475b764bc05611b60d64d39c4cedd14e33993db0542aaf829290670d3a0"
+        },
+        "alignment": {
+          "rows": 1486,
+          "semantic_sha256": "c6fea5e6207004ecec7640f63bb308d00c10be68c486a885d4c76cdacd5b36f4"
+        }
+      },
+      "graph_time_s": 0.5129650999879232,
+      "nodes": 26635,
+      "arcs": 56027,
+      "elapsed_s": 2.6347303000075044
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000077",
+      "source": {
+        "track": {
+          "sha256": "249f32516e1b68ab1c8a83ccc5f8e23fa8b44b8543489ff62b1fe58ebfa1b8cf",
+          "nonempty_records": 3911,
+          "loaded_rows": 3911,
+          "size_bytes": 127956
+        },
+        "nodes": {
+          "sha256": "35f1cfea61ac368fe63366278c5e7e824d2cfc42610a3aa4befbfc37623e4df6",
+          "nonempty_records": 4424,
+          "loaded_rows": 4424,
+          "size_bytes": 88480
+        },
+        "arcs": {
+          "sha256": "ac893522636b099d4fcc2717334818a1aef7879f9a09f0c61592c2c0d1a86581",
+          "nonempty_records": 9622,
+          "loaded_rows": 9622,
+          "size_bytes": 91058
+        },
+        "route": {
+          "sha256": "8d6770cce557889c9db01c637facc0cb31503291781e25fbadbc686028576b38",
+          "nonempty_records": 268,
+          "loaded_rows": 268,
+          "size_bytes": 1258
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 3911,
+          "semantic_sha256": "efb6f763f2bebb8ff487c169e870380083cac18fae05fc58938cb6e543f5455c"
+        },
+        "candidates": {
+          "rows": 30526,
+          "semantic_sha256": "a59f200aa1390601b839f43f4d13192c659fe68ebaaa6a9984f4815b313c8460"
+        },
+        "alignment": {
+          "rows": 3911,
+          "semantic_sha256": "27c4f13c2211a2d31d6ba98bb6971415f0fbecbc1bc32996ec56509fe7a1bdf9"
+        }
+      },
+      "graph_time_s": 0.1063750000030268,
+      "nodes": 4424,
+      "arcs": 9622,
+      "elapsed_s": 5.121774899991578
+    },
+    {
+      "partition": "student_test",
+      "trip_id": "00000091",
+      "source": {
+        "track": {
+          "sha256": "72952c263046bc41bd7899a7d266c0225b5dc35d1f14e5654a04978ea78f237e",
+          "nonempty_records": 874,
+          "loaded_rows": 874,
+          "size_bytes": 26986
+        },
+        "nodes": {
+          "sha256": "c74ffdd3b604a731ca7d059500266f9b959b0f78935e79630083d9111cae54c0",
+          "nonempty_records": 6360,
+          "loaded_rows": 6360,
+          "size_bytes": 120840
+        },
+        "arcs": {
+          "sha256": "228ce5b9d30419054b08e9ddbf1af2d91f71e70e953e9be98c643df5be27a35f",
+          "nonempty_records": 12303,
+          "loaded_rows": 12303,
+          "size_bytes": 119276
+        },
+        "route": {
+          "sha256": "f4aa8efc4c15b5008480463f4bbf8e155b70c4e8434bc62cc54f72f44f167275",
+          "nonempty_records": 232,
+          "loaded_rows": 232,
+          "size_bytes": 1095
+        }
+      },
+      "tables": {
+        "observations": {
+          "rows": 874,
+          "semantic_sha256": "2c8b01b6f6a1a39a298489c0148fadab0b5a17fd65c2935c14cc4c282792176c"
+        },
+        "candidates": {
+          "rows": 6823,
+          "semantic_sha256": "fd829aadf06b96cd32a13c1176e692aeb3654394882ec06648651388194d44cc"
+        },
+        "alignment": {
+          "rows": 874,
+          "semantic_sha256": "78ba61d142721a0b848c7868dd8e973b321bd37c46d4767af35d5aefde508e0b"
+        }
+      },
+      "graph_time_s": 0.1720746000064537,
+      "nodes": 6360,
+      "arcs": 12303,
+      "elapsed_s": 1.4743389000068419
+    }
+  ],
+  "outputs": {
+    "train_observations.parquet": {
+      "rows": 208417,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000001",
+          "92a67517ebfd5505510a779288c5b92ba5492a2daeaf121c325a200733d6efc5"
+        ],
+        [
+          "00000002",
+          "67a8a787815fedfe327cf402c4d79f9e1018c3ebbf37e84ef0a774dec39538f4"
+        ],
+        [
+          "00000003",
+          "15d6bda3021706e8798aba6ce44d3db0824e36bae0fef9046d454292b742f172"
+        ],
+        [
+          "00000004",
+          "0ea31df8eabbb65a8788e6fd6d6d00f191cae637bd282a6a9895280edc2be25b"
+        ],
+        [
+          "00000005",
+          "9af611f68848487a050b4dea3ef0f94a355cc46970140c69ab7fb602cee4ea3b"
+        ],
+        [
+          "00000006",
+          "bdc50a51112a0bccb5ed3b4ef17230651ba872bf75a8a615ebc6582279c4c129"
+        ],
+        [
+          "00000008",
+          "f2076a6d6c58d47b768c0dd9df52ac2579da44c39a3e0d96abb798486eb9c41c"
+        ],
+        [
+          "00000010",
+          "c378234d143c97ee30d88b9583ff1d5338dbc1e9426be02f4664f011a0659902"
+        ],
+        [
+          "00000011",
+          "8b523dc2e5ad3a4302e2fb83b806d6287720612ca212c2cd49b071c89e9b000b"
+        ],
+        [
+          "00000012",
+          "5c6cd1e42d6514540913e68ae6097b5752833726dafc81247b4a8c3499005f93"
+        ],
+        [
+          "00000013",
+          "cd2023f56d83ca96d1bf16232475d03e06415c9ca815ce327a2b0e8e1f6c7d43"
+        ],
+        [
+          "00000014",
+          "d2e9f15a7923506665143beee6a16b2a3e126fb860ffca364ce969be8df81000"
+        ],
+        [
+          "00000016",
+          "8acfcdf04c0767f722285f10dfdcff9ac4262a04175f685a1500381a1cd01457"
+        ],
+        [
+          "00000018",
+          "695a8357522151d196f55b439f16d2c294c927513f663f22cefbe277d5f6216f"
+        ],
+        [
+          "00000019",
+          "a5644c917912736e88c583d71f230f0926414fb25c56dee9f57cdada8220abf7"
+        ],
+        [
+          "00000020",
+          "9467d7877ed63924c15a488854406ccb93f210426bf91f062043ecd2fb5b4664"
+        ],
+        [
+          "00000021",
+          "2cbeae865887dd8c64e23c8d66c44d2e2a3852014cdcf4c3c57d754c442ea37b"
+        ],
+        [
+          "00000022",
+          "34c719a204fb7092f8bf2c827e0ea02936c07967f23a6e112d4845a8dad86efc"
+        ],
+        [
+          "00000024",
+          "1f798f13477f66f3b7c6cc5e9cc2175c5c6ff5076af455b718953cb6adb874d1"
+        ],
+        [
+          "00000025",
+          "22aa0d99ec52dc4104679f2d6baec57c2c634c0f1ed9cd9fd80210e869125986"
+        ],
+        [
+          "00000026",
+          "0c47e84bcf22047c3659757e51176fdc4e25729700fce486f3e7eb952347671a"
+        ],
+        [
+          "00000027",
+          "7969727532aab5ac702e19c1535330278172f252f96e21240b88c072a3073de5"
+        ],
+        [
+          "00000028",
+          "d011244f27ddb2ff009a8e01f1aba5c448d433f3da761762dc1942790bfeb2b2"
+        ],
+        [
+          "00000029",
+          "8f43909ef92567a18132375004620f6d3ffee25a39fda161eed629979389edae"
+        ],
+        [
+          "00000031",
+          "d7a574aff816b835f5f9a647e5989e0a995c741638ecc18c186b79e8b568efd8"
+        ],
+        [
+          "00000032",
+          "f7c5612fb70831bb029b73c73e314afe3b4df20ec2175300fdacd9c3d11ba962"
+        ],
+        [
+          "00000033",
+          "9abe0d64b225de0c3f1fa2fc2a06d79be3c33a2200fb4ebbf5a02ba4f3e19f06"
+        ],
+        [
+          "00000034",
+          "056381012b93a7e833775840aa0a40dc5c8d1edae1f3dfcefd14adaa4be5e308"
+        ],
+        [
+          "00000035",
+          "7816e57ae6dbd2f0816a33fafd3526ac1fb0eeea50706ac5cb4ee945e84bfa6d"
+        ],
+        [
+          "00000036",
+          "57ea37c7c7a69c1f2d70c7eaa9561abaea445eff40c33283b30b70492932400e"
+        ],
+        [
+          "00000037",
+          "f91ea984b737f668f7262fd760fab9440517d53fc8b6d8f396687b3912a83d6f"
+        ],
+        [
+          "00000038",
+          "2f376bb7ace3e9f40c4bb862e45e652114432bfca041a72f6f1459e32f902fd1"
+        ],
+        [
+          "00000039",
+          "58ca8ca07623796535a2bd2d5b8dd6e211ae91793051aa990d25719d44b4dca6"
+        ],
+        [
+          "00000041",
+          "9d789868dd853213de23eb75fe0853cd2e5aa476a85c0e6db20a598b63d542fb"
+        ],
+        [
+          "00000042",
+          "5379039e895816b7f1e0371d7b7b07452b415d0b8bd5e19b064f1740d3cb2ac8"
+        ],
+        [
+          "00000043",
+          "a11085060ddcefecabaaafa2c8eb4cbf425b8712b3ebf2f2cc3c47811875c6ea"
+        ],
+        [
+          "00000044",
+          "f1cfb2b3870f86f9b981e56b0531db1ac76bf0fc11c898d48e48a5f3b4f4400f"
+        ],
+        [
+          "00000045",
+          "d732ba490688eebf46e9399e0776867579a2227a021e67ce0990ae1caccbb776"
+        ],
+        [
+          "00000046",
+          "b49557702d67a2135456bb55da5e98f07e9ed0db148a6869782ec981f9fc96d9"
+        ],
+        [
+          "00000047",
+          "da95789ff8bb53f22113af2c9550ea186bc63ebb47e412748c9a19cb9e9e7625"
+        ],
+        [
+          "00000048",
+          "be730be3af5801cfb9c11ef02856c00f335a5f06ce963ada62baa63b239b197f"
+        ],
+        [
+          "00000050",
+          "8766c7f887d0566204dac40483dda9a482405c69b7029e1f39104be9ee88c1bd"
+        ],
+        [
+          "00000051",
+          "cdd0306bb51de059cb8bf431447aedc570f82aefa8dfbc5c3a3961a94be63afa"
+        ],
+        [
+          "00000053",
+          "2e1aad57c52c83b7b878255671abf398e82e4937e7c25fee88639b6852f3b405"
+        ],
+        [
+          "00000054",
+          "c203a4677bbf3a8f86e60c8e2e9830f4422e99cc56b9852cea518585587efd85"
+        ],
+        [
+          "00000055",
+          "027889fe78364c91951b8917349ae57e48f2316cce8552a486d1e146677dc256"
+        ],
+        [
+          "00000057",
+          "7cc2d52a8af20bb6928d0884b41c634a115e87c118674b65ac9b6f062d099aa8"
+        ],
+        [
+          "00000058",
+          "bb42d017b0576af522aa0a0a66a7203fc9c39a22a6bc5f37b6b077e3a1d5a5ef"
+        ],
+        [
+          "00000060",
+          "df6a438a98a9546488c3f9add9af76bfebf2c4e631f343a7eab03479a97e83f6"
+        ],
+        [
+          "00000061",
+          "8ae5c6c87e27c990367839572f635f8cb6affbf1cff2e35654488691302d2033"
+        ],
+        [
+          "00000062",
+          "f6e69c971503ad845a2d11887b5e581599f7eb8681a440ae633ac094a354e6b8"
+        ],
+        [
+          "00000063",
+          "8ec4ef19334f23dcb23d4528c2a0995ce9d27e9c10c3820b3838ceb497e38937"
+        ],
+        [
+          "00000064",
+          "f6f037d91aae39256383395576035173dde7d65e95b98374a40153c21ff7f398"
+        ],
+        [
+          "00000066",
+          "b7cfe62eec2ec7a37aac2ad9f40d38ba8eec24801f07899cdedba65d5fab799b"
+        ],
+        [
+          "00000068",
+          "6faf298d5c3433506699e4385527f78ef496d12c2abcd508a40aaa534fb5693f"
+        ],
+        [
+          "00000069",
+          "07a9372bcbfa803327c718c290df85de8985f9d2ad03b81c081bd40a5215b262"
+        ],
+        [
+          "00000070",
+          "1a1abac88fb475ba44605a59407ca601301ba878743028c9f11af853623ce13d"
+        ],
+        [
+          "00000071",
+          "b27ce03daf381e95db27409512f352dd00fd72436867ba161fbe2c8e2d7965b2"
+        ],
+        [
+          "00000072",
+          "4c3851056866e68fd6b2715aec94d6dfcb99c77120e0b32c5d7eaac39d3c4a4f"
+        ],
+        [
+          "00000074",
+          "3387f1250184eacae78e923373888f773ae5cdcecdeeab44912f3beebde79092"
+        ],
+        [
+          "00000075",
+          "071eaae83bade6c6fbae41dbb30e7f47680bde206fe502544a930ec576d99d08"
+        ],
+        [
+          "00000078",
+          "dadd44e60ea97c88bd246119a429fcb8e9d7685bfe1158f431504bbf400102fe"
+        ],
+        [
+          "00000079",
+          "5d62b3e334df8ab0575322b836cb129c79ff0363c7213fdba72ee351dbad22d2"
+        ],
+        [
+          "00000080",
+          "96c984d21790768fe8abf139a5be2ffd11d1c0895dd90ec07b53ca242ae78dc6"
+        ],
+        [
+          "00000081",
+          "21222287cf43de406a21ef41d5b129b5d4dbc2504b9b6e9766f1131894437993"
+        ],
+        [
+          "00000082",
+          "4bf3adb5c57ac6d591485a10a07a068ca31f48f05420341d569d42d0101da52c"
+        ],
+        [
+          "00000083",
+          "7b309c85984030303a5ce69fcbf6faddde733e4798e68d70bb913047f51910f9"
+        ],
+        [
+          "00000084",
+          "f1274af33796d938df92aa9c998311ea77eee376f9a25b6d9f6aa2d321e42cb6"
+        ],
+        [
+          "00000085",
+          "ddc2955b082b35ca488e15385db1df5088f624fb2b611926a1689d8d791de730"
+        ],
+        [
+          "00000086",
+          "101355f95cb6cef6fd08698aa089ed406df3b9d60fb733622123ae492f84785d"
+        ],
+        [
+          "00000088",
+          "bba03547fe75d9ce6edb040262f583007a6644af95fbffed1b8ac184890f4dd5"
+        ],
+        [
+          "00000089",
+          "53c24957dfab02dce3ce60c63984d55b09be50286dd01ccf568a57b585ec8c6e"
+        ],
+        [
+          "00000090",
+          "067a93eb3896503576c762f4ddf5baffd32aab76c028b777e5036b5480958e9e"
+        ],
+        [
+          "00000092",
+          "9e037d70bdfa3a4d9aac7e43c9ce35b08ced24f2368a37c9834fdb45a5b190e6"
+        ],
+        [
+          "00000093",
+          "53c89e3403860458ff54b187ad48305ff6cea422237555b54bc5e5dc39a1e941"
+        ],
+        [
+          "00000095",
+          "88d74b53855b4233e70730cfcb5d180077a7786ce613fba780284fa1c0b4d06a"
+        ],
+        [
+          "00000096",
+          "fd8763e5824904d7b0fed164e0e6f7ec281a987b9ec23a1f92f85429a96079c9"
+        ],
+        [
+          "00000097",
+          "a76e8f8b4ed700adbf019b54a83ab06b54bd142ded1bf40c13c87baeabc578bd"
+        ],
+        [
+          "00000098",
+          "939f70a4aec37220fab9e79b954e230fadca48cd9c66ee665581e45488663663"
+        ],
+        [
+          "00000099",
+          "ec5426015525eb30f218b5c10aa24678c8a5320500312047334dcb188b801e60"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "partition": "string",
+        "obs_idx": "int64",
+        "t": "float64",
+        "lon": "float64",
+        "lat": "float64",
+        "x": "float64",
+        "y": "float64",
+        "dt_prev": "float64",
+        "speed_mps": "float64",
+        "heading_deg": "float64",
+        "is_valid": "bool",
+        "gap_flag": "bool",
+        "n_candidates": "int64",
+        "step_dist_m": "float64",
+        "coordinate_valid": "bool",
+        "timestamp_valid": "bool",
+        "nonpositive_dt": "bool",
+        "suspicious_speed": "bool"
+      },
+      "file_sha256": "1a18b83d019a6d8c641c78601af4ac6cd40fee679eb4e4c284fbd04a6154b9da",
+      "semantic_sha256": "1fa1b50804eaa6f135db9c048c5d694cf83e0f46f1ecdebe5f7d740bf90df663"
+    },
+    "train_candidates.parquet": {
+      "rows": 1358450,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000001",
+          "0d1ae0e9601bd5ac5a44b8e372c045038a48507a448d1169ad8bc7fd39ea75a5"
+        ],
+        [
+          "00000002",
+          "fb4fea9415c3c3c5cf8bedcfa512fe2977118e873b8d5b368b101bb81ea08e37"
+        ],
+        [
+          "00000003",
+          "0ef5975497857500074d3ef4ffaba88c0ba24683da2921a2d6a29f89e6e52b2d"
+        ],
+        [
+          "00000004",
+          "f1d3f441433e04bdb9867c9c112a4ce55868d3f21d7cb9febd44e3aa939055b1"
+        ],
+        [
+          "00000005",
+          "291df30195d55662918081bbd5fce40c442014eb422a91d4a75e5ba02df4fd18"
+        ],
+        [
+          "00000006",
+          "f6d7e09e5abd9c772d0b0bba000d17abcfebc86e564172b22ff1b75eb0352eb9"
+        ],
+        [
+          "00000008",
+          "ee90921db2c761254fb9222654dd5e4e03e3a8190e40eab5738bf38950bb4591"
+        ],
+        [
+          "00000010",
+          "8538d769f7838ba26a225db40cf17e31b023e375e856b1209984ad92536db24f"
+        ],
+        [
+          "00000011",
+          "f9c1761467862af3cc35e4e1dcf3ece2f872fd4872705c92fe8d431c916496c9"
+        ],
+        [
+          "00000012",
+          "f47ed26edfa2882a209420a9055bd4cd3f50a38a91e8c7a16926fbeb1a206c95"
+        ],
+        [
+          "00000013",
+          "d93f30c1f46d53bf3f5754f4a607c33f0d55d9bd83433f2d41eb2ebce177f7b0"
+        ],
+        [
+          "00000014",
+          "cb69f5b1a962667db1328fa3a57d37f3f633771bb9a93f3b9ea64360ccca71a6"
+        ],
+        [
+          "00000016",
+          "615f8205a13b878bcdd892879446554072c4f709825deb48de4dcca9f3a695c2"
+        ],
+        [
+          "00000018",
+          "37a0e5659fe95e9f9e990c3180ac3c3b3164cc0d815222f08e3ecf675e022d99"
+        ],
+        [
+          "00000019",
+          "a0f28a879c4a603259f4013e9603653878e9d96445c485eb0e25b0554155e696"
+        ],
+        [
+          "00000020",
+          "1963ea717535214587a8d73ec67bf8a41fe22dff418a7cbb7393fa0282543f3a"
+        ],
+        [
+          "00000021",
+          "d57fd6fadae6115d09b328a072a63df5962a812b6525cb7cd31cc33655b1a16e"
+        ],
+        [
+          "00000022",
+          "3b09bbf1b04b4d8f9edb513be2e7bde71df5b68a024477db0c59ca0e4fcdc32c"
+        ],
+        [
+          "00000024",
+          "b9261444eb022d47c56cb6efa5ee08c02c8e2a86459c59e9a2b2eaeca853512c"
+        ],
+        [
+          "00000025",
+          "ed459df18678d57dfee92ed1c6edc6412c2bd79b3e812800a1fdc6ccf60ed08d"
+        ],
+        [
+          "00000026",
+          "27d7edafb8064853f81c8eda4d62b9dd030859db1ecce5aecec6f4ca1e17a3c7"
+        ],
+        [
+          "00000027",
+          "e80455c896e6d92e5cbdbfd6053ce33bc7f81674029ad4611e0ee9bd55c4a0af"
+        ],
+        [
+          "00000028",
+          "67cd86235c50e65fc85da3ca2460a4a92090176d0410e2c188bc1b8c0b2bda78"
+        ],
+        [
+          "00000029",
+          "87db5a27a0c88ae3a45d4aff350c3f9976d614309f735cf86a7907623d28a8b6"
+        ],
+        [
+          "00000031",
+          "a65bba36060d856ddf4456c1be4424482ce114e2718321735033bd750d468d05"
+        ],
+        [
+          "00000032",
+          "1fe3107d185e48e24f7dcdcaafd40af50b5e50608c321ce4fd5be8e08d6c2da2"
+        ],
+        [
+          "00000033",
+          "02134de00c568e7abc0b36b0160801ef6cbf4a3582130b736ecd85213f8056a8"
+        ],
+        [
+          "00000034",
+          "c54a1b28b4e07f1bd062572ad3905ca91e3422bcbfae82469808d4a392ac63ab"
+        ],
+        [
+          "00000035",
+          "9d49e4e358044055ef8fa5d8ca57545eb55e548a9066dd33ecb35e068ee8cda5"
+        ],
+        [
+          "00000036",
+          "fd8efa3abe012cbb5d7c993e8a80ecc735b19e0393d142589050df254f0b6eb9"
+        ],
+        [
+          "00000037",
+          "dbf25f9d8e546d863f5f13c7c5e8589a0c3a4df124b5d95a805dc457d22864be"
+        ],
+        [
+          "00000038",
+          "1cb4abe0beeba920cfc5caa6844bb51d27ee95df4f682beee148ac362e5bd336"
+        ],
+        [
+          "00000039",
+          "a4091937c09e227f3a4f034ee29478b43312ca1cba0cad4ea021783f90309c7d"
+        ],
+        [
+          "00000041",
+          "d1f3a1d2c5a4dc311b0330275990d802ff90769e664a7fe79dbfe6e8c6560fec"
+        ],
+        [
+          "00000042",
+          "86e9f799a47834ff8b979076cfcd377239e6b7840029176d4ad6e9502d2dd3b4"
+        ],
+        [
+          "00000043",
+          "713214930c3cfd4fe952a744a6e2d528dce4b4ca996708385a4dcbca17165da3"
+        ],
+        [
+          "00000044",
+          "3897a79db9a6dca03ee4a1abaeb361f8690705684b6514234bf49e8548147bff"
+        ],
+        [
+          "00000045",
+          "710c17fda190f9dc26dce28e829a2bca06ced743c13e325cbced5dfab86c258f"
+        ],
+        [
+          "00000046",
+          "fa56debcf8737b7725ebd6f9099dd7d153bb2dd22776181d8984b065f4c00b6c"
+        ],
+        [
+          "00000047",
+          "c844f6aedbc606ccba307d33e5a651864b0dd00f17886a36b50d7bf53fa05d6d"
+        ],
+        [
+          "00000048",
+          "3c2da2fba06121434f88990f3768c23738db7e0fdf5adecf4ab8676215aae43f"
+        ],
+        [
+          "00000050",
+          "dcb67d3e336016613eb19e5ff2d7162e37b90025ca54517c53abb40d23da93fd"
+        ],
+        [
+          "00000051",
+          "7940101f9b52dcc56a7b41e7a3b7ade4c6d5879a3d5cddb1402760dca61bf466"
+        ],
+        [
+          "00000053",
+          "fe5d95aca603eff5acd0f615437fe7becf92891545756a50180bcffc8954f455"
+        ],
+        [
+          "00000054",
+          "40852e95a8c29f7933077b2afd85f2efca7dc8b177c55c3bd4b44b3dbdc25141"
+        ],
+        [
+          "00000055",
+          "82c653c06dba1b7aad6431996f6affb8d50173f665223e141ab3242255d945cd"
+        ],
+        [
+          "00000057",
+          "31f767534ca6e1c058c52c0269984030b2a6ba87f221b27cfc28b3e6946b09b4"
+        ],
+        [
+          "00000058",
+          "20376a9bb0919c2e184e8b220cd32d6bbc5ac17849fd49dd82a553246806c393"
+        ],
+        [
+          "00000060",
+          "0d5e4c9dedaa60f8ac58f120df8af96bfc251e23a7a1a7767eeb483e6ea3dd5e"
+        ],
+        [
+          "00000061",
+          "6480639a6c5424f3eb443c2e4905d813e30ad1d9e651a6283c5923e752d8cf15"
+        ],
+        [
+          "00000062",
+          "5d02afe93d43a2ffc845755e5aa6af6c1816a432c491593f0234d5e46206f751"
+        ],
+        [
+          "00000063",
+          "f1ccab86161a88afce90413c262fbadeefae21379c6d39c0d5bc591743ff1255"
+        ],
+        [
+          "00000064",
+          "f784633fb6a0ab1374ae9990f1737ace5202202136dd6dd4aa5fd8ee4fa83d13"
+        ],
+        [
+          "00000066",
+          "cc3b93b5d3128ba9e9448fe326a18d003985cdfce5e79bf2bd70e65993c20e5e"
+        ],
+        [
+          "00000068",
+          "29bb3d92dd1d08ec05d0fb4efa73386b76d1a56b5eb2311ac7c16f76ff857678"
+        ],
+        [
+          "00000069",
+          "c1760183fe33f2064ab283b7d1813fe25060a15e5366e24090edb16272ff879a"
+        ],
+        [
+          "00000070",
+          "25684351b6f2415e476866e4ff553f314474b9d67199258ad610c68655bbb5b1"
+        ],
+        [
+          "00000071",
+          "f9da139421ff4729bf27e0cb71588d4908ab8ac96220ac6e95a082933e71e0f0"
+        ],
+        [
+          "00000072",
+          "89dc74535428867197877b3cd4977b9e38cc1eef968b7c63a91c0499bd8bccc9"
+        ],
+        [
+          "00000074",
+          "592ba56d595645a3056c772d5c80cf260bc9825e5516497c635c8f809658c106"
+        ],
+        [
+          "00000075",
+          "3bc2fb44f52069c33c9421b577b42ef0891814d61c122854c1769f1544872a1b"
+        ],
+        [
+          "00000078",
+          "7ae5caf429eeae45ca548cc06788c7676ae48a6e1d5cfff9f5f3ea439ba458af"
+        ],
+        [
+          "00000079",
+          "c5fc6cd44b2e1828cdf3ceaf9248e125ba9493d0786ad3e66d5274e0513a2cd2"
+        ],
+        [
+          "00000080",
+          "5f36ac28b803fec4fa22fffaa39825e5a25918258829de1b6f8d80dc5bbf38ab"
+        ],
+        [
+          "00000081",
+          "cba5e40cdb43a7b1a5e963ad3f0857ea5a84acad34a760d7ab94c87ae297d549"
+        ],
+        [
+          "00000082",
+          "c4ff3c5800017d21eedad1653f9699fe564514bcff983a419cdd2df193830dd4"
+        ],
+        [
+          "00000083",
+          "b7b0f6e54a14bea40699b95f3aaa701eec85a47c71f00acba38e2977f6f5a003"
+        ],
+        [
+          "00000084",
+          "70682af36d42eb957616166df0bdc8fd513ca00b0be3e67af16343eaa616aa70"
+        ],
+        [
+          "00000085",
+          "c5df588d05dfe8030ff66b4454bb32ba924ca3a3e636a3d5cb18b381d8b30119"
+        ],
+        [
+          "00000086",
+          "ae3dedaa6c9d01d7f5153e8bf953ff8b4a401efe6e6feb0571a0bd05bdb4129c"
+        ],
+        [
+          "00000088",
+          "382102985dca23e489f9c2c7cfbcdf3f76c4de4c8b86b85c80f0014a6efdca93"
+        ],
+        [
+          "00000089",
+          "614bb9f78cb5a7997132b3eadbf9212759f50c9250f14d708d2ae7703ada5fc7"
+        ],
+        [
+          "00000090",
+          "0f42693b7f3070389bbc7e1b50628078039675e830177aee7ebb5e028f6b1a72"
+        ],
+        [
+          "00000092",
+          "2fd610b0325b3e0b87b8bfc1aaca6f6e404416ea167c5d0b7aa67961558da8e8"
+        ],
+        [
+          "00000093",
+          "8660db6c4d326e06bde0ae90d2dd98c68457c58ee13b71d6e6fa640320f0c14e"
+        ],
+        [
+          "00000095",
+          "56b8bfc3e9c737d84e578c1feaac3e482e9eacf99f16b5cc7ec50d7ccbade455"
+        ],
+        [
+          "00000096",
+          "e933e109c6ba28bef8b46d95fca3939e171db31afa029573d0bde1239d12e20f"
+        ],
+        [
+          "00000097",
+          "b41b63fc80030fb72cf2474f2efeaaa0203cfb45a374259e4079e907f977a443"
+        ],
+        [
+          "00000098",
+          "83b322a003fe77b4caac9d46b4f79fa168854fb13375f2bae64e9a88258d9c54"
+        ],
+        [
+          "00000099",
+          "5cd79d2a2d740f6df57dfd98ca49b435f83a1f7ca7f684534144dd076f4d2e70"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "obs_idx": "int64",
+        "arc_id": "int64",
+        "cand_rank": "int64",
+        "dist_m": "float64",
+        "proj_frac": "float64",
+        "proj_x": "float64",
+        "proj_y": "float64",
+        "dist_minus_min": "float64",
+        "heading_diff_deg": "float64",
+        "speed_mps": "float64",
+        "arc_len_m": "float64",
+        "n_candidates": "int64",
+        "is_oneway": "bool",
+        "source_degree": "int64",
+        "target_degree": "int64",
+        "prev_dist_m": "float64",
+        "next_dist_m": "float64",
+        "label": "Int8"
+      },
+      "file_sha256": "8c0dfd03bf998a7a40ca3e0b86d9c5044663d7d1af42cff7b0e3e9febacc9285",
+      "semantic_sha256": "4a10e846975aefb1e061ef5b67bf10b3682fa54f99c9b2ca93a243bc0202f158"
+    },
+    "train_alignment.parquet": {
+      "rows": 208417,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000001",
+          "e419c11e54b8e1ed9a26a15f81b020904e3953c4efd5615e6b08e7980c7fd6b6"
+        ],
+        [
+          "00000002",
+          "d9af52ef4a9e8d8d5646c790dfa5e9af5e2589aba8005efa3d51ded12f77e052"
+        ],
+        [
+          "00000003",
+          "0526f9d573ac9aefe78ed185f8e7c88b231193ffef63234337bf52a03866492d"
+        ],
+        [
+          "00000004",
+          "fd0314ac531acea9181443140b715bf4081e6d4f7fed134a01bd60549fb1352b"
+        ],
+        [
+          "00000005",
+          "3a6474c0bffd4989701d48958d94447402aab6711701691de10a865830718a80"
+        ],
+        [
+          "00000006",
+          "c1e8212078be18ed21a28a6bc1d2ecb545f1ca5e08f87c42a57a1b55e7b6d1e1"
+        ],
+        [
+          "00000008",
+          "bcd0014667fc6752bf49b3a9e242311b9a4f3283b8c7a2954440b9fe9b46f839"
+        ],
+        [
+          "00000010",
+          "05da79d596694e5784f529d9a8e3c0b0800a38e742c31b0de784831d7da10e1b"
+        ],
+        [
+          "00000011",
+          "58879468ec67e34511b6ec743de50ab8a60035b0148fd5e5632088b36b0a3a7d"
+        ],
+        [
+          "00000012",
+          "a8df579a707d6a3524428b0180432d686f508e212959cf450b39c079341d35fa"
+        ],
+        [
+          "00000013",
+          "f477da83ab5108794bcc3a7d611e26a3c0467c1501eb61b92f9e8e0cb835a40d"
+        ],
+        [
+          "00000014",
+          "786f7b1a03b57d508bbb8a0f189658f8b9dafc8bfdd2b8b2596c7337fb895bcb"
+        ],
+        [
+          "00000016",
+          "b1fa427022ecdd76493c4372a3192ae43ba84727ed135980499c43df7ef7bcac"
+        ],
+        [
+          "00000018",
+          "12a7e18dbb3bde5aab63f241e5dcdf82ea45dc7f2882e8afebb5cfc853ed80cf"
+        ],
+        [
+          "00000019",
+          "ccee2315bf81f2e227b6ca98ec8b2a391c7515a5aa85f66ad467c572a867f129"
+        ],
+        [
+          "00000020",
+          "eb25f12293ac9cdc235ba3164af25bbb4a88da40e90b646f122f6f688f52b098"
+        ],
+        [
+          "00000021",
+          "a61522dc7107ea3af8ff81a85e845402ab63423f5145a88995d4d4806bd6a24f"
+        ],
+        [
+          "00000022",
+          "06178d76a9e98a4b0fca57e7f560a1721d2944c331863c5e8fb07f3d8a1f8661"
+        ],
+        [
+          "00000024",
+          "a13ff0ddba0023fae0e0f90684cfe0e9df1f33651ff810452b460f693f8d020d"
+        ],
+        [
+          "00000025",
+          "e81ae865e284dd587e74d53e57a8ff70410958ba93cf1f2eb4a342ac50403dbd"
+        ],
+        [
+          "00000026",
+          "282d29cf5d2f27ddb3d6a1b452b916aa3bc8d30bb872849da6fbc43375d9bd29"
+        ],
+        [
+          "00000027",
+          "8e2e98f8dd131731abb2caf083e362a8e06bdb7d76e388f1969fd11ae31cbce6"
+        ],
+        [
+          "00000028",
+          "d1c45415a0af6b25e526d6f0f9cd4948c0252910459e1fd0d892fd863d72e9d2"
+        ],
+        [
+          "00000029",
+          "adffaa47936e2a038dbdb3087463d2322b08e0144ac1f7937a5a9ac4e7313f7e"
+        ],
+        [
+          "00000031",
+          "e72cfd52452ede7e823f911f931ef136263b4b014e4c8219885809e355791f0e"
+        ],
+        [
+          "00000032",
+          "e2086150f3da9afe50c682b98ad862af97816a2a317121208e1b2809a3e376de"
+        ],
+        [
+          "00000033",
+          "58e8ab2a4451ba6ec40a2148c3f32fc2b62ffaf23c3d2ce7546d09662f2ca739"
+        ],
+        [
+          "00000034",
+          "c25ba3d99214f6ca6642b280f0ed0910aed89e319dd00877ef14e297654a88e2"
+        ],
+        [
+          "00000035",
+          "82d3b5369f67e8188e0b7260096f002d679f8a0336ecea82a55ba8870b63726b"
+        ],
+        [
+          "00000036",
+          "fdca4a65b2c7aab5acb686e8aa655826598972a7bc91e4bcbfa409a3e61d50bf"
+        ],
+        [
+          "00000037",
+          "89ef524879b86fd76a6692255a3ee57d70a2ccd86cab75bdc0930c7ad317177f"
+        ],
+        [
+          "00000038",
+          "2ea4c9e4413777b875729b06af6e92ef1d66061534adeaf5bb0bf5de4db640f2"
+        ],
+        [
+          "00000039",
+          "84fad7a9451d413a3a2c9cfebbf77e9ec21b4fcb76024966c3159cd99373685b"
+        ],
+        [
+          "00000041",
+          "ced0da5d0b6be1ac27314700cd0423fc068521d61565679b2a876360d18e2c2c"
+        ],
+        [
+          "00000042",
+          "5858ebfe751f24e3d265b9f53eeb46cfca3b55cebfcf5900f725a7dfb6c14c1a"
+        ],
+        [
+          "00000043",
+          "f0c29e27eaf21c8c1c16a7e52bb4f90079b05d84ee75be783670ae7185712967"
+        ],
+        [
+          "00000044",
+          "65aeb41f613c90eec1a25a926c55be6c95fd1c918044d859273fc9c71eca3b2e"
+        ],
+        [
+          "00000045",
+          "c587113c7290fbb075f95761af6a6be751e1ded762fa9d4b8c28656ff36466b2"
+        ],
+        [
+          "00000046",
+          "4c2d89c34020bc8490c8ffdfaa043938b08aa5510723a8e02c8fe2115601477c"
+        ],
+        [
+          "00000047",
+          "43f6efad5ef78071dbf96ea12a548b05240a50e09faf302076554db383f462b1"
+        ],
+        [
+          "00000048",
+          "f689265609de4079b05cbbeac917aa32a89bbb6b845fcb7b4cff3e8b19738311"
+        ],
+        [
+          "00000050",
+          "244d47aa5c74ec1cc44f2e98dfe7466bb189f16894c5c9949af6962ce90894ef"
+        ],
+        [
+          "00000051",
+          "f9e3abca673a8b83d74c15da69bdd4d5bdc51a7e3f9825e6d7c3692d0cb563c8"
+        ],
+        [
+          "00000053",
+          "326c039aa4424c01cb7be5b9fa58bad3916b98675e4a7e001be4af1f5fae09b2"
+        ],
+        [
+          "00000054",
+          "1dc262c005061a98df32e8631b7717e97283a6e603ab7fe2bb724cd4b263c964"
+        ],
+        [
+          "00000055",
+          "aed54aa8bec06e6fbfbaa72a5c8ea9e8377648333753c43c28bb03deffe04ceb"
+        ],
+        [
+          "00000057",
+          "281382146e24d6e81a5279119e35528a223291d29813641206cf82a8dedc91d9"
+        ],
+        [
+          "00000058",
+          "b1fc50b3cae8df6ff1b6a42980903fe0d58e913ca45df7d6346b575444bde3c4"
+        ],
+        [
+          "00000060",
+          "2a48913f5c4d13a01c7c6a56631ed14a01f070c2aa1970e6543a0e79747dcdb0"
+        ],
+        [
+          "00000061",
+          "181133d14c8549aeb75781b6468585828f0603bdcc399304ba592c041846de0e"
+        ],
+        [
+          "00000062",
+          "b5da2c3dfc4d714f6a1091b0b6fc82d8589e333eb41df8bde2dce2d047cf8b48"
+        ],
+        [
+          "00000063",
+          "9aee2398a539952fc514f903917292eb09c95d53aab774dd2a0d544a01c218d6"
+        ],
+        [
+          "00000064",
+          "71c865b7f20460f59f0e57cd27525e21d9ebf5d74ee17197ac67dba59d8c4b2a"
+        ],
+        [
+          "00000066",
+          "eeabc3b282a3f5c22bd71a6a6f321d5c39cbf5f46fbaa2074a3722d99b7cdb3e"
+        ],
+        [
+          "00000068",
+          "aabcc3ed9a76872506af46ff3a7a0abfc37c34941332f1ba9d0c041cc9463d27"
+        ],
+        [
+          "00000069",
+          "8883359f27cb9865a3f0972028eb72a065f66a3156dd9a9dcce9baeb41ebb1cb"
+        ],
+        [
+          "00000070",
+          "67b8240456263529014d7768e345d23043ce4f4ae8932697aaa93794c312d8bb"
+        ],
+        [
+          "00000071",
+          "57df3570c4e6a17eb4a048aee97f05702c47873c1725834cf69862ed2478f262"
+        ],
+        [
+          "00000072",
+          "f56e49cb7a8088f76537425dc94fd63609262293d6f83c96a0970ffdfb541bbe"
+        ],
+        [
+          "00000074",
+          "d52a402664c471a6374bccce500d229030b08457ebb31390470db031a79af5a6"
+        ],
+        [
+          "00000075",
+          "58ef8080ff7e3508beb7a04f194fe1229725b5955cd61e657ef1dd8f7d529d72"
+        ],
+        [
+          "00000078",
+          "faeedc95142b000b4756909ddbec1f12264440b35036622914a3104859a603d7"
+        ],
+        [
+          "00000079",
+          "67a89a5187bb0818fc8d325909402ebb10701d41a272557c4e4f07c2a4936856"
+        ],
+        [
+          "00000080",
+          "f8a907625a6c145d84c0c44a13bd454e7c5d32eca3f34837264829bd7ddac59e"
+        ],
+        [
+          "00000081",
+          "9ca07ce8f3adcc016ab99cf04efbba67d5631126f6f4fee896b662b0b69f3d3c"
+        ],
+        [
+          "00000082",
+          "02057a12c63086c50680ba78b0dbf12edcb8b4167999288bd77cb20fef5b5360"
+        ],
+        [
+          "00000083",
+          "082c7d8a89cf4c19fc1dc51068e101b382aac69124924d80afd8b9b64b598542"
+        ],
+        [
+          "00000084",
+          "4f0b5fd1be68e13232a55bb3d13797b88beb576f4f531cea6e5141ae8fb2e718"
+        ],
+        [
+          "00000085",
+          "5bbac9f19dd15919c018851e062ba6126f57423422ed08c6c3ed023ab49732fd"
+        ],
+        [
+          "00000086",
+          "bf3510b05861ab4d71d96d8226891bd8e5c5cc9c9d5f16da9d94a3b07d07988e"
+        ],
+        [
+          "00000088",
+          "fe1114f079a6d2928c0b08b875cceee31df0a12426e714b5b80ae801c164fafd"
+        ],
+        [
+          "00000089",
+          "92ac4a0a9764caf30b2e02c405c60fb0c38b9de8a60f52d5bfbf71e60e9b725e"
+        ],
+        [
+          "00000090",
+          "07e13ad9670c8a78f0d0304ca9a31ad5f2540ce1dbddc850726ecfd47cb55eba"
+        ],
+        [
+          "00000092",
+          "8770d5f53661e6ee76b6488cf115310224d5cecd8630a9208d109b535e6fe394"
+        ],
+        [
+          "00000093",
+          "8fe90507e42adf8ae1a1d315906490a68b64ecda1c1e1815ff194e520d56523a"
+        ],
+        [
+          "00000095",
+          "24058cfc5d3c10a2b12891598b1eb802878784720d6de8a60a9d3de0ae18beb5"
+        ],
+        [
+          "00000096",
+          "48a46491f07d6849e11af7f7cd93fd87717c248b14f1d476efe17a9ce8b5d178"
+        ],
+        [
+          "00000097",
+          "164eef26cbcd1d7cba4d2a1e91281ad35609e87092f33230433087bbce964ce9"
+        ],
+        [
+          "00000098",
+          "d62d8df9b309e401d9475f6c3f06fa9ad8a59555a2bd5d4f3f05e826475273f5"
+        ],
+        [
+          "00000099",
+          "5eeda0201321ce4df0ff5795faee9fe9130deff4be73ad87b4faf789593d67d9"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "obs_idx": "int64",
+        "ref_arc_id": "int64",
+        "ref_route_pos": "int64",
+        "align_dist_m": "float64",
+        "align_status": "string",
+        "ref_in_candidates": "bool"
+      },
+      "file_sha256": "9d042d0205103a96a41e79a46387419316ed9f008c33db50773c815b245e159e",
+      "semantic_sha256": "55ea5b5d2839617446121c8a13177bab1278e7d4e2e871b64184fdecf7781c3a"
+    },
+    "student_test_observations.parquet": {
+      "rows": 19160,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000000",
+          "82b7e2362746f0db286be5c2d0672af8d8f5e79ecf4c4131866c49ac11c6c2bd"
+        ],
+        [
+          "00000007",
+          "d2fe9cb7a63761d11e0c205332496c54e1b05d86255f530cdeccfb4c69e25ef2"
+        ],
+        [
+          "00000009",
+          "cc076fed28cb69511b5b30ca9a7ce26e8642a590b9782afc7cc4967142d00c63"
+        ],
+        [
+          "00000040",
+          "6be6d0bac2ea49546a204bfe2b988450fc036efb34d2d1bf4fa50202504207cb"
+        ],
+        [
+          "00000052",
+          "128f90f8c08f9da0c1dc87cac8d118a767a2cc284055797d3d13e5f88c231197"
+        ],
+        [
+          "00000056",
+          "21810ac5e1717a5b71e91b4725235f92e7b0b145306d5d1805db6396f68faa92"
+        ],
+        [
+          "00000065",
+          "b53c3b0e29524c5e3d73d7eb70852361492c9e575a5450f9eb06cb80ee8caa0b"
+        ],
+        [
+          "00000076",
+          "887c0c14f6f7880b71cc812a69d0068359580c697782f66af9937361a2247b02"
+        ],
+        [
+          "00000077",
+          "efb6f763f2bebb8ff487c169e870380083cac18fae05fc58938cb6e543f5455c"
+        ],
+        [
+          "00000091",
+          "2c8b01b6f6a1a39a298489c0148fadab0b5a17fd65c2935c14cc4c282792176c"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "partition": "string",
+        "obs_idx": "int64",
+        "t": "float64",
+        "lon": "float64",
+        "lat": "float64",
+        "x": "float64",
+        "y": "float64",
+        "dt_prev": "float64",
+        "speed_mps": "float64",
+        "heading_deg": "float64",
+        "is_valid": "bool",
+        "gap_flag": "bool",
+        "n_candidates": "int64",
+        "step_dist_m": "float64",
+        "coordinate_valid": "bool",
+        "timestamp_valid": "bool",
+        "nonpositive_dt": "bool",
+        "suspicious_speed": "bool"
+      },
+      "file_sha256": "b39dd3ea494d2cdb90349ff32c3a233b6b09631bbf20bdedeade54b9b6041a11",
+      "semantic_sha256": "f36b80359ef01f77d5cf501fad490cd44bb02ad53e30b51b26906d005757ae91"
+    },
+    "student_test_candidates.parquet": {
+      "rows": 130919,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000000",
+          "eb99001aacb7a1f96fd8c52452417d5b623c05e32a12d1318b1d6bac0edc3e95"
+        ],
+        [
+          "00000007",
+          "996e906252c2f97d820db2718859984fb0c74f72d1e1de4930a5770e8abd1944"
+        ],
+        [
+          "00000009",
+          "1af6638b6917f40239cf609afd343e772a8b61351f18995150cfcc4c6fcf8031"
+        ],
+        [
+          "00000040",
+          "849d8cf34a66f5d17bde7d391bee14522f6928bf2136fe68987af4234b3cfb37"
+        ],
+        [
+          "00000052",
+          "9dd25339952e415ce0b911396a1e457e4aee4e74adf49d90b503c20c16ccf229"
+        ],
+        [
+          "00000056",
+          "ef7a41825012cb2b6bed6ae032c40cb1efbeea2678644ac6d426624fa23cf5d1"
+        ],
+        [
+          "00000065",
+          "b63eae37450d39c52eb5bc2676bbf39b51dcec753cf8142bc04bee3996e5c985"
+        ],
+        [
+          "00000076",
+          "549e9475b764bc05611b60d64d39c4cedd14e33993db0542aaf829290670d3a0"
+        ],
+        [
+          "00000077",
+          "a59f200aa1390601b839f43f4d13192c659fe68ebaaa6a9984f4815b313c8460"
+        ],
+        [
+          "00000091",
+          "fd829aadf06b96cd32a13c1176e692aeb3654394882ec06648651388194d44cc"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "obs_idx": "int64",
+        "arc_id": "int64",
+        "cand_rank": "int64",
+        "dist_m": "float64",
+        "proj_frac": "float64",
+        "proj_x": "float64",
+        "proj_y": "float64",
+        "dist_minus_min": "float64",
+        "heading_diff_deg": "float64",
+        "speed_mps": "float64",
+        "arc_len_m": "float64",
+        "n_candidates": "int64",
+        "is_oneway": "bool",
+        "source_degree": "int64",
+        "target_degree": "int64",
+        "prev_dist_m": "float64",
+        "next_dist_m": "float64",
+        "label": "Int8"
+      },
+      "file_sha256": "053e15af77bb4b1c5a5d6cb8a82e2ba1b7717e39e2030e9d8e72f17aa6403f19",
+      "semantic_sha256": "8f9cab361caa69ea961ad7f3b10f6c3b899d77f0973d51bc1873aad75dbffd2a"
+    },
+    "student_test_alignment.parquet": {
+      "rows": 19160,
+      "ordered_trip_semantic_hashes": [
+        [
+          "00000000",
+          "e6a490c2dd38bde7fd76510f937ac2c4adf885f3d2611524c37a0164623b21c0"
+        ],
+        [
+          "00000007",
+          "c6ce420d81c06eb3dc0d5d54bfd4cd2b04bea5d04363f1e6c159956ee330b81f"
+        ],
+        [
+          "00000009",
+          "08e539fc29da256cd875253462decadec0a611694f8309c8c02f70f6cd2ea5a6"
+        ],
+        [
+          "00000040",
+          "d9d752bf2bfc48b2c2a0375d5fc9707286fa5fa5d7594bba5449b7396bae055d"
+        ],
+        [
+          "00000052",
+          "af0879d381c375cb768c7e188105d451e7c4fa2b647fd8709e819fb739911aa2"
+        ],
+        [
+          "00000056",
+          "5cdd78dc7cdee137a1159d88f35927b574377f145ad0f9c96f7fea97fe9b9f35"
+        ],
+        [
+          "00000065",
+          "1709d5ee0ba8b15c4ef5bf604ee5633005299eff55847230b6f1a63a7c165b8a"
+        ],
+        [
+          "00000076",
+          "c6fea5e6207004ecec7640f63bb308d00c10be68c486a885d4c76cdacd5b36f4"
+        ],
+        [
+          "00000077",
+          "27c4f13c2211a2d31d6ba98bb6971415f0fbecbc1bc32996ec56509fe7a1bdf9"
+        ],
+        [
+          "00000091",
+          "78ba61d142721a0b848c7868dd8e973b321bd37c46d4767af35d5aefde508e0b"
+        ]
+      ],
+      "dtypes": {
+        "trip_id": "string",
+        "obs_idx": "int64",
+        "ref_arc_id": "int64",
+        "ref_route_pos": "int64",
+        "align_dist_m": "float64",
+        "align_status": "string",
+        "ref_in_candidates": "bool"
+      },
+      "file_sha256": "21447d59c40d845bf8670767f67c7ced525bdaed410749d849d9af6eb4c0d1ab",
+      "semantic_sha256": "c3bdfd74f52c70c5f73ec3b1983d6f9c64721827cac5487cbd460699be36110b"
+    }
+  },
+  "elapsed_s": 366.9550941000052
+}

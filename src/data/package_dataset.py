@@ -23,15 +23,15 @@ def package(processed_root,asset_root,tag,repository='rakshan-2006/ML-Hackathon'
             raise ValueError(f'File integrity mismatch: {name}')
         shutil.copyfile(source/name,assets/name)
     shutil.copyfile(source/'manifest.json',assets/'manifest.json')
-    shutil.copyfile('experiments/data_config.yaml',assets/'data_config.yaml')
-    shutil.copyfile('data/requirements-m1.txt',assets/'requirements-m1.txt')
+    shutil.copyfile('configs/data.yaml',assets/'data_config.yaml')
+    shutil.copyfile('requirements/reproducibility/m1.txt',assets/'requirements-m1.txt')
     schema = dict(schema_version=SCHEMA_VERSION,ordered_features=FEATURES,feature_spec=FEATURE_SPEC,C1=C1,C2=C2|{'label':'Int8'},C3=C3,label_column='label',label_policy='Exclude null labels (ambiguous/unaligned). Confident reference misses retain all-zero labels.',group_column='trip_id',partitions=['train','student_test'])
     (assets/'schema.json').write_text(json.dumps(schema,indent=2),encoding='utf8')
     checksums = ''.join(f'{sha256_file(p)}  {p.name}\n' for p in sorted(assets.iterdir()) if p.is_file() and p.name!='SHA256SUMS.txt')
     (assets/'SHA256SUMS.txt').write_text(checksums,encoding='utf8')
     prefix = f'https://github.com/{repository}/releases/download/{tag}'
     metadata = dict(repository=repository,tag=tag,release_url=f'https://github.com/{repository}/releases/tag/{tag}',schema_version=SCHEMA_VERSION,build_revision=manifest['code']['revision'],ordered_features=FEATURES,label_column='label',group_column='trip_id',assets=[dict(name=p.name,url=f'{prefix}/{p.name}',size_bytes=p.stat().st_size,sha256=sha256_file(p)) for p in sorted(assets.iterdir()) if p.is_file()])
-    Path('data/dataset_release.json').write_text(json.dumps(metadata,indent=2),encoding='utf8')
+    Path('data/releases/preprocessing.json').write_text(json.dumps(metadata,indent=2),encoding='utf8')
     print(json.dumps(metadata,indent=2))
     return metadata
 

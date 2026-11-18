@@ -49,7 +49,7 @@ def download(metadata,output_root,overwrite=False):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--metadata',default=str(Path(__file__).parents[2]/'data/dataset_release.json'))
+    p.add_argument('--metadata',default=str(Path(__file__).parents[2]/'data/releases/preprocessing.json'))
     p.add_argument('--output-root',default='data/processed')
     p.add_argument('--overwrite',action='store_true')
     a = p.parse_args()

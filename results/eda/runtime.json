@@ -1,0 +1,16 @@
+{
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "packages": {
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "pyproj": "3.7.2",
+    "shapely": "2.2.0",
+    "matplotlib": "3.10.7",
+    "folium": "1.0.0",
+    "PyYAML": "6.0.3",
+    "pytest": "9.0.2",
+    "pyarrow": "25.0.1"
+  }
+}

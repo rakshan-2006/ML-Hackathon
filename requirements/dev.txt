@@ -1,0 +1,5 @@
+-r training.txt
+-r api.txt
+-r ui.txt
+pytest==9.0.2
+httpx==0.28.1

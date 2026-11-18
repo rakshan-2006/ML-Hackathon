@@ -132,7 +132,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--raw-root',default=os.environ.get('PATHSNAP_RAW_ROOT'),required=not bool(os.environ.get('PATHSNAP_RAW_ROOT')))
     p.add_argument('--output-root',default='data/processed')
-    p.add_argument('--config',default='experiments/data_config.yaml')
+    p.add_argument('--config',default='configs/data.yaml')
     p.add_argument('--partitions',nargs='+',choices=['train','student_test'],default=['train','student_test'])
     p.add_argument('--trips',nargs='+')
     p.add_argument('--overwrite',action='store_true')

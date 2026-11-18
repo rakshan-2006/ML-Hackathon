@@ -238,7 +238,7 @@ def main():
     p.add_argument('mode',choices=['select','audit'])
     p.add_argument('--raw-root',required=True)
     p.add_argument('--processed-root',default='data/processed')
-    p.add_argument('--config',default='experiments/data_config.yaml')
+    p.add_argument('--config',default='configs/data.yaml')
     p.add_argument('--evidence-root',default='results/eda')
     p.add_argument('--figure-root',default='results/figures/eda')
     args = p.parse_args()

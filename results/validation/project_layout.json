@@ -1,0 +1,38 @@
+{
+  "verified_code_revision": "e004c93ca0be776f663f8386f39317a03b0a9ede",
+  "baseline_main_revision": "a1433bd799d4a4e7e82b67e0ede1215c6ae48d41",
+  "clean_environment_install": true,
+  "python": "3.11.9",
+  "tests_passed": 59,
+  "pip_check": "No broken requirements found",
+  "dataset_validation": {
+    "trip_count": 90,
+    "content_validation": "passed"
+  },
+  "released_model_compatibility": {
+    "logistic_regression": {
+      "rows": 130919,
+      "probabilities_match": true,
+      "max_absolute_error": 5.551115123125783e-16,
+      "top1_unchanged": true,
+      "top1_accuracy": 0.8279101598954769
+    },
+    "decision_tree": {
+      "rows": 130919,
+      "probabilities_match": true,
+      "max_absolute_error": 0.0,
+      "top1_unchanged": true,
+      "top1_accuracy": 0.8316431282274622
+    },
+    "gradient_boosting": {
+      "rows": 130919,
+      "probabilities_match": true,
+      "max_absolute_error": 0.0,
+      "top1_unchanged": true,
+      "top1_accuracy": 0.8356871772537796
+    }
+  },
+  "ui_folium_rendering_smoke": "passed",
+  "scope": "Layout/config/dependency refactor; no model retraining or dataset/weight changes",
+  "known_warning": "Upstream Starlette/AnyIO deprecated BlockingPortal alias"
+}

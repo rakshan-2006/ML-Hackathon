@@ -1,4 +1,4 @@
-# Local data and evaluator/reference material
+# Local input data: never commit supplied/evaluator/reference files
 data/raw/*
 !data/raw/.gitkeep
 data/evaluation/*
@@ -6,25 +6,24 @@ data/evaluation/*
 data/processed/*
 !data/processed/.gitkeep
 *.route
+!tests/fixtures/**/*.route
 
-# Generated outputs and logs
+# Large generated artifacts; small metrics/figures in results/ are intentional
+artifacts/
+models/*
+!models/.gitkeep
+results/**/*.parquet
+results/**/*.joblib
+results/**/*.pkl
 logs/
-results/*
-!results/.gitkeep
-experiments/*
-!experiments/.gitkeep
+tmp/
+*.partial
 *.log
 *.tmp
 *.temp
 
-# Model artifacts are local until an explicit distribution policy is agreed
-models/*.joblib
-models/*.pkl
-models/random_forest_v1/*
-!models/random_forest_v1/.gitkeep
-
-# Python environments, bytecode, and test/tool caches
-.venv/
+# Environments and tools
+.venv*/
 venv/
 env/
 __pycache__/
@@ -35,7 +34,7 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Editor and operating-system temporary files
+# Editors and operating systems
 .vscode/
 .idea/
 *.swp
