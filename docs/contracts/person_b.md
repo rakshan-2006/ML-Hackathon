@@ -49,3 +49,21 @@ Development may use the versioned GB baseline and fixed **untuned** decoder conf
 All such results are labelled development-baseline, never final evaluation.
 The evaluator archive stays sealed. Two-laptop hardware validation requires an
 actual second machine and must not be inferred from local TestClient checks.
+
+## Final OOF provenance manifest consumed by `src.hmm.tune`
+
+JSON fields: `status=final_parameter_oof`, `schema_version`, `model_version`,
+`partition=train`, `score_kind=out_of_fold`, `fold_holdout_trip_ids` (string fold
+number -> complete canonical held-out trip ID list), and `sha256` with keys
+`candidates`, `observations`, `alignment`, `scores`, `model_card`, `folds`,
+`data_config`. Hash the exact consumed file bytes. A must document how the export
+was generated using the final selected classifier parameters with fold-local
+preprocessing and no held-out trip fitting. A manifest is declared provenance,
+not proof replacing review of the producing code/training record.
+
+The C4 export additionally requires `fold` for every candidate. IDs remain strings
+(preserve leading zeros). B validates all key identities including unlabeled rows,
+canonical folds, positive-class probabilities and the final card/version before
+creating a tuning run. Missing evidence is an error, never implicit permission to
+tune in-sample probabilities. These fields are proposed integration requirements;
+they do not imply Person A has already supplied/approved them.

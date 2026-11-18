@@ -6,7 +6,8 @@ import folium
 from src.hmm.adapter import route_polylines
 
 
-def create_trip_map(output,trip_dir,destination,partition='student_test',max_network_arcs=2000,max_gps_points=1500):
+def create_trip_map(output,trip_dir,destination,partition='student_test',max_network_arcs=2000,max_gps_points=1500,
+                    model_label='Development GB baseline / untuned decoder'):
     if partition not in {'train','student_test','synthetic'}:
         raise ValueError('Reference maps are limited to permitted development partitions')
     graph,obs=output['graph'],output['observations']
@@ -38,7 +39,7 @@ def create_trip_map(output,trip_dir,destination,partition='student_test',max_net
         m.fit_bounds([valid.min(axis=0).tolist(),valid.max(axis=0).tolist()])
     title=f'PathSnap | {partition} | {escape(str(Path(trip_dir).name))}'
     legend=f'''<div style="position:fixed;top:10px;left:55px;z-index:9999;background:white;padding:12px;border:1px solid #bbb;font:13px Arial">
-    <b>{title}</b><br>Development GB baseline / untuned decoder<br>
+    <b>{title}</b><br>{escape(model_label)}<br>
     <span style="color:#e08019">●</span> GPS &nbsp; <span style="color:#008577">━</span> Reference (approximate)<br>
     <span style="color:#2463eb">━</span> HMM &nbsp; <span style="color:#be37b8">━</span> Classifier<br>
     Display: {len(valid[::stride])}/{len(valid)} GPS, {len(ids)}/{len(graph.arc_from)} background arcs.<br>Inference uses all points/candidates; gaps are not joined.</div>'''

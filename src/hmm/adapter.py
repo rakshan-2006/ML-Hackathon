@@ -52,6 +52,12 @@ def decoder_inputs(observations, candidates, scores):
         raise ValueError('scores must be finite probabilities')
     if candidates.duplicated(['trip_id','obs_idx','arc_id']).any():
         raise ValueError('duplicate candidate keys')
+    for column in ['obs_idx','arc_id','cand_rank']:
+        values=candidates[column].to_numpy(dtype=np.float64)
+        if not np.isfinite(values).all() or (values<0).any() or not np.equal(values,np.floor(values)).all():
+            raise ValueError(f'{column} must contain nonnegative integer IDs')
+    if candidates.duplicated(['trip_id','obs_idx','cand_rank']).any():
+        raise ValueError('duplicate candidate ranks within an observation')
 
     obs_idx = candidates.obs_idx.to_numpy(dtype=np.int64)
     order = np.lexsort((candidates.cand_rank.to_numpy(), obs_idx))

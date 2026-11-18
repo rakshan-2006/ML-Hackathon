@@ -13,6 +13,8 @@ from src.hmm.adapter import decoder_config_from_dict
 from src.inference.pipeline import run_trip
 from src.visualization.folium_maps import create_trip_map
 from src.common.paths import PROJECT_ROOT
+from src.hmm.tune import sha256
+from src.api.evaluation import evaluate_prediction
 
 
 def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout=1800,create_maps=False):
@@ -27,6 +29,9 @@ def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout
     if sorted(ids)!=expected:
         raise ValueError('Server trips differ from permitted rehearsal root')
     bundle=ArtifactLoader(Path(models_dir)).load()
+    if (health.json()['model_version']!=bundle.model_card['model_version'] or
+        health.json()['decoder_config_version']!=bundle.decoder_config['version']):
+        raise ValueError('Server and offline bundle versions differ')
     scorer=load_scorer(Path(models_dir),bundle)
     decoder=decoder_config_from_dict(bundle.decoder_config)
     data=load_config(PROJECT_ROOT/'configs/data.yaml')
@@ -42,6 +47,9 @@ def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout
         if payload['is_stub'] or payload['mode']!='real':
             raise ValueError('Rehearsal returned a stub')
         offline=run_trip(raw/tid,scorer,data,decoder)
+        offline_metrics,_=evaluate_prediction(raw/tid,offline,data)
+        if offline_metrics!=payload['metrics']:
+            raise AssertionError('HTTP and offline metrics disagree')
         # Public geometry and row counts agree with the independently called pipeline.
         for key in ['route_hmm','route_classifier']:
             actual=[[[p['latitude'],p['longitude']] for p in line['points']] for line in payload[key]]
@@ -55,7 +63,9 @@ def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout
                  model_version=payload['diagnostics']['model_version'],
                  decoder_version=payload['diagnostics']['decoder_version'],
                  deployment_status=payload['diagnostics']['deployment_status'],
-                 offline_geometry_equal=True,request_id=response.headers['X-Request-ID'],
+                 offline_geometry_equal=True,offline_metrics_equal=True,request_id=response.headers['X-Request-ID'],
+                 **{k:payload['diagnostics'].get(k) for k in ['n_candidates','n_segments','n_breaks_gap',
+                     'n_breaks_time','n_breaks_no_transition','n_no_candidates','n_inferred_arcs']},
                  **payload['metrics'],**{f'{k}_ms':v for k,v in payload['timings'].items()},
                  verification_wall_s=perf_counter()-started)
         rows.append(row)
@@ -64,7 +74,11 @@ def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout
         response_dir=PROJECT_ROOT/'artifacts/rehearsal_responses'; response_dir.mkdir(parents=True,exist_ok=True)
         (response_dir/f'{tid}.json').write_text(json.dumps(payload,indent=2))
         if create_maps and tid in selected:
-            create_trip_map(offline,raw/tid,PROJECT_ROOT/f'maps/development/{tid}.html')
+            final=bundle.model_card.get('status')=='final' and bundle.decoder_config.get('status')=='final_tuned'
+            directory='final' if final else 'development'
+            label=(f"Final model {bundle.model_card['model_version']} / {bundle.decoder_config['version']}"
+                   if final else 'Development GB baseline / untuned decoder')
+            create_trip_map(offline,raw/tid,PROJECT_ROOT/f'maps/{directory}/{tid}.html',model_label=label)
         print(json.dumps({'trip_id':tid,'n_obs':payload['n_obs'],'http_ms':payload['timings']['total'],
                           'top1_classifier':payload['metrics'].get('top1_accuracy_classifier'),
                           'top1_hmm':payload['metrics'].get('top1_accuracy_hmm')}),flush=True)
@@ -73,12 +87,15 @@ def rehearse(api_url,raw_root,models_dir,output_root='results/rehearsal',timeout
     for name in ['classifier','hmm']:
         n=table[f'n_evaluated_{name}'].sum()
         aggregate[f'top1_{name}']=float(table[f'n_correct_{name}'].sum()/n) if n else None
-    report=dict(status='development_baseline_rehearsal',trip_count=len(rows),partition='student_test',
+    is_final=bundle.model_card.get('status')=='final' and bundle.decoder_config.get('status')=='final_tuned'
+    report=dict(status='final_student_test_confirmed' if is_final else 'development_baseline_rehearsal',trip_count=len(rows),partition='student_test',
                 all_http_offline_geometry_equal=True,two_laptop_verified=False,
+                all_http_offline_metrics_equal=True,model_version=bundle.model_card['model_version'],
+                decoder_sha256=sha256(Path(models_dir)/'decoder_config.json'),
                 evaluation_archive_opened=False,python=platform.python_version(),
                 aggregate=aggregate,api_url=api_url,
                 map_selection='Shortest, median and longest allowed trajectory before observing metrics',
-                final_model_and_decoder_pending=True)
+                final_model_and_decoder_pending=not is_final)
     (result_root/'summary.json').write_text(json.dumps(report,indent=2))
     return report
 

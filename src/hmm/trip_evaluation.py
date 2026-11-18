@@ -20,6 +20,9 @@ def evaluate_trip(trip_dir, observations, result, m1_graph, data_config, alignme
     if alignment is None:
         alignment = align_reference(observations, m1_graph, route, data_config)
     alignment = alignment.sort_values("obs_idx")
+    observations = observations.sort_values('obs_idx')
+    if not np.array_equal(alignment.obs_idx.to_numpy(),observations.obs_idx.to_numpy()):
+        raise ValueError('alignment must match observation keys exactly')
     if len(alignment) != len(result["pred_arc_ids"]):
         raise ValueError("result must hold one prediction per observation")
     trusted = (alignment.align_status.to_numpy() == 'ok') & observations.is_valid.to_numpy()

@@ -4,13 +4,16 @@
   "partition": "student_test",
   "all_http_offline_geometry_equal": true,
   "two_laptop_verified": false,
+  "all_http_offline_metrics_equal": true,
+  "model_version": "hgb-baseline-ac522dfa",
+  "decoder_sha256": "c0c281a397bdb2d2d248bd5c2491931fbbe24045b6f261140fc2689de4ff7c57",
   "evaluation_archive_opened": false,
   "python": "3.11.9",
   "aggregate": {
     "top1_classifier": 0.8356871772537796,
     "top1_hmm": 0.9145150251975362
   },
-  "api_url": "http://127.0.0.1:8011",
+  "api_url": "http://127.0.0.1:8013",
   "map_selection": "Shortest, median and longest allowed trajectory before observing metrics",
   "final_model_and_decoder_pending": true
 }

@@ -1,8 +1,8 @@
 """Route-reconstruction metrics shared by Member 2 (comparison table), Member 3
 (classifier-only vs HMM) and Member 4 (server-side evaluation).
 
-Definitions follow TEAM_IMPLEMENTATION_PLAN.md decision D9, which is still PENDING
-TEAM APPROVAL (M3 proposes, M2 + M4 approve). Conventions:
+Definitions are published in docs/contracts/person_b.md for shared integration.
+This does not claim teammate approval. Conventions:
   * Arc IDs are per-trip 0-based rows of `.arcs`; -1 or None means "missing".
   * A metric with nothing to evaluate returns NaN rather than a misleading 0 or 1.
 """
@@ -62,9 +62,10 @@ def route_continuity(route_arc_ids, graph, segment_ids=None):
     route_arc_ids : ordered predicted arcs (per observation or already collapsed).
     graph         : any object with `arc_from` / `arc_to` arrays (e.g. hmm.transition.RoadGraph).
 
-    Missing values are dropped and repeats merged first, so a pair (a, b) is
-    connected iff arc_to[a] == arc_from[b]. A U-turn onto the reverse twin counts as
-    connected because the arcs share the node.
+    Missing observations and segment changes break comparisons; within a segment,
+    repeats contribute no transition. A pair (a,b) is connected iff arc_to[a] ==
+    arc_from[b]. A U-turn onto the reverse twin counts as connected because the
+    arcs share the node.
     """
     if segment_ids is not None and len(segment_ids)!=len(route_arc_ids):
         raise ValueError('segment_ids length mismatch')
@@ -111,6 +112,8 @@ def sequence_similarity(pred_route, ref_route):
     """Compare a predicted route with the reference route (e.g. the trip's `.route`).
 
     Both are ordered arc sequences; missing values are dropped and repeats merged.
+    Segment lists are concatenated in time order for this sequence measure; it
+    does not assert that a pair spanning a segment break is physically connected.
       arc_precision / arc_recall / arc_f1 : overlap of the *sets* of arcs (order ignored)
       lcs_similarity : 2 * LCS / (len_pred + len_ref), the order-aware match (= LCS F1)
     Returns NaN metrics when both routes are empty.

@@ -9,6 +9,8 @@ import joblib
 import hashlib
 from collections import OrderedDict
 from time import perf_counter
+from threading import RLock
+from importlib.metadata import version as installed_version
 import numpy as np
 
 from src.api.schemas import PredictionResponse, GeoPoint, RoutePolyline
@@ -125,6 +127,8 @@ class ArtifactLoader:
         manifest_path=self.artifacts_dir/'deployment_manifest.json'
         if manifest_path.is_file():
             manifest=self._load_json('deployment_manifest.json')
+            if set(manifest.get('sha256',{})) != set(self.REQUIRED_FILES):
+                raise ArtifactUnavailableError('Deployment manifest must bind every required artifact')
             for name,digest in manifest.get('sha256',{}).items():
                 if Path(name).name!=name or name not in self.REQUIRED_FILES:
                     raise ArtifactUnavailableError('Unknown deployment manifest entry')
@@ -173,7 +177,7 @@ class ArtifactLoader:
 
 
 class PredictionService:
-    """Provides contract-valid stub responses until real components are ready."""
+    """Frozen scorer with bounded graphs; serialize requests to bound peak memory."""
 
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
@@ -181,6 +185,7 @@ class PredictionService:
         self.artifact_loader = ArtifactLoader(settings.artifacts_dir)
         self.bundle = None
         self.graph_cache = OrderedDict()
+        self.request_lock = RLock()
 
     def startup(self):
         if self.settings.mode!='real' or self.bundle is not None:
@@ -191,6 +196,18 @@ class PredictionService:
                 raise ArtifactUnavailableError('Final model and tuned decoder are still pending')
             if not (self.settings.artifacts_dir/'deployment_manifest.json').is_file():
                 raise ArtifactUnavailableError('Final deployment manifest is missing')
+            manifest=self.artifact_loader._load_json('deployment_manifest.json')
+            if (manifest.get('status')!='final' or
+                manifest.get('model_version')!=bundle.model_card.get('model_version') or
+                manifest.get('decoder_version')!=bundle.decoder_config.get('version') or
+                manifest.get('data_config_sha256')!=bundle.decoder_config.get('data_config_sha256') or
+                not bundle.decoder_config.get('data_config_sha256') or
+                not manifest.get('source_revision') or not manifest.get('dependencies') or
+                not manifest.get('confirmation_sha256') or not manifest.get('tuning_provenance')):
+                raise ArtifactUnavailableError('Final deployment provenance is incomplete')
+            for package in ['scikit-learn','numpy','pandas','joblib','pyproj','shapely']:
+                if manifest['dependencies'].get(package)!=installed_version(package):
+                    raise ArtifactUnavailableError(f'Final runtime dependency mismatch: {package}')
         self.data_config=load_config(self.settings.data_config_path or PROJECT_ROOT/'configs/data.yaml')
         expected=bundle.decoder_config.get('data_config_sha256')
         if expected and hashlib.sha256((self.settings.data_config_path or PROJECT_ROOT/'configs/data.yaml').read_bytes()).hexdigest()!=expected:
@@ -209,6 +226,10 @@ class PredictionService:
             raise ArtifactUnavailableError(f'Artifact removed after startup: {exc.filename}') from exc
 
     def predict(self, trip_id: str) -> PredictionResponse:
+        with self.request_lock:
+            return self._predict(trip_id)
+
+    def _predict(self, trip_id: str) -> PredictionResponse:
         trip_dir=self.registry.get_trip_dir(trip_id)
         if self.settings.mode == "real":
             self.startup()
@@ -216,7 +237,8 @@ class PredictionService:
                 raise ArtifactUnavailableError('Artifacts changed after startup; restart to load a verified bundle')
             try:
                 started=perf_counter()
-                key=(str(trip_dir.resolve()),tuple((trip_dir/f'{trip_id}.{k}').stat().st_mtime_ns for k in ['nodes','arcs']))
+                key=(str(trip_dir.resolve()),tuple(((trip_dir/f'{trip_id}.{k}').stat().st_mtime_ns,
+                     (trip_dir/f'{trip_id}.{k}').stat().st_size) for k in ['nodes','arcs']))
                 cached=self.graph_cache.get(key)
                 if cached is None:
                     cached=load_road_graph(trip_dir)
@@ -247,7 +269,7 @@ class PredictionService:
                         'model_version':self.bundle.model_card.get('model_version','unknown'),
                         'decoder_version':self.bundle.decoder_config.get('version','unknown'),
                         'n_candidates':len(output['candidates']),
-                        **{k:output['hmm'][k] for k in ['n_segments','n_breaks_gap','n_breaks_no_transition','n_no_candidates','n_inferred_arcs']},
+                        **{k:output['hmm'][k] for k in ['n_segments','n_breaks_gap','n_breaks_time','n_breaks_no_transition','n_no_candidates','n_inferred_arcs']},
                         **evaluation},timings=output['timings'],mode='real',is_stub=False)
             except ArtifactUnavailableError:
                 raise

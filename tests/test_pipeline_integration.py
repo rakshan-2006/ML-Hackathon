@@ -89,5 +89,3 @@ def test_evaluate_trip_on_fixture_reference(tmp_path):
                             DATA_CONFIG)
     assert {"top1_accuracy", "n_evaluated", "route_continuity", "arc_f1", "lcs_similarity"} <= set(metrics)
     assert metrics["route_continuity"] == 1.0
-
-

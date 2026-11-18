@@ -9,6 +9,8 @@ import stat
 import tempfile
 import unicodedata
 import zipfile
+import re
+import numpy as np
 
 from src.data.dataset_loader import load_track,load_nodes,load_arcs,load_route
 
@@ -83,12 +85,15 @@ def import_archive(archive,destination,*,evaluation_authorized=False,expected_tr
         trips=[]; identifiers=set()
         for track in tracks:
             trip=track.parent; trip_id=trip.name
-            if track.stem!=trip_id or not trip_id.replace('_','').replace('-','').isalnum():
+            if track.stem!=trip_id or not re.fullmatch(r'[A-Za-z0-9_-]+',trip_id):
                 raise ValueError('Trip folder/file identifiers are inconsistent')
             if trip_id.casefold() in identifiers:
                 raise ValueError('Duplicate trip identifier across archive wrappers')
             identifiers.add(trip_id.casefold())
             nodes=load_nodes(trip); arcs=load_arcs(trip,len(nodes)); observations=load_track(trip)
+            if (not np.isfinite(nodes).all() or (np.abs(nodes[:,0])>180).any() or
+                (np.abs(nodes[:,1])>90).any()):
+                raise ValueError('Invalid road-network coordinates')
             reference=(trip/f'{trip_id}.route').is_file()
             if reference:
                 load_route(trip,len(arcs))
@@ -96,6 +101,11 @@ def import_archive(archive,destination,*,evaluation_authorized=False,expected_tr
             for kind in ['track','nodes','arcs']+(['route'] if reference else []):
                 shutil.copyfile(trip/f'{trip_id}.{kind}',dest/f'{trip_id}.{kind}')
             trips.append(dict(trip_id=trip_id,observations=len(observations),nodes=len(nodes),arcs=len(arcs),reference_available=reference))
+        # Reject orphan/misnamed payloads rather than silently discarding them.
+        consumed = {p.relative_to(ready) for p in ready.rglob('*') if p.is_file()}
+        for path in extracted.rglob('*'):
+            if path.is_file() and Path(path.parent.name,path.name) not in consumed:
+                raise ValueError('Orphan or inconsistent trip file in archive')
         digest=hashlib.sha256()
         with archive.open('rb') as source:
             while chunk:=source.read(1024*1024):

@@ -51,3 +51,10 @@ def test_symlink_and_size_limits(tmp_path):
     synthetic_zip(archive)
     with pytest.raises(ValueError,match='size limit'):
         import_archive(archive,tmp_path/'out',evaluation_authorized=True,max_file_bytes=1)
+
+
+def test_orphan_member_rejected_atomically(tmp_path):
+    archive=tmp_path/'synthetic.zip'; synthetic_zip(archive,'wrapper/orphan/orphan.nodes')
+    with pytest.raises(ValueError,match='Orphan'):
+        import_archive(archive,tmp_path/'out',evaluation_authorized=True)
+    assert not (tmp_path/'out').exists()

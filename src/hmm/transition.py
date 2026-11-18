@@ -22,8 +22,8 @@ class RoadGraph:
         self.arc_len_m = np.asarray(arc_len_m, dtype=np.float64)
         if not (len(self.arc_from) == len(self.arc_to) == len(self.arc_len_m)):
             raise ValueError("arc_from, arc_to and arc_len_m must have equal length")
-        if (self.arc_len_m < 0).any():
-            raise ValueError("arc lengths must be non-negative")
+        if not np.isfinite(self.arc_len_m).all() or (self.arc_len_m < 0).any():
+            raise ValueError("arc lengths must be finite and non-negative")
         self.out_arcs = {}
         for arc, node in enumerate(self.arc_from):
             self.out_arcs.setdefault(int(node), []).append(arc)
@@ -62,15 +62,19 @@ def route_distance(graph, arc_i, frac_i, arc_j, frac_j, sp_cache, max_dist, back
     len_j = graph.arc_len_m[arc_j]
     if arc_i == arc_j and (frac_j >= frac_i or (frac_i - frac_j) * len_i <= backtrack_m):
         # Same arc: forward movement, or a small backwards jitter treated as standing still.
-        return max(frac_j - frac_i, 0.0) * len_i, []
+        distance = max(frac_j - frac_i, 0.0) * len_i
+        return (distance if distance <= max_dist else math.inf), []
 
     head = (1.0 - frac_i) * len_i
     tail = frac_j * len_j
     source = int(graph.arc_to[arc_i])
     target = int(graph.arc_from[arc_j])
-    if source not in sp_cache:
-        sp_cache[source] = shortest_paths(graph, source, max_dist)
-    dist, pred = sp_cache[source]
+    # A cache is local to a transition matrix; include graph/bound anyway so
+    # callers reusing a cache cannot confuse a small-bound miss with unreachable.
+    cache_key = (id(graph), source, float(max_dist))
+    if cache_key not in sp_cache:
+        sp_cache[cache_key] = shortest_paths(graph, source, max_dist)
+    dist, pred = sp_cache[cache_key]
     if target not in dist:
         return math.inf, []
     total = head + dist[target] + tail
