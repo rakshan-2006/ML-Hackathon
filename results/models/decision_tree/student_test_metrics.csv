@@ -1,0 +1,2 @@
+n_trips,n_labelled,candidate_accuracy,precision_pos,recall_pos,f1_pos,precision_macro,recall_macro,f1_macro,log_loss,tn,fp,fn,tp,n_trusted_obs,n_top1_correct,top1_accuracy,n_reference_misses,n_zero_candidate_trusted,top1_upper_bound
+10,106730,0.9488335051063431,0.8414350355526826,0.8122932917316693,0.8266073979996825,0.9042371320651863,0.8926247892978395,0.8982980660484495,0.13512715949477758,88252,2453,3008,13017,16073,13367,0.8316431282274622,48,0,0.9970136253344117
