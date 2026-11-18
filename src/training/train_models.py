@@ -119,10 +119,12 @@ def run(name, params, smoke_only=False):
         model.fit(X_tr, y_all[tr])
         fit_s = time.perf_counter() - started
 
-        # Imputer statistics must come from the training fold only.
-        fold_medians = np.nanmedian(X_tr.to_numpy(dtype=np.float64), axis=0)
-        if not np.allclose(model.named_steps["impute"].statistics_, fold_medians, equal_nan=True):
-            raise AssertionError(f"fold {k}: imputer not fitted on the training fold")
+        # Imputer statistics must come from the training fold only (models that
+        # handle NaNs natively have no imputer step).
+        if "impute" in model.named_steps:
+            fold_medians = np.nanmedian(X_tr.to_numpy(dtype=np.float64), axis=0)
+            if not np.allclose(model.named_steps["impute"].statistics_, fold_medians, equal_nan=True):
+                raise AssertionError(f"fold {k}: imputer not fitted on the training fold")
 
         p_tr = positive_proba(model, X_tr)
         started = time.perf_counter()

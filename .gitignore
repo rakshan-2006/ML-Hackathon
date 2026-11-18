@@ -55,7 +55,6 @@ tmp/
 # Model results: small measured outputs are versioned; large artifacts go to GitHub Releases
 # (gradient boosting additionally keeps its local artifacts/ folder out of Git)
 artifacts/
-!experiments/cv_folds.json
 !results/models/
 !results/models/**
 results/models/**/*.parquet
