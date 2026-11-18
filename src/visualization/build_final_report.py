@@ -4,7 +4,7 @@
 
 Tables are read from committed result files at build time; figures are the
 committed experiment plots, maps and UI captures. Output:
-output/pdf/PathSnap_Team84_Technical_Report.pdf
+output/pdf/PES1UG24CS316_F_PES1UG24CS317_F_PES1UG24CS365_F_PES1UG24CS366_F.pdf
 """
 
 import json
@@ -22,7 +22,7 @@ from src.common.paths import PROJECT_ROOT
 from src.evaluation.visualizations import load_metrics
 
 R = PROJECT_ROOT
-OUT = R / "output" / "pdf" / "PathSnap_Team84_Technical_Report.pdf"
+OUT = R / "output" / "pdf" / "PES1UG24CS316_F_PES1UG24CS317_F_PES1UG24CS365_F_PES1UG24CS366_F.pdf"
 TEAM = [("PES1UG24CS316", "PARAS AGARWAL", "F"), ("PES1UG24CS317", "PARINITHA RAMESH", "F"),
         ("PES1UG24CS365", "RAKSHAN R", "F"), ("PES1UG24CS366", "RAKSHITA MUTTUR", "F")]
 NAMES = {"logistic_regression": "Logistic Regression", "decision_tree": "Decision Tree",
@@ -113,7 +113,21 @@ def cover():
                            ("ALIGN", (0, 0), (-1, -1), "CENTER"), ("TOPPADDING", (0, 0), (-1, -1), 6),
                            ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
     story.append(t)
-    story.append(Spacer(1, 1.2 * cm))
+    story.append(Spacer(1, 1.0 * cm))
+    hmm = pd.read_csv(R / "results/hmm/development/classifier_vs_hmm_summary.csv").iloc[0]
+    trips = pd.read_csv(R / "results/rehearsal/student_test_api.csv", dtype={"trip_id": str})
+    box = Table([[Paragraph(
+        f"<b>Inference accuracy achieved:</b> the final system (Histogram Gradient Boosting classifier + "
+        f"HMM/Viterbi decoding) matches <b>{pct(hmm.classifier_plus_hmm)}</b> of GPS observations to the correct "
+        f"road segment ({int(trips.n_correct_hmm.sum()):,} of {int(trips.n_evaluated_hmm.sum()):,} trusted "
+        f"observations, 10 student_test trips), up from {pct(hmm.classifier_only)} with the classifier alone "
+        f"(+{100 * (hmm.classifier_plus_hmm - hmm.classifier_only):.2f} percentage points).", styles["SubC"])]],
+        colWidths=[15 * cm])
+    box.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.8, NAVY), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#eef3f8")),
+                             ("TOPPADDING", (0, 0), (-1, -1), 8), ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                             ("LEFTPADDING", (0, 0), (-1, -1), 10), ("RIGHTPADDING", (0, 0), (-1, -1), 10)]))
+    story.append(box)
+    story.append(Spacer(1, 1.0 * cm))
     p("Repository: https://github.com/rakshan-2006/ML-Hackathon", "SubC")
     p("Every number in this report is read from result files committed in the repository; "
       "the source file is named under each table or figure.", "SubC")

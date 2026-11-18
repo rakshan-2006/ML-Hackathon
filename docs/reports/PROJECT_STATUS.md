@@ -39,7 +39,7 @@ Dataset preparation, candidate features, common model factory, frozen trip folds
 five evaluated classifiers, Bayesian optimisation (Optuna TPE), HMM/Viterbi route
 reconstruction with classifier-only vs HMM comparison, the real inference pipeline,
 FastAPI service and Streamlit dashboard for the two-laptop deployment. The final
-technical report is `output/pdf/PathSnap_Team84_Technical_Report.pdf`.
+technical report is `output/pdf/PES1UG24CS316_F_PES1UG24CS317_F_PES1UG24CS365_F_PES1UG24CS366_F.pdf`.
 
 ## Evidence and limitations
 

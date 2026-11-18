@@ -6,7 +6,7 @@ The demo uses the selected GB and explicitly untuned decoder defaults.
 
 **Two-laptop launch: [Quick demo](docs/QUICK_DEMO.md).**
 
-**Technical report (Team 84): [output/pdf/PathSnap_Team84_Technical_Report.pdf](output/pdf/PathSnap_Team84_Technical_Report.pdf)** - rebuild from committed results with `python -m src.visualization.build_final_report` (needs `requirements/reporting.txt`).
+**Technical report (Team 84): [output/pdf/PES1UG24CS316_F_PES1UG24CS317_F_PES1UG24CS365_F_PES1UG24CS366_F.pdf](output/pdf/PES1UG24CS316_F_PES1UG24CS317_F_PES1UG24CS365_F_PES1UG24CS366_F.pdf)** - rebuild from committed results with `python -m src.visualization.build_final_report` (needs `requirements/reporting.txt`).
 
 ## Start here
 
