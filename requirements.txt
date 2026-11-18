@@ -8,10 +8,10 @@ folium==0.19.5
 streamlit-folium==0.25.0
 pytest==8.3.5
 httpx==0.28.1
-# Runtime dependencies of the Member 1 preprocessing used by the API pipeline
-# (pins from data/requirements-m1.txt; M4 to review consolidation)
+# Shared schema is also used by API artifact validation.
 numpy==2.3.4
 pandas==2.3.3
+# Member 1 preprocessing used by the API inference pipeline (pins from data/requirements-m1.txt)
 scipy==1.16.3
 pyproj==3.7.2
 shapely==2.2.0

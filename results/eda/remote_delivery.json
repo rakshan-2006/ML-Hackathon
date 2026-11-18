@@ -1,0 +1,116 @@
+{
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/m1-preprocessed-2026-11-18",
+  "tag": "m1-preprocessed-2026-11-18",
+  "public_unauthenticated_download_verified": true,
+  "asset_count": 11,
+  "total_bytes": 90849859,
+  "dataset_bytes": 90657538,
+  "assets": [
+    {
+      "name": "data_config.yaml",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/data_config.yaml",
+      "size_bytes": 397,
+      "sha256": "2eb73e85235bc7a873cd34d3b2a9209e1c5c49e28cc8d560aec1b64a711d051e"
+    },
+    {
+      "name": "manifest.json",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/manifest.json",
+      "size_bytes": 187387,
+      "sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9"
+    },
+    {
+      "name": "requirements-m1.txt",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/requirements-m1.txt",
+      "size_bytes": 228,
+      "sha256": "6394eae8e0f524d6037dccb3ef154cc5deb0db039a02661b0e6c255398853a07"
+    },
+    {
+      "name": "schema.json",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/schema.json",
+      "size_bytes": 3403,
+      "sha256": "e28840b958e3b527413e6f0551497a7572809ae4ba04a5e5598d24763541ed51"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/SHA256SUMS.txt",
+      "size_bytes": 906,
+      "sha256": "ac6d09066cf0c6709a4fb001cec89cb1e70ed010b0858a581fae6bb2d77e55fe"
+    },
+    {
+      "name": "student_test_alignment.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/student_test_alignment.parquet",
+      "size_bytes": 276119,
+      "sha256": "21447d59c40d845bf8670767f67c7ced525bdaed410749d849d9af6eb4c0d1ab"
+    },
+    {
+      "name": "student_test_candidates.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/student_test_candidates.parquet",
+      "size_bytes": 6446729,
+      "sha256": "053e15af77bb4b1c5a5d6cb8a82e2ba1b7717e39e2030e9d8e72f17aa6403f19"
+    },
+    {
+      "name": "student_test_observations.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/student_test_observations.parquet",
+      "size_bytes": 1305115,
+      "sha256": "b39dd3ea494d2cdb90349ff32c3a233b6b09631bbf20bdedeade54b9b6041a11"
+    },
+    {
+      "name": "train_alignment.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/train_alignment.parquet",
+      "size_bytes": 2827691,
+      "sha256": "9d042d0205103a96a41e79a46387419316ed9f008c33db50773c815b245e159e"
+    },
+    {
+      "name": "train_candidates.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/train_candidates.parquet",
+      "size_bytes": 65901683,
+      "sha256": "8c0dfd03bf998a7a40ca3e0b86d9c5044663d7d1af42cff7b0e3e9febacc9285"
+    },
+    {
+      "name": "train_observations.parquet",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/m1-preprocessed-2026-11-18/train_observations.parquet",
+      "size_bytes": 13900201,
+      "sha256": "1a18b83d019a6d8c641c78601af4ac6cd40fee679eb4e4c284fbd04a6154b9da"
+    }
+  ],
+  "trip_count": 90,
+  "schema_version": "1.0.0-m1-provisional",
+  "ordered_semantic_content_identical": true,
+  "coverage_by_partition": [
+    {
+      "partition": "student_test",
+      "observations": 19160,
+      "valid": 19160,
+      "trusted": 16073,
+      "ambiguous": 3084,
+      "unaligned": 3,
+      "reference_hits": 16025,
+      "reference_misses": 48,
+      "zero_candidates_valid": 0,
+      "candidates": 130919,
+      "labelled_candidates": 106730,
+      "positive_candidates": 16025,
+      "miss_rate_trusted": 0.0029863746655882538,
+      "known_misses_over_all_valid": 0.0025052192066805845,
+      "alignment_coverage_valid": 0.8388830897703549
+    },
+    {
+      "partition": "train",
+      "observations": 208417,
+      "valid": 208417,
+      "trusted": 167184,
+      "ambiguous": 32224,
+      "unaligned": 9009,
+      "reference_hits": 156681,
+      "reference_misses": 10503,
+      "zero_candidates_valid": 1417,
+      "candidates": 1358450,
+      "labelled_candidates": 1070140,
+      "positive_candidates": 156681,
+      "miss_rate_trusted": 0.06282299741602067,
+      "known_misses_over_all_valid": 0.05039416170465941,
+      "alignment_coverage_valid": 0.802161052121468
+    }
+  ],
+  "verification_method": "Every asset fetched from public browser download URL using urllib with no Authorization header or token, then checked by exact size and SHA-256. Downloaded Parquet tables revalidated against manifest and compared to the local validated full build."
+}

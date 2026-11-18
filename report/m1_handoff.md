@@ -1,5 +1,28 @@
 # Preprocessing handoff
 
+## Integration review against main
+
+The M1 branch incorporates `main` at `6a17f63` (M4 API/UI foundation, PR #1).
+The API now reuses `src.common.schema.SCHEMA_VERSION` through the existing
+`src.common.paths` import, rather than keeping an incompatible `1.0` constant.
+M2 model cards and M3 decoder cards must declare `1.0.0-m1-provisional` for this
+dataset release. API tests use the same contract. Existing stub behavior remains;
+this change does not supply a trained model, decoder, or real inference adapter.
+
+After integration, `python -m pytest -q` passed all 31 tests in the M1 Python 3.11
+environment with FastAPI 0.115.12, HTTPX 0.28.1 and joblib 1.5.1 installed for the
+API tests. This is not a claim of testing the entire UI or every pinned package
+combination. A fresh `python -m src.data.validate_dataset --evidence
+tmp/pr-review/validation.json` also passed all 90 released trips. The original
+independent-rebuild and release-download evidence remains in `results/eda/`.
+
+The root README links the ready-to-use dataset release. API and historical M1
+reproducibility environments remain documented separately because Folium/pytest
+pins differ. Shared requirements add the numpy/pandas dependencies imported by
+the shared schema. Ignore rules preserve M4 exclusions while allowing M1's
+versioned config, EDA evidence, and synthetic `.route` fixture; processed data
+remains excluded from Git and is downloaded from the checksummed Release assets.
+
 Scope narrowed by the user to preprocessing ready for model training. This branch
 does not implement models, the production route decoder, API, UI, deployment or
 the original full phase-report/map acceptance gate. No teammate approval is claimed.

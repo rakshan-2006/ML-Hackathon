@@ -8,7 +8,8 @@ import joblib
 import pytest
 
 from src.api.main import create_app
-from src.common.paths import SCHEMA_VERSION, Settings
+from src.common.paths import Settings
+from src.common.schema import SCHEMA_VERSION
 from src.api.service import PipelineFailureError
 
 

@@ -39,13 +39,15 @@ htmlcov/
 Thumbs.db
 .DS_Store
 
-# M1 additions (merged); M4 maintains shared exclusions.
+# M1 generated tables, environments, and temporary downloads
 .venv*/
-data/processed/
+data/processed/*
+!data/processed/.gitkeep
 tmp/
 *.partial
 
-# Committed evidence and fixtures that the patterns above would otherwise hide
-!results/eda/
+# Versioned M1 configuration/evidence and synthetic reference fixture
 !experiments/data_config.yaml
+!results/eda/
+!results/eda/**
 !tests/fixtures/**/*.route
