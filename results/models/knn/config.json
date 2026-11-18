@@ -1,0 +1,29 @@
+{
+  "model_name": "knn",
+  "model_version": "knn-v1-ae48b532af",
+  "family": "Instance-based",
+  "estimator": "KNeighborsClassifier",
+  "params": {
+    "n_neighbors": 5,
+    "weights": "distance",
+    "metric": "minkowski",
+    "p": 2,
+    "algorithm": "kd_tree",
+    "leaf_size": 40,
+    "n_jobs": 4
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "No class weighting or resampling; report positive-class recall and macro-F1 alongside candidate and observation accuracy.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only (models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": true
+  },
+  "folds_file": "configs/cv_folds.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "train_metrics_rows": "fixed sample of 50000 training rows per fold",
+  "command": "python -m src.training.train_models --model knn"
+}

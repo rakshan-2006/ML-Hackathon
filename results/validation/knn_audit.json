@@ -1,0 +1,62 @@
+{
+  "model": "knn",
+  "artifact_sha256": {
+    "oof_probabilities.parquet": "42ca4fdf4d24ee6e39f568cc33f44a970d99a338b72a75a5a11b187fdd869d3c",
+    "student_test_probabilities.parquet": "97ebb9867e2b363eeaec73e5c008748210716bea91a31ff0aef71de463b2e8a6",
+    "pipeline.joblib": "8a7ebe0ef2a3adbe332af61384a4e9e4f536c58e596a295fec993b4677625b64"
+  },
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "pipeline_steps": [
+    "to_float",
+    "impute",
+    "scale",
+    "model"
+  ],
+  "estimator": "KNeighborsClassifier",
+  "classes": [
+    0,
+    1
+  ],
+  "train_oof_rows": 1358450,
+  "student_test_rows": 130919,
+  "keys_unique_and_in_c2_order": true,
+  "scores_finite_float64_unit_interval": true,
+  "all_fold_validation_rows_recomputed": true,
+  "student_test_row_recomputed": true,
+  "student_test_rescore_max_abs_diff": 0.0,
+  "per_fold": [
+    {
+      "fold": 0,
+      "f1_macro": 0.8459966066328751,
+      "top1_accuracy": 0.7475651567098517,
+      "log_loss": 1.0570215269406085
+    },
+    {
+      "fold": 1,
+      "f1_macro": 0.8532767881291536,
+      "top1_accuracy": 0.764034125859164,
+      "log_loss": 1.1878176926489037
+    },
+    {
+      "fold": 2,
+      "f1_macro": 0.8756356620044345,
+      "top1_accuracy": 0.796347391932729,
+      "log_loss": 0.7110583473398796
+    },
+    {
+      "fold": 3,
+      "f1_macro": 0.9059569525908797,
+      "top1_accuracy": 0.8349400646920784,
+      "log_loss": 0.5448918772763122
+    },
+    {
+      "fold": 4,
+      "f1_macro": 0.808655683805614,
+      "top1_accuracy": 0.535919210465917,
+      "log_loss": 0.9683981607040021
+    }
+  ],
+  "pooled_oof_f1_macro": 0.8587308884411373,
+  "pooled_oof_log_loss": 0.8941851008078741
+}
