@@ -46,6 +46,13 @@ def test_dependency_sets_exist_and_have_no_conflicting_pins():
     assert {'scikit-learn', 'fastapi', 'folium', 'pytest'} <= set(pins)
 
 
+def test_archived_json_fold_maps_still_load(tmp_path):
+    folds = load_folds()
+    path = tmp_path/'legacy.json'
+    path.write_text(json.dumps({'trip_to_fold':dict(zip(folds.trip_id.astype(str),folds.fold.astype(int)))}))
+    pd.testing.assert_frame_equal(load_folds(path).reset_index(drop=True),folds)
+
+
 def test_documentation_relative_links_resolve():
     documents = [PROJECT_ROOT/'README.md', PROJECT_ROOT/'data/README.md']
     documents += list((PROJECT_ROOT/'docs').rglob('*.md'))

@@ -1,7 +1,9 @@
 """Model factory: each model lives in src/models/<name>.py and exposes
 
-    NAME, FAMILY, DEFAULT_PARAMS, SCALE_FEATURES, CLASS_IMBALANCE
+    NAME, FAMILY, DEFAULT_PARAMS, SCALE_FEATURES, CLASS_IMBALANCE, LIMITATIONS
     build_estimator(params, seed) -> sklearn classifier with predict_proba
+    IMPUTE_MISSING (optional, default True): False keeps NaNs for estimators
+    with native missing-value support instead of fold-fitted median imputation
 
 Modules are found by name, so adding a model never edits this file.
 """
@@ -10,7 +12,6 @@ import importlib
 import re
 
 from src.training.preprocessing import make_pipeline
-from sklearn.pipeline import Pipeline
 
 
 def model_module(name):
@@ -34,6 +35,5 @@ def get_model(name, params=None, seed=2026):
     """Full Pipeline (preprocessing + estimator) for one model."""
     module = model_module(name)
     estimator = module.build_estimator(model_params(name, params), seed)
-    if getattr(module, 'NATIVE_MISSING_VALUES', False):
-        return Pipeline([('model', estimator)])
-    return make_pipeline(estimator, scale=module.SCALE_FEATURES)
+    return make_pipeline(estimator, scale=module.SCALE_FEATURES,
+                         impute=getattr(module, "IMPUTE_MISSING", True))

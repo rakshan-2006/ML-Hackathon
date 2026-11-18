@@ -19,6 +19,18 @@ from sklearn.metrics import (average_precision_score, log_loss, precision_recall
                              roc_auc_score, roc_curve)
 
 BLUE, TEAL, ORANGE = '#3867d6', '#008577', '#de7b28'
+# Model cards written before the shared metrics schema use the old metric names.
+LEGACY_NAMES = {'f1_macro': 'macro_f1'}
+
+
+def card_metric(metrics, name):
+    return metrics[name] if name in metrics else metrics[LEGACY_NAMES[name]]
+
+
+def confusion_counts(metrics):
+    if 'confusion_matrix' in metrics:
+        return np.array(metrics['confusion_matrix'])
+    return np.array([[metrics['tn'], metrics['fp']], [metrics['fn'], metrics['tp']]])
 
 
 def main():
@@ -31,7 +43,8 @@ def main():
     out = root/'figures'
     out.mkdir(parents=True, exist_ok=True)
     card = json.loads((root/'model_card.json').read_text())
-    cv = pd.read_csv(root/'cv_metrics.csv')
+    cv = pd.read_csv(root/'cv_metrics.csv', dtype={'fold': str})
+    cv = cv[cv.fold.str.isdigit()]  # per-fold rows only (mean/std rows follow)
     trips = {name: pd.read_csv(root/f'{name}_per_trip.csv', dtype={'trip_id': str})
              for name in ['train_oof', 'student_test']}
     timings = json.loads((root/'timings.json').read_text())
@@ -63,7 +76,7 @@ def main():
     fig, axes = plt.subplots(2, 2, figsize=(13, 9))
     ax = axes[0, 0]
     xs = np.arange(1, 6)
-    ax.bar(xs-.18, cv.macro_f1, .36, label='Candidate macro-F1', color=BLUE)
+    ax.bar(xs-.18, cv.f1_macro, .36, label='Candidate macro-F1', color=BLUE)
     ax.bar(xs+.18, cv.top1_accuracy, .36, label='Observation Top-1', color=TEAL)
     for x, value in zip(xs+.18, cv.top1_accuracy):
         ax.text(x, value+.018, f'{value:.1%}', ha='center', fontsize=8)
@@ -72,11 +85,11 @@ def main():
     percentage(ax)
     ax.legend(fontsize=8, loc='lower left')
     ax = axes[0, 1]
-    metric_names = ['macro_f1', 'precision_macro', 'recall_macro', 'top1_accuracy']
+    metric_names = ['f1_macro', 'precision_macro', 'recall_macro', 'top1_accuracy']
     xx = np.arange(4)
     for shift, name, color, label in [(-.18, 'train_oof', BLUE, 'Pooled train OOF'),
                                     (.18, 'student_test', TEAL, 'Student-test')]:
-        values = [card[name][m] for m in metric_names]
+        values = [card_metric(card[name], m) for m in metric_names]
         ax.bar(xx+shift, values, .36, label=label, color=color)
         for x, value in zip(xx+shift, values):
             ax.text(x, value+.015, f'{value:.1%}', ha='center', fontsize=8)
@@ -105,7 +118,7 @@ def main():
 
     fig, axes = plt.subplots(1, 2, figsize=(12, 5.5))
     for ax, name, label in zip(axes, ['train_oof', 'student_test'], ['Train out-of-fold', 'Student-test']):
-        counts = np.array(card[name]['confusion_matrix'])
+        counts = confusion_counts(card[name])
         normalized = counts/counts.sum(axis=1, keepdims=True)
         image = ax.imshow(normalized, cmap='Blues', vmin=0, vmax=1)
         for i in range(2):

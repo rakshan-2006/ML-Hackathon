@@ -6,6 +6,7 @@ import pytest
 from threadpoolctl import threadpool_limits
 
 from src.models.gradient_boosting import build_model
+from src.training.cross_validation import assign_folds
 from src.training.train_gradient_boosting import evaluate, make_folds, positive_probability
 
 
@@ -17,9 +18,9 @@ def test_top1_counts_miss_and_zero_candidates_and_breaks_ties_by_rank():
     align = pd.DataFrame(dict(trip_id=['00000001']*4, obs_idx=range(4),
                               ref_arc_id=[7, 6, 9, 1], align_status=['ok', 'ok', 'ok', 'ambiguous']))
     metrics, _ = evaluate(cand, np.array([0.7, 0.7, 0.9, 0.8]), obs, align)
-    assert metrics['top1_denominator'] == 3
-    assert metrics['top1_correct'] == 1
-    assert metrics['labelled_candidates'] == 3
+    assert metrics['n_trusted_obs'] == 3
+    assert metrics['n_top1_correct'] == 1
+    assert metrics['n_labelled'] == 3
     assert metrics['top1_accuracy'] == pytest.approx(1/3)
 
 
@@ -33,14 +34,15 @@ def test_probability_mapping_does_not_assume_positive_class_column():
     assert positive_probability(ReversedClasses(), X.iloc[:0]).shape == (0,)
 
 
-def test_folds_persist_and_keep_trips_together(tmp_path):
+def test_shared_folds_are_reused_and_keep_trips_together(tmp_path):
     groups = pd.Series(np.repeat([f'{i:08d}' for i in range(10)], 3))
-    mapping, assignments, digest = make_folds(groups, tmp_path/'folds.json')
+    assign_folds(groups).to_csv(tmp_path/'folds.csv', index=False)
+    mapping, assignments, digest = make_folds(groups, tmp_path/'folds.csv')
     for fold in range(5):
         assert not set(groups[assignments == fold]) & set(groups[assignments != fold])
-    assert make_folds(groups, tmp_path/'folds.json')[2] == digest
+    assert make_folds(groups, tmp_path/'folds.csv')[2] == digest
     with pytest.raises(ValueError, match='cover'):
-        make_folds(groups.iloc[3:], tmp_path/'folds.json')
+        make_folds(groups.iloc[3:], tmp_path/'folds.csv')
 
 
 def test_pipeline_handles_nans_and_reloads_identically(tmp_path):

@@ -127,7 +127,7 @@ def run(name, params, smoke_only=False):
             fold_medians = np.nanmedian(X_tr.to_numpy(dtype=np.float64), axis=0)
             if not np.allclose(model.named_steps["impute"].statistics_, fold_medians, equal_nan=True):
                 raise AssertionError(f"fold {k}: imputer not fitted on the training fold")
-        elif not getattr(module, 'NATIVE_MISSING_VALUES', False):
+        elif getattr(module, 'IMPUTE_MISSING', True):
             raise AssertionError('Model must declare how it handles missing features')
 
         p_tr = positive_proba(model, X_tr)
@@ -198,7 +198,7 @@ def run(name, params, smoke_only=False):
               "class_imbalance": module.CLASS_IMBALANCE,
               "preprocessing": ({"missing_values": "Native estimator handling; no fitted imputer",
                                   "scaled": False, "feature_order": "src.common.schema.FEATURES"}
-                                if getattr(module, 'NATIVE_MISSING_VALUES', False)
+                                if not getattr(module, 'IMPUTE_MISSING', True)
                                 else {**PREPROCESSING_POLICY, "scaled": module.SCALE_FEATURES}),
               "folds_file": str(FOLDS_PATH.relative_to(PROJECT_ROOT)).replace("\\", "/"),
               "folds_sha256": folds_sha256(), "n_splits": N_SPLITS,

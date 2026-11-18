@@ -6,6 +6,7 @@ comparisons use identical folds.
 """
 
 import hashlib
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -29,7 +30,14 @@ def assign_folds(groups, n_splits=N_SPLITS):
 
 
 def load_folds(path=FOLDS_PATH):
-    folds = pd.read_csv(path, dtype={"trip_id": "string", "fold": "int64"})
+    path = Path(path)
+    if path.suffix == '.json':
+        # Explicitly supplied original GB Release fold maps remain readable.
+        mapping = json.loads(path.read_text(encoding='utf8'))['trip_to_fold']
+        folds = pd.DataFrame({'trip_id': list(mapping), 'fold': list(mapping.values())})
+        folds = folds.astype({'trip_id': 'string', 'fold': 'int64'}).sort_values('trip_id')
+    else:
+        folds = pd.read_csv(path, dtype={"trip_id": "string", "fold": "int64"})
     if folds.trip_id.duplicated().any():
         raise ValueError("a trip appears in more than one fold")
     if set(folds.fold) != set(range(N_SPLITS)):
