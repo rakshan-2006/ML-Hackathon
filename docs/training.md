@@ -76,3 +76,17 @@ python -m src.evaluation.plot_gradient_boosting
 This recreates the GB PNG/SVG graphs after downloading the data and model assets;
 it does not train the model. See [the GB report](reports/gradient_boosting.md) and
 [graph gallery](../results/models/gradient_boosting/figures/).
+
+### Random Forest
+
+The fourth baseline's fitted pipeline, embedded-feature model card and probability
+exports are published separately from the historical three-fold metadata:
+
+```powershell
+python -m src.data.download_dataset --metadata results/models/random_forest/artifacts.json --output-root artifacts/random_forest
+```
+
+This verifies sizes and SHA-256 hashes. Load with
+`RandomForestPredictor('artifacts/random_forest')` from `src.models.random_forest`,
+or load `pipeline.joblib` through joblib. Fitted preprocessing is already inside.
+See [the RF report](reports/m2_random_forest.md) for the reviewed measurements.

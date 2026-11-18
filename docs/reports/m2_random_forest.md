@@ -66,3 +66,38 @@ not a corrected coverage statistic.
 The integrated trainer replaces that metric with the shared implementation and
 never rewrites the historical run to imply it was trained or scored differently.
 See [training documentation](../training.md) for dependencies, metrics and downloads.
+
+## Verified integrated run
+
+The reviewed five-fold run fitted every trusted labelled candidate row from all
+80 training trips (1,070,140 rows), then evaluated on the 10 held-out student-test
+trips. No resampling or truncation was used to shorten this run.
+
+| Metric | Mean five-fold validation | Student test |
+| --- | ---: | ---: |
+| Candidate accuracy | 93.73% | 94.24% |
+| Observation Top-1 | 76.62% | 83.77% |
+| Macro-F1 | 88.18% | 89.46% |
+| Log loss | 0.17204 | 0.14712 |
+
+Student-test Top-1 is 13,465 / 16,073 trusted valid observations; all 48 reference
+candidate misses count as failures. The final fit took 313.405 seconds and
+student-test scoring took 0.587 seconds in this run. These are local timings,
+not a controlled performance comparison with other machines or earlier runs.
+
+All five fold metric rows and the holdout metrics were recomputed from the
+exported probabilities. The reloaded predictor matched every one of 130,919
+student-test candidate scores within absolute tolerance 1e-12. All 67 repository
+tests passed and pip reported no broken requirements. Evidence is saved in
+[review_validation.json](../../results/models/random_forest/review_validation.json).
+The generated [four-model comparison](../../results/models/comparison/logistic_regression_vs_decision_tree_vs_gradient_boosting_vs_random_forest/)
+keeps CV and student-test metrics separate. RF has slightly higher student-test
+Top-1 than GB, while GB retains better candidate accuracy, macro-F1 and log loss;
+these measurements do not establish RF as universally the best model.
+
+Download the fitted pipeline and scores from the
+[Random Forest release](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/models-random-forest-v1):
+
+```powershell
+python -m src.data.download_dataset --metadata results/models/random_forest/artifacts.json --output-root artifacts/random_forest
+```

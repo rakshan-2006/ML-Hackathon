@@ -1,0 +1,31 @@
+{
+  "release_tag": "models-random-forest-v1",
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/models-random-forest-v1",
+  "note": "Download to artifacts/random_forest; the pipeline includes fitted preprocessing.",
+  "assets": [
+    {
+      "name": "pipeline.joblib",
+      "size_bytes": 196336594,
+      "sha256": "665ae18c46750d49e220ab3076f429c9930427b952bdb5058d783fbf9c424f9a",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-random-forest-v1/pipeline.joblib"
+    },
+    {
+      "name": "model_card.json",
+      "size_bytes": 3581,
+      "sha256": "4a30fdf7de49ce05cf2c12696122d6fb0d065e2367303cb1c32eb0b1a3b582c2",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-random-forest-v1/model_card.json"
+    },
+    {
+      "name": "oof_probabilities.parquet",
+      "size_bytes": 9022958,
+      "sha256": "ed79cb21683501b5824b59eded7996f648535e6d1077bd17531f41e4bb474551",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-random-forest-v1/oof_probabilities.parquet"
+    },
+    {
+      "name": "student_test_probabilities.parquet",
+      "size_bytes": 877922,
+      "sha256": "5a831a9e1751de484c5f4b64d2ff08f3d9f272c0faed56256aa3e391eda7b940",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-random-forest-v1/student_test_probabilities.parquet"
+    }
+  ]
+}

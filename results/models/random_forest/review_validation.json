@@ -1,0 +1,54 @@
+{
+  "source_pr": 9,
+  "full_training_rows": 1070140,
+  "training_trips": 80,
+  "held_out_student_test_trips": 10,
+  "canonical_fold_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "all_saved_fold_metrics_recomputed": true,
+  "saved_predictor_matches_all_student_test_scores_atol": 1e-12,
+  "candidate_key_order_and_uniqueness_verified": true,
+  "checks": [
+    {
+      "partition": "train",
+      "fold": "0",
+      "trusted_observations": 32959,
+      "reference_misses": 205,
+      "top1_accuracy": 0.7798173488273309
+    },
+    {
+      "partition": "train",
+      "fold": "1",
+      "trusted_observations": 37391,
+      "reference_misses": 229,
+      "top1_accuracy": 0.7901634083068118
+    },
+    {
+      "partition": "train",
+      "fold": "2",
+      "trusted_observations": 30444,
+      "reference_misses": 79,
+      "top1_accuracy": 0.8360268033109972
+    },
+    {
+      "partition": "train",
+      "fold": "3",
+      "trusted_observations": 31534,
+      "reference_misses": 930,
+      "top1_accuracy": 0.8671909684784677
+    },
+    {
+      "partition": "train",
+      "fold": "4",
+      "trusted_observations": 34856,
+      "reference_misses": 9060,
+      "top1_accuracy": 0.5578953408308469
+    },
+    {
+      "partition": "student_test",
+      "fold": "student_test",
+      "trusted_observations": 16073,
+      "reference_misses": 48,
+      "top1_accuracy": 0.8377403098363716
+    }
+  ]
+}
