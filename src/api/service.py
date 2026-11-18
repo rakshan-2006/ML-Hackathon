@@ -7,8 +7,10 @@ from typing import Any
 
 import joblib
 
-from src.api.schemas import PredictionResponse
-from src.common.paths import SCHEMA_VERSION, Settings
+from src.api.schemas import GeoPoint, PredictionResponse, RoutePolyline
+from src.common.paths import PROJECT_ROOT, SCHEMA_VERSION, Settings
+
+DATA_CONFIG_PATH = PROJECT_ROOT / "experiments" / "data_config.yaml"
 
 
 class TripNotFoundError(LookupError):
@@ -20,7 +22,7 @@ class ArtifactUnavailableError(RuntimeError):
 
 
 class InferenceUnavailableError(RuntimeError):
-    """Raised until the Member 1-3 inference adapter is integrated."""
+    """Raised when a required inference component (e.g. the M2 scorer) is missing."""
 
 
 class PipelineFailureError(RuntimeError):
@@ -134,13 +136,10 @@ class PredictionService:
         self.artifact_loader = ArtifactLoader(settings.artifacts_dir)
 
     def predict(self, trip_id: str) -> PredictionResponse:
-        self.registry.get_trip_dir(trip_id)
+        trip_dir = self.registry.get_trip_dir(trip_id)
         if self.settings.mode == "real":
-            self.artifact_loader.load()
-            raise InferenceUnavailableError(
-                "Real inference is unavailable until the Member 1-3 pipeline "
-                "adapter is integrated."
-            )
+            bundle = self.artifact_loader.load()
+            return self._predict_real(trip_id, trip_dir, bundle)
 
         return PredictionResponse(
             trip_id=trip_id,
@@ -160,3 +159,74 @@ class PredictionService:
             mode="stub",
             is_stub=True,
         )
+
+    def _predict_real(
+        self, trip_id: str, trip_dir: Path, bundle: ArtifactBundle
+    ) -> PredictionResponse:
+        # Imported lazily so stub mode runs without the M1/M3 dependencies.
+        from src.data.config import load_config
+        from src.hmm.adapter import decoder_config_from_dict
+        from src.hmm.route_metrics import route_continuity
+        from src.inference.pipeline import run_trip
+
+        score_candidates = load_scorer(self.settings.artifacts_dir)
+        try:
+            data_config = load_config(DATA_CONFIG_PATH)
+            decoder_config = decoder_config_from_dict(bundle.decoder_config)
+            out = run_trip(trip_dir, score_candidates, data_config, decoder_config)
+        except Exception as exc:
+            raise PipelineFailureError(f"{type(exc).__name__}: {exc}") from exc
+
+        hmm, classifier, graph = out["hmm"], out["classifier"], out["graph"]
+        obs = out["observations"]
+        gps = obs.loc[obs.coordinate_valid, ["lat", "lon"]].to_numpy()
+        metrics = {
+            "route_continuity_hmm": route_continuity(hmm["route"], graph)["continuity"],
+            "route_continuity_classifier": route_continuity(
+                classifier["route"], graph
+            )["continuity"],
+        }
+        return PredictionResponse(
+            trip_id=trip_id,
+            n_obs=len(obs),
+            gps_coordinates=[GeoPoint(latitude=lat, longitude=lon) for lat, lon in gps],
+            route_hmm=_polylines(out["route_hmm"]),
+            route_classifier=_polylines(out["route_classifier"]),
+            # Reference-free metrics only; NaN (nothing to measure) is not JSON-safe.
+            metrics={k: float(v) for k, v in metrics.items() if v == v},
+            diagnostics={
+                "status": hmm["status"],
+                "warnings": "; ".join(hmm["warnings"]),
+                "n_segments": str(hmm["n_segments"]),
+                "n_breaks_gap": str(hmm["n_breaks_gap"]),
+                "n_breaks_no_transition": str(hmm["n_breaks_no_transition"]),
+                "n_no_candidates": str(hmm["n_no_candidates"]),
+                "n_candidates": str(len(out["candidates"])),
+            },
+            timings=out["timings"],
+            mode="real",
+            is_stub=False,
+        )
+
+
+def _polylines(lines: list[list[tuple[float, float]]]) -> list[RoutePolyline]:
+    return [
+        RoutePolyline(points=[GeoPoint(latitude=lat, longitude=lon) for lat, lon in line])
+        for line in lines
+    ]
+
+
+def load_scorer(artifacts_dir: Path):
+    """Member 2's candidate scorer: Predictor.load(dir).score_candidates(features)."""
+    try:
+        from src.inference.predictor import Predictor
+    except ImportError as exc:
+        raise InferenceUnavailableError(
+            "Classifier probabilities are unavailable: Member 2's "
+            "src.inference.predictor.Predictor (load(models_dir) -> "
+            "score_candidates(features)) is not integrated yet."
+        ) from exc
+    try:
+        return Predictor.load(artifacts_dir).score_candidates
+    except Exception as exc:
+        raise PipelineFailureError(f"Could not load Member 2's Predictor: {exc}") from exc

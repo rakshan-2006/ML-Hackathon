@@ -4,9 +4,10 @@ from dataclasses import dataclass
 import os
 from pathlib import Path
 
+from src.common.schema import SCHEMA_VERSION
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_VERSION = "1.0"
 
 
 def _configured_path(variable: str, default: str) -> Path:

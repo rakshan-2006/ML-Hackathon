@@ -8,7 +8,7 @@ import joblib
 import pytest
 
 from src.api.main import create_app
-from src.common.paths import Settings
+from src.common.paths import SCHEMA_VERSION, Settings
 from src.api.service import PipelineFailureError
 
 
@@ -35,7 +35,7 @@ def test_health_has_contract_fields(tmp_path: Path) -> None:
         "status": "ok",
         "model_name": "test-model (stub)",
         "model_version": "test-version",
-        "schema_version": "1.0",
+        "schema_version": SCHEMA_VERSION,
         "decoder_config_version": "not-loaded",
     }
 
@@ -126,10 +126,10 @@ def test_missing_artifact_after_startup_returns_503(tmp_path: Path) -> None:
     joblib.dump({"test": True}, settings.artifacts_dir / "best_model.joblib")
     joblib.dump({"test": True}, settings.artifacts_dir / "preprocessing.joblib")
     (settings.artifacts_dir / "model_card.json").write_text(
-        json.dumps({"schema_version": "1.0"}), encoding="utf-8"
+        json.dumps({"schema_version": SCHEMA_VERSION}), encoding="utf-8"
     )
     (settings.artifacts_dir / "decoder_config.json").write_text(
-        json.dumps({"schema_version": "1.0"}), encoding="utf-8"
+        json.dumps({"schema_version": SCHEMA_VERSION}), encoding="utf-8"
     )
 
     with TestClient(create_app(settings)) as client:
