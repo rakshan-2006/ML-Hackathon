@@ -1,0 +1,21 @@
+{
+  "student_test_trips": 10,
+  "trusted_observations": 16073,
+  "baseline_gps_top1": 0.8356871772537796,
+  "tuned_gps_top1": 0.8374292291420394,
+  "selected_baseline_plus_hmm_gps_top1": 0.9145150251975362,
+  "hmm_gain_percentage_points": 7.882784794375663,
+  "baseline_cv_macro_f1": 0.886149400557357,
+  "tuned_cv_macro_f1": 0.886116850062306,
+  "selected_model": "baseline gradient_boosting",
+  "hmm_applied_to": "baseline gradient_boosting",
+  "decoder_status": "development-untuned-v1",
+  "sources": [
+    "results/models/gradient_boosting/student_test_metrics.csv",
+    "results/models/gradient_boosting_tuned/student_test_metrics.csv",
+    "results/models/gradient_boosting/model_card.json",
+    "results/models/gradient_boosting_tuned/model_card.json",
+    "results/rehearsal/summary.json",
+    "results/rehearsal/student_test_api.csv"
+  ]
+}

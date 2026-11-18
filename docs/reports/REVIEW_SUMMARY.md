@@ -134,3 +134,20 @@ Launch instructions: [quick two-laptop demo](../QUICK_DEMO.md).
 ## 8. Short explanation for the review
 
 > PathSnap reconstructs vehicle routes from noisy GPS observations. We compared five classifiers using five-fold trip-grouped validation and selected Histogram Gradient Boosting. Adding HMM/Viterbi improved trusted GPS-to-road Top-1 accuracy from 83.57% to 91.45% on ten student-test trips, a gain of 7.88 percentage points. The model runs behind FastAPI on Laptop 1, and the Streamlit interface runs on Laptop 2. The recorded HMM result uses fixed untuned decoder defaults.
+
+## 9. Review graphs
+
+![Baseline, Bayesian-tuned GB, and selected baseline GB with HMM](../../results/figures/review/01_baseline_tuned_hmm_top1.png)
+
+The middle bar is the tuned trial, which was not selected. The HMM bar uses the
+retained baseline GB. Thus this is a comparison of alternatives, not a claim
+that the tuned model was fed into HMM. The HMM gain remains +7.88 percentage
+points over the selected baseline.
+
+- [Detailed before/after tuning graph](../../results/figures/review/02_before_after_tuning.png)
+- [Before/after HMM for every student-test trip](../../results/figures/review/03_hmm_per_trip.png)
+- [PNG/SVG gallery and plotting evidence](../../results/figures/review/README.md)
+
+The tuned model improves student-test Top-1 slightly (83.57% to 83.74%) but has
+slightly lower training-CV macro-F1, the declared selection objective. The
+baseline was therefore retained. HMM results for the tuned model are not claimed.

@@ -1,0 +1,4 @@
+stage,top1_accuracy,correct,denominator,scope
+Before tuning: baseline GB (selected),0.8356871772537796,13432,16073,student_test
+After Bayesian tuning: trial-winning GB (not selected),0.8374292291420394,13460,16073,student_test
+Selected baseline GB + fixed untuned HMM,0.9145150251975362,14699,16073,student_test
