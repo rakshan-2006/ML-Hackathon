@@ -113,14 +113,16 @@ def smoke_test(name, params, data, folds_all):
     return {"train_rows": 20000, "val_rows": 5000, "seconds": round(time.perf_counter() - started, 3)}
 
 
-def run(name, params, smoke_only=False):
+def run(name, params, smoke_only=False, output_name=None):
+    """output_name stores a variant (e.g. tuned parameters) beside, not over, the baseline."""
     module = model_module(name)
     params = model_params(name, params)
+    label = output_name or name
     config_hash = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()[:10]
-    version = f"{name}-v1-{config_hash}"
-    out = RESULTS / name
+    version = f"{label}-v1-{config_hash}"
+    out = RESULTS / label
     out.mkdir(parents=True, exist_ok=True)
-    artifact_out = ARTIFACTS / name
+    artifact_out = ARTIFACTS / label
     artifact_out.mkdir(parents=True, exist_ok=True)
 
     train, test = load_partition("train"), load_partition("student_test")
@@ -220,7 +222,7 @@ def run(name, params, smoke_only=False):
 
     for filename, frame, p in (("oof_probabilities.parquet", cand, oof),
                                ("student_test_probabilities.parquet", tcand, p_test)):
-        frame[KEY].assign(p_model=p, model_name=name, model_version=version)[PROB_COLUMNS] \
+        frame[KEY].assign(p_model=p, model_name=label, model_version=version)[PROB_COLUMNS] \
             .to_parquet(artifact_out / filename, index=False)
 
     verify_saved_metrics(out, train, test, cv, test_metrics, artifact_out)
@@ -232,7 +234,8 @@ def run(name, params, smoke_only=False):
                     "peak_memory_mb": peak_memory_mb()})
     (out / "timings.json").write_text(json.dumps(timings, indent=2), encoding="utf-8")
 
-    config = {"model_name": name, "model_version": version, "family": module.FAMILY,
+    config = {"model_name": label, "model_module": name, "model_version": version,
+              "family": module.FAMILY,
               "estimator": type(final.named_steps["model"]).__name__, "params": params,
               "seed": SEED, "decision_threshold": THRESHOLD,
               "class_imbalance": module.CLASS_IMBALANCE,
@@ -244,13 +247,15 @@ def run(name, params, smoke_only=False):
               "folds_sha256": folds_sha256(), "n_splits": N_SPLITS,
               "train_metrics_rows": (f"fixed sample of {train_sample} training rows per fold"
                                      if train_sample else "all training rows"),
-              "command": f"python -m src.training.train_models --model {name}"}
+              "command": f"python -m src.training.train_models --model {name}"
+                         + (f" --output-name {label} --params '{json.dumps(params)}'"
+                            if output_name else "")}
     (out / "config.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
     cv_mean = cv[(cv.fold == "mean")].iloc[0]
     manifest = json.loads((DATA / "manifest.json").read_text())
     card = {
-        **{k: config[k] for k in ("model_name", "model_version", "family", "estimator",
+        **{k: config[k] for k in ("model_name", "model_module", "model_version", "family", "estimator",
                                   "params", "seed", "decision_threshold", "class_imbalance",
                                   "preprocessing", "folds_file", "folds_sha256", "n_splits")},
         "schema_version": SCHEMA_VERSION,
@@ -284,8 +289,8 @@ def run(name, params, smoke_only=False):
     (out / "model_card.json").write_text(json.dumps(card, indent=2), encoding="utf-8")
 
     from src.evaluation.visualizations import plot_model_accuracy
-    plot_model_accuracy(name)
-    print(f"[{name}] done -> {out}", flush=True)
+    plot_model_accuracy(label)
+    print(f"[{label}] done -> {out}", flush=True)
 
 
 def verify_saved_metrics(out, train, test, cv, test_metrics, artifact_dir=None):
@@ -319,8 +324,10 @@ def main(argv=None):
     parser.add_argument("--model", required=True)
     parser.add_argument("--params", default="{}", help="JSON overrides of DEFAULT_PARAMS")
     parser.add_argument("--smoke-only", action="store_true")
+    parser.add_argument("--output-name", help="results/artifacts folder for a variant run")
     args = parser.parse_args(argv)
-    run(args.model, json.loads(args.params), smoke_only=args.smoke_only)
+    run(args.model, json.loads(args.params), smoke_only=args.smoke_only,
+        output_name=args.output_name)
 
 
 if __name__ == "__main__":
