@@ -1,0 +1,22 @@
+seed: 2026
+projection: network_centered_aeqd_wgs84
+gap_threshold_s: 30
+stationary_m: 1.0
+suspicious_speed_mps: 70
+smoothing: none
+radius_m: 100.0
+max_candidates: 8
+alignment_radius_m: 150
+alignment_heading_weight_m: 15
+alignment_skip_penalty_m: 0.05
+alignment_ambiguity_margin_m: 3
+sweep_radii_m:
+- 30
+- 60
+- 100
+sweep_k:
+- 4
+- 8
+- 16
+selection_partition: train
+frozen: true
