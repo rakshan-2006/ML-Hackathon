@@ -1,0 +1,51 @@
+{
+  "release_tag": "model-selected-hgb-baseline-ac522dfa",
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/model-selected-hgb-baseline-ac522dfa",
+  "model_version": "hgb-baseline-ac522dfa",
+  "status": "final",
+  "note": "Download into the configured models directory; add Person B's decoder_config.json and deployment_manifest.json.",
+  "assets": [
+    {
+      "name": "best_model.joblib",
+      "size_bytes": 84811,
+      "sha256": "41b6f69f4a859ae5522e2f44a2c80d4b7f7ecb6cc1968e2c347607b14f887027",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/best_model.joblib"
+    },
+    {
+      "name": "model_card.json",
+      "size_bytes": 5131,
+      "sha256": "241ab1cb3acd4fd1758c9de49b8c1f39faadc1803a954b14621e5003675badcb",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/model_card.json"
+    },
+    {
+      "name": "oof_manifest.json",
+      "size_bytes": 3169,
+      "sha256": "e2fc42d20b2e6b40cace84841d81efd6fb0d63705817913abe8c8778cdc892fc",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/oof_manifest.json"
+    },
+    {
+      "name": "preprocessing.joblib",
+      "size_bytes": 385,
+      "sha256": "e16bb630274017a5b73bb8404761b76421515ce9b009fe9777c78f5ee2cbfcab",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/preprocessing.joblib"
+    },
+    {
+      "name": "scores_student_test.parquet",
+      "size_bytes": 1503727,
+      "sha256": "6045957eccd0db99a6058b9d77ac6f974ed64515254907e3bf9593f562d3890e",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/scores_student_test.parquet"
+    },
+    {
+      "name": "scores_train_oof.parquet",
+      "size_bytes": 14444804,
+      "sha256": "0f92cbbc9070a122da45aef381d8d8a31173f5e9d5f2188b262798a36eb4e07f",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/scores_train_oof.parquet"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size_bytes": 528,
+      "sha256": "9a1e2375bad55c4812c3fc8f5ba7889ecb598fac5438fd6194665543b93000d3",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/model-selected-hgb-baseline-ac522dfa/SHA256SUMS.txt"
+    }
+  ]
+}

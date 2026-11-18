@@ -22,6 +22,7 @@ import pandas as pd
 
 from src.common.paths import PROJECT_ROOT
 from src.common.schema import SCHEMA_VERSION
+from src.evaluation.audit_scores import DEFAULT_EXPORTS, EXPORTS
 from src.inference.predictor import file_sha256
 from src.training.cross_validation import FOLDS_PATH, fold_of_rows, load_folds
 from src.training.export_bundle import export
@@ -57,13 +58,16 @@ def handoff(name, output_root):
     folds = load_folds()
     train_cand = pd.read_parquet(DATA / "train_candidates.parquet", columns=KEY)
     test_cand = pd.read_parquet(DATA / "student_test_candidates.parquet", columns=KEY)
-    oof = keyed(pd.read_parquet(ARTIFACTS / name / "oof_probabilities.parquet"), train_cand, "OOF")
-    test = keyed(pd.read_parquet(ARTIFACTS / name / "student_test_probabilities.parquet"),
-                 test_cand, "student_test")
+    oof_file, test_file, _ = EXPORTS.get(name, DEFAULT_EXPORTS)
+    oof = keyed(pd.read_parquet(ARTIFACTS / name / oof_file), train_cand, "OOF")
+    test = keyed(pd.read_parquet(ARTIFACTS / name / test_file), test_cand, "student_test")
     for frame in (oof, test):
         if set(frame.model_version) != {version}:
             raise AssertionError("score export version differs from the model card")
-    oof["fold"] = fold_of_rows(oof.trip_id, folds).astype("int64")
+    canonical = fold_of_rows(oof.trip_id, folds).astype("int64")
+    if "fold" in oof.columns and not np.array_equal(oof.fold.to_numpy(), canonical):
+        raise AssertionError("exported OOF fold IDs differ from the canonical folds")
+    oof["fold"] = canonical
     oof.to_parquet(out / "scores_train_oof.parquet", index=False)
     test.to_parquet(out / "scores_student_test.parquet", index=False)
 
