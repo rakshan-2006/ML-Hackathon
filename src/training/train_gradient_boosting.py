@@ -16,11 +16,11 @@ import pandas as pd
 import sklearn
 from sklearn.metrics import (accuracy_score, confusion_matrix, log_loss,
                              precision_recall_fscore_support)
-from sklearn.model_selection import GroupKFold
 from threadpoolctl import threadpool_limits
 
 from src.common.schema import FEATURES, SCHEMA_VERSION
 from src.models.gradient_boosting import build_model, default_params
+from src.training.cross_validation import assign_folds, load_folds
 
 MODEL_NAME = 'gradient_boosting'
 KEYS = ['trip_id', 'obs_idx', 'arc_id']
@@ -60,21 +60,29 @@ def make_folds(groups, path, seed=2026):
     if len(trips) < 5:
         raise ValueError('Five-fold CV needs at least five distinct trips')
     if path.exists():
-        spec = json.loads(path.read_text(encoding='utf8'))
+        if path.suffix == '.csv':
+            table = load_folds(path)
+            spec = dict(schema_version=SCHEMA_VERSION,
+                        trip_to_fold=dict(zip(table.trip_id.astype(str), table.fold.astype(int))))
+        else:
+            # Accept earlier downloaded JSON fold maps explicitly supplied by users.
+            spec = json.loads(path.read_text(encoding='utf8'))
         mapping = spec['trip_to_fold']
         if set(mapping) != set(trips) or set(mapping.values()) != set(range(5)):
             raise ValueError('Saved fold assignment does not cover these train trips')
     else:
-        mapping = {}
-        for fold, (_, valid) in enumerate(GroupKFold(n_splits=5).split(
-                np.zeros(len(groups)), groups=groups)):
-            mapping.update({str(t): fold for t in groups.iloc[valid].unique()})
+        table = assign_folds(groups)
+        mapping = dict(zip(table.trip_id.astype(str), table.fold.astype(int)))
         spec = dict(scheme='GroupKFold', n_splits=5, shuffle=False,
                     seed=seed, seed_note='Recorded; nonshuffled GroupKFold uses no RNG',
                     group_column='trip_id', partition='train',
                     grouping_rows='candidates with non-null label',
                     schema_version=SCHEMA_VERSION, trip_to_fold=dict(sorted(mapping.items())))
-        write_json(path, spec)
+        if path.suffix == '.csv':
+            path.parent.mkdir(parents=True, exist_ok=True)
+            table.to_csv(path, index=False)
+        else:
+            write_json(path, spec)
     if spec.get('schema_version') != SCHEMA_VERSION:
         raise ValueError('Fold/schema version mismatch')
     assignment = groups.map(mapping).to_numpy(dtype=int)
@@ -251,7 +259,8 @@ def run(args):
     write_json(results/'model_card.json', card)
     write_json(artifacts/'model_card.json', card)
     write_json(artifacts/'schema.json', dict(schema_version=SCHEMA_VERSION, features=FEATURES))
-    write_json(artifacts/'cv_folds.json', json.loads(Path(args.folds).read_text()))
+    write_json(artifacts/'cv_folds.json', dict(schema_version=SCHEMA_VERSION,
+               source_file=str(args.folds), source_sha256=fold_hash, trip_to_fold=mapping))
     hashes = {p.name: dict(size_bytes=p.stat().st_size,
                            sha256=hashlib.sha256(p.read_bytes()).hexdigest())
               for p in artifacts.iterdir() if p.is_file() and p.name != 'artifact_manifest.json'}
@@ -265,7 +274,7 @@ def main():
     p.add_argument('--processed-root', default='data/processed')
     p.add_argument('--results-root', default='results/models/gradient_boosting')
     p.add_argument('--artifacts-root', default='artifacts/gradient_boosting')
-    p.add_argument('--folds', default='experiments/cv_folds.json')
+    p.add_argument('--folds', default='configs/cv_folds.csv')
     p.add_argument('--seed', type=int, default=2026)
     p.add_argument('--threads', type=int, default=4)
     p.add_argument('--batch-size', type=int, default=100000)

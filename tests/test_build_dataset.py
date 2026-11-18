@@ -12,7 +12,7 @@ def test_atomic_build_and_repeat(tmp_path):
     trip = tmp_path/'raw/train/00000001'; trip.mkdir(parents=True)
     for kind in ['track','nodes','arcs','route']:
         shutil.copyfile(FIXTURE/f'tiny_trip.{kind}',trip/f'00000001.{kind}')
-    config = Path(__file__).parents[1]/'experiments/data_config.yaml'
+    config = Path(__file__).parents[1]/'configs/data.yaml'
     build(tmp_path/'raw',tmp_path/'first',config,['train'])
     build(tmp_path/'raw',tmp_path/'second',config,['train'])
     assert validate(tmp_path/'first',tmp_path/'second')['ordered_semantic_content_identical']

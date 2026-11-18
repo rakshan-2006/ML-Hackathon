@@ -18,7 +18,20 @@ def load_metrics(name):
     if missing:
         raise FileNotFoundError(f"missing measured results: {missing}")
     cv = pd.read_csv(paths[0], dtype={"fold": "string"})
-    return cv, pd.read_csv(paths[1]).iloc[0]
+    test = pd.read_csv(paths[1]).iloc[0]
+    if 'split' not in cv.columns:
+        # Earlier GB evidence has one row per validation fold and different names.
+        # Adapt at the read boundary; never rewrite historical measured results.
+        rename = {'macro_f1': 'f1_macro', 'precision_positive': 'precision_pos',
+                  'recall_positive': 'recall_pos', 'f1_positive': 'f1_pos'}
+        cv = cv.rename(columns=rename)
+        test = test.rename(index=rename)
+        numeric = cv.select_dtypes('number')
+        summary = [dict(fold=stat, split='validation', **numeric.agg(stat).to_dict())
+                   for stat in ['mean', 'std']]
+        cv['split'] = 'validation'
+        cv = pd.concat([cv, pd.DataFrame(summary)], ignore_index=True)
+    return cv, test
 
 
 def _bars(ax, positions, values, colors, errors=None):
@@ -41,7 +54,8 @@ def plot_model_accuracy(name):
     ax = axes[0]
     x = range(len(labels))
     width = 0.38
-    ax.bar([i - width / 2 for i in x], train.candidate_accuracy, width, label="train fold", color="#9bb7d4")
+    if not train.empty:
+        ax.bar([i - width / 2 for i in x], train.candidate_accuracy, width, label="train fold", color="#9bb7d4")
     ax.bar([i + width / 2 for i in x], val.candidate_accuracy, width, label="validation fold", color="#2f6db5")
     for i, (a, b) in enumerate(zip(train.candidate_accuracy, val.candidate_accuracy)):
         ax.annotate(f"{a:.4f}", (i - width / 2, a), ha="center", va="bottom", fontsize=7)
@@ -53,7 +67,7 @@ def plot_model_accuracy(name):
     ax.set_xticks(list(x) + [n, n + 1], labels + ["CV mean (val)", "student test"], rotation=20)
     ax.set_ylabel("Candidate accuracy (labelled candidates, threshold 0.5)")
     ax.set_title(f"{name}: candidate-level accuracy")
-    low = min(train.candidate_accuracy.min(), val.candidate_accuracy.min(), test.candidate_accuracy)
+    low = min(val.candidate_accuracy.min(), test.candidate_accuracy)
     ax.set_ylim(max(0.0, low - 0.05), 1.0)
     ax.legend(loc="lower right")
 

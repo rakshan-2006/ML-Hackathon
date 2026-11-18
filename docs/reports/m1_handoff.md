@@ -88,7 +88,7 @@ from src.data.track_cleaning import clean_track
 from src.data.candidate_generation import generate_candidates
 from src.data.feature_engineering import build_features
 
-cfg = load_config('experiments/data_config.yaml')
+cfg = load_config('configs/data.yaml')
 graph = load_road_graph(trip_dir)
 obs = clean_track(load_track(trip_dir), graph.projection, graph.trip_id,
                   partition='student_test', config=cfg)

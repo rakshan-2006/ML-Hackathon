@@ -1,0 +1,2 @@
+# Convenience entry point; no competing model dependency pins.
+-r training.txt

@@ -37,23 +37,21 @@ the runtime. Hyperparameters are fixed before student-test evaluation.
 
 ```powershell
 py -3.11 -m venv .venv-gb
-.venv-gb/Scripts/python -m pip install -r data/requirements-m1.txt -r data/requirements-gradient-boosting.txt
+.venv-gb/Scripts/python -m pip install -r requirements.txt
 .venv-gb/Scripts/python -m src.data.download_dataset
 .venv-gb/Scripts/python -m src.data.validate_dataset
 .venv-gb/Scripts/python -m src.training.train_gradient_boosting --threads 4
 .venv-gb/Scripts/python -m pytest -q
 ```
 
-The shared model branch currently contains empty scaffolding, so no executable
-shared runner or fold file was available. This implementation isolates the GB
-runner and publishes `experiments/cv_folds.json` for all five models to reuse.
+At the original baseline run, the model branch contained empty scaffolding. The
+integrated repository now has a shared runner and a single `configs/cv_folds.csv`
+for all five models. The dedicated GB baseline runner remains available.
 Five-fold GroupKFold balances counts of labelled candidate rows and keeps whole
 trips together. Existing fold assignments are validated and reused. There is no
 shuffle; the recorded seed controls the estimator rather than the fold splitter.
 
-The code depends on the M1 preprocessing PR (#2). Until that PR is merged, this
-model branch includes its commits; reviewers should merge the preprocessing
-dependency first so the GB PR shows only model-specific changes.
+Preprocessing PR #2 and model PRs #3–#5 have been integrated into main.
 
 ## Model and supervision
 
@@ -121,7 +119,7 @@ per-trip results and identically assigned folds rather than student-test alone.
 branch after installing the documented dependencies, download with:
 
 ```powershell
-python -m src.data.download_dataset --metadata data/gradient_boosting_release.json --output-root artifacts/gradient_boosting
+python -m src.data.download_dataset --metadata data/releases/gradient_boosting.json --output-root artifacts/gradient_boosting
 ```
 
 This verifies every asset's SHA-256/size. The pipeline is a trusted project

@@ -1,155 +1,78 @@
 # PathSnap
 
-PathSnap is a PES University hackathon project for distributed map-matching and
-route reconstruction. This repository currently contains the **Member 4 API,
-UI, integration, and deployment foundation** and **M1 model-ready preprocessing**.
-Inference remains in walking-skeleton mode until the model and decoder are
-supplied and the inference adapter is integrated.
+GPS candidate scoring and route reconstruction for the PES University ML hackathon.
+Preprocessing and three model baselines (Logistic Regression, Decision Tree and
+Gradient Boosting) are available. The API/UI currently runs as a walking skeleton;
+the production decoder and model-to-API adapter are still required.
 
-## Ready-to-use training data (Member 2)
+## Start here
 
-All 80 train trips and 10 student-test trips have been preprocessed. Download the
-checksummed Parquet files from the [M1 dataset release](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/m1-preprocessed-2026-11-18).
-Cloning the repository alone does not download these assets. Follow
-[data/README.md](data/README.md) for environment setup, the verified downloader,
-and the model-data loader. [report/m1_handoff.md](report/m1_handoff.md) explains
-features, nullable labels, group splits, and M3/M4 interfaces.
-
-The M1 data environment uses Python 3.11. Install `data/requirements-m1.txt` in
-its own environment; its historical reproducibility pins differ from the API/UI
-environment for Folium and pytest. Do not combine both pinned requirement files
-in one install command. The shared schema version is defined only in
-`src/common/schema.py`; model and decoder cards must use that exact version.
-
-## Project structure
-
-### Train candidate models
-
-Use a separate Python 3.11 environment for training; do not combine its historical
-Folium/pytest pins with the API/UI requirements in one install command.
+Use Python 3.11 or later, from the repository root:
 
 ```powershell
-py -3.11 -m venv .venv-train
-.venv-train/Scripts/python -m pip install -r data/requirements-training.txt
-.venv-train/Scripts/python -m src.data.download_dataset
-.venv-train/Scripts/python -m src.data.validate_dataset
-.venv-train/Scripts/python -m src.training.train_models --model logistic_regression
+py -3.11 -m venv .venv
+.venv/Scripts/python -m pip install -r requirements.txt
+.venv/Scripts/python -m src.data.download_dataset
+.venv/Scripts/python -m src.data.validate_dataset
+.venv/Scripts/python -m pytest -q
 ```
 
-Use the committed `results/models/shared/train_folds_5.csv` for all models.
-Large fitted pipelines and probability exports are Release assets; each model's
-`results/models/<name>/artifacts.json` records download URLs, sizes and checksums.
-Never train on student-test or evaluator data. Missing feature values are handled
-inside each fold's fitted pipeline.
+`requirements.txt` installs the complete team environment. For a smaller training
+environment use `requirements/training.txt`; see [setup and deployment](docs/setup.md).
+Cloning does not download dataset/model assets.
+
+## Repository map
 
 ```text
-data/
-  raw/                 # Local-only source data
-  processed/           # Processed inputs and trip folders
-  evaluation/          # Local-only evaluator trips; never commit this data
-src/
-  common/              # Shared paths and configuration
-  inference/           # Reserved integration point; no inference logic yet
-  api/                 # FastAPI contract, service, artifact and logging interfaces
-ui/                    # Streamlit/Folium evaluator dashboard
-models/                # Local model artifacts
-results/               # Local generated outputs
-experiments/            # Experiment outputs
-tests/
-  fixtures/             # Safe, synthetic test fixtures only
-report/                 # Member 4 implementation notes
+configs/        Frozen preprocessing config and the one shared CV fold assignment
+data/           Local raw/processed/evaluation data; Release indexes in releases/
+docs/           Setup, data, training, architecture, and member reports
+requirements/   Shared dependency pins grouped by workflow
+src/            Python code: data, models, training, evaluation, API, common
+tests/          Synthetic fixtures and automated checks
+ui/             Streamlit dashboard
+results/        Committed measured metrics, evidence and report figures
+artifacts/      Downloaded/fitted per-model pipelines and scores (local, ignored)
+models/         Selected runtime model/decoder bundle for the API (local, ignored)
 ```
 
-## Python environment and dependencies
+Keep code under `src/`, configuration under `configs/`, and measured outputs under
+`results/`. Never commit raw/evaluator data, environments, or large fitted artifacts.
 
-Python 3.11 or later is required. The initial API/UI dependency pins were selected for
-compatibility with the available Python 3.13.15 environment.
+## Train and compare
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+.venv/Scripts/python -m src.training.train_models --model logistic_regression
+.venv/Scripts/python -m src.training.train_models --model decision_tree
+.venv/Scripts/python -m src.training.train_gradient_boosting --threads 4
+.venv/Scripts/python -m src.evaluation.compare_models logistic_regression decision_tree gradient_boosting
 ```
 
-If PowerShell blocks activation, run commands using
-`.\.venv\Scripts\python.exe -m pip ...` directly.
+All models use [configs/cv_folds.csv](configs/cv_folds.csv), the same 80 training
+trips, 13 ordered physical features, nullable-label policy, and held-out 10-trip
+student-test partition. [Training and artifact loading](docs/training.md) explains
+commands, model contracts, metrics, and existing Release downloads.
 
-## Configure and run the API
-
-The API defaults to `PATHSNAP_MODE=stub`. Stub mode does not load model artifacts,
-read trip contents, or produce fabricated predictions or metrics.
+## Run the demo foundation
 
 ```powershell
-$env:PATHSNAP_MODE = "stub"
-python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+.venv/Scripts/python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+# In another terminal:
+.venv/Scripts/python -m streamlit run ui/app.py
 ```
 
-Open `http://127.0.0.1:8000/docs` for the interactive API contract. Configuration
-uses environment variables; relative paths resolve from the repository root:
+The default mode is explicitly `stub`; it returns no fabricated predictions.
+[Setup/deployment](docs/setup.md) covers environment variables and two laptops.
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `PATHSNAP_MODE` | `stub` | `stub` or `real`; real mode validates artifacts at startup |
-| `PATHSNAP_EVALUATION_DIR` | `data/evaluation` | Directory containing one folder per trip |
-| `PATHSNAP_ARTIFACTS_DIR` | `models` | Directory containing required model/decoder artifacts |
-| `PATHSNAP_LOG_DIR` | `logs` | Rotating application log output |
+## Documentation and results
 
-`GET /trips` returns names of immediate child directories in the configured
-evaluation directory. An absent directory produces an empty list. A prediction
-for an ID not discovered there returns 404.
+- [Dataset download, regeneration, schema and leakage rules](docs/data.md)
+- [Model training, comparison and saved pipelines](docs/training.md)
+- [Architecture and layout migration](docs/architecture.md)
+- [Member handoffs and reports](docs/reports/)
+- [Gradient Boosting graph gallery](results/models/gradient_boosting/figures/)
+- [Measured model results](results/models/)
 
-Real mode requires `best_model.joblib`, `preprocessing.joblib`,
-`model_card.json`, and `decoder_config.json`; both JSON files must declare a
-matching `schema_version`. The artifact-loading interface is ready, but the
-Member 1/2/3 inference adapter is not implemented. Consequently, the API reports
-an explicit 503 for predictions in real mode until that integration is supplied.
-
-## Run the Streamlit evaluator dashboard
-
-Start the API, then in another terminal:
-
-```powershell
-$env:PATHSNAP_API_BASE_URL = "http://127.0.0.1:8000"
-python -m streamlit run ui/app.py
-```
-
-Set `PATHSNAP_API_BASE_URL` to the reachable API origin, without an endpoint
-suffix. The UI gets health and trip IDs from the API and sends prediction
-requests to `/predict`; it does not implement inference itself.
-
-### Connect two laptops over Wi-Fi or hotspot
-
-1. Connect both laptops to the same trusted Wi-Fi/hotspot and find the API
-   laptop's private IPv4 address (for example, with `ipconfig` on Windows).
-2. Start the API bound to that interface:
-   `python -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000`.
-3. Allow inbound TCP port 8000 in the API laptop's firewall, limited to the
-   trusted local network.
-4. On the UI laptop, set
-   `$env:PATHSNAP_API_BASE_URL = "http://<API-LAPTOP-IP>:8000"` and start
-   Streamlit. Keep both devices on the trusted network; do not expose the
-   development API publicly.
-
-## Test
-
-```powershell
-python -m pytest
-```
-
-Tests use temporary directories and synthetic trip IDs. They do not open or use
-evaluator data.
-
-## Integration still awaited
-
-- **Member 1:** input data-processing/preprocessing outputs and the documented
-  trip input format.
-- **Member 2:** trained `best_model.joblib`, `preprocessing.joblib`, and a
-  `model_card.json` declaring `schema_version`.
-- **Member 3:** decoder implementation/configuration and `decoder_config.json`
-  declaring the same `schema_version`, plus the inference integration contract.
-
-No Member 1, 2, or 3 logic is implemented here. Inference code must not read
-reference `.route` files or return reference routes to the evaluator UI. When
-evaluation is implemented, only the server-side evaluation module may read
-reference routes.
+Historical manifests/cards retain the paths and hashes from their original runs.
+The layout migration moves configuration and documentation without changing
+dataset values, fold membership, trained weights, or recorded metrics.

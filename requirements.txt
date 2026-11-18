@@ -1,13 +1,2 @@
-fastapi==0.115.12
-uvicorn==0.34.2
-pydantic==2.11.4
-joblib==1.5.1
-requests==2.32.3
-streamlit==1.45.1
-folium==0.19.5
-streamlit-folium==0.25.0
-pytest==8.3.5
-httpx==0.28.1
-# Shared schema is also used by API artifact validation.
-numpy==2.3.4
-pandas==2.3.3
+# Full team/development environment. See requirements/ for smaller installations.
+-r requirements/dev.txt

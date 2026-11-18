@@ -1,26 +1,29 @@
-# Local data and evaluator/reference material
+# Local input data: never commit supplied/evaluator/reference files
 data/raw/*
 !data/raw/.gitkeep
 data/evaluation/*
 !data/evaluation/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 *.route
+!tests/fixtures/**/*.route
 
-# Generated outputs and logs
+# Large generated artifacts; small metrics/figures in results/ are intentional
+artifacts/
+models/*
+!models/.gitkeep
+results/**/*.parquet
+results/**/*.joblib
+results/**/*.pkl
 logs/
-results/*
-!results/.gitkeep
-experiments/*
-!experiments/.gitkeep
+tmp/
+*.partial
 *.log
 *.tmp
 *.temp
 
-# Model artifacts are local until an explicit distribution policy is agreed
-models/*.joblib
-models/*.pkl
-
-# Python environments, bytecode, and test/tool caches
-.venv/
+# Environments and tools
+.venv*/
 venv/
 env/
 __pycache__/
@@ -31,32 +34,10 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Editor and operating-system temporary files
+# Editors and operating systems
 .vscode/
 .idea/
 *.swp
 *.swo
 Thumbs.db
 .DS_Store
-
-# M1 generated tables, environments, and temporary downloads
-.venv*/
-data/processed/*
-!data/processed/.gitkeep
-tmp/
-*.partial
-
-# Versioned M1 configuration/evidence and synthetic reference fixture
-!experiments/data_config.yaml
-!results/eda/
-!results/eda/**
-!tests/fixtures/**/*.route
-
-# Model results: small measured outputs are versioned; large artifacts go to GitHub Releases
-# (gradient boosting additionally keeps its local artifacts/ folder out of Git)
-artifacts/
-!experiments/cv_folds.json
-!results/models/
-!results/models/**
-results/models/**/*.parquet
-results/models/**/*.joblib
