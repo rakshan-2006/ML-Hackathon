@@ -1,0 +1,5 @@
+# Common training stack; model-specific files include this same set.
+-r data.txt
+scikit-learn==1.7.2
+joblib==1.5.1
+threadpoolctl==3.6.0

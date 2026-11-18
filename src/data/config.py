@@ -2,7 +2,7 @@
 from pathlib import Path
 import yaml
 
-def load_config(path='experiments/data_config.yaml'):
+def load_config(path='configs/data.yaml'):
     with Path(path).open() as stream:
         cfg = yaml.safe_load(stream)
     required = ['seed','radius_m','max_candidates','gap_threshold_s','alignment_radius_m']

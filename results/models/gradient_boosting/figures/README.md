@@ -11,7 +11,7 @@ python -m src.evaluation.plot_gradient_boosting
 ```
 
 Install dependencies and download dataset/model probability assets as documented
-in [the model report](../../../../report/gradient_boosting.md).
+in [the model report](../../../../docs/reports/gradient_boosting.md).
 Source checksums are recorded in `figure_manifest.json`.
 
 ## Performance overview

@@ -1,5 +1,10 @@
 # PathSnap: comparison of the three implemented models
 
+Layout note: the numeric comparisons below describe the original baseline runs.
+PR #6 subsequently standardized the shared factory/metric interfaces without
+changing their measured values. Current runners all read `configs/cv_folds.csv`;
+historical model cards retain their original CSV/JSON file paths and hashes.
+
 **Recommendation: Histogram Gradient Boosting is the strongest current baseline.**
 It leads Logistic Regression and Decision Tree on five-fold validation Macro-F1,
 observation Top-1, and log loss, and it also leads on all three student-test metrics.
@@ -58,7 +63,7 @@ particular, Gradient Boosting's pooled OOF Macro-F1 (0.886669) and pooled OOF To
 (76.422%) must not be substituted into the mean-CV comparison above.
 
 The normalized results are saved in
-[comparison_metrics.csv](../results/models/comparison/three_models/comparison_metrics.csv).
+[comparison_metrics.csv](../../results/models/comparison/logistic_regression_vs_decision_tree_vs_gradient_boosting/comparison_metrics.csv).
 
 ## 3. Why Gradient Boosting currently wins
 
@@ -185,9 +190,9 @@ Original metric tables, cards and timings:
 
 New comparison evidence:
 
-- [Normalized comparison table](../results/models/comparison/three_models/comparison_metrics.csv)
-- [Normalized per-fold metrics](../results/models/comparison/three_models/fold_metrics.csv)
-- [Comparability checks and source revision](../results/models/comparison/three_models/comparison_validation.json)
+- [Normalized comparison table](../../results/models/comparison/logistic_regression_vs_decision_tree_vs_gradient_boosting/comparison_metrics.csv)
+- [Per-model fold metrics and cards](../../results/models/)
+- [Canonical trip-to-fold assignment](../../configs/cv_folds.csv)
 
 Checks performed: exact 80-trip fold-map equality, matching dataset manifest,
 matching schema and ordered features, CV means recomputed from fold rows and

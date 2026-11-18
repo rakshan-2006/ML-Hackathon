@@ -32,6 +32,7 @@ from src.training.preprocessing import PREPROCESSING_POLICY
 
 DATA = PROJECT_ROOT / "data" / "processed"
 RESULTS = PROJECT_ROOT / "results" / "models"
+ARTIFACTS = PROJECT_ROOT / "artifacts"
 SEED = 2026
 THRESHOLD = 0.5
 DATASET_RELEASE = "m1-preprocessed-2026-11-18"
@@ -90,6 +91,8 @@ def run(name, params, smoke_only=False):
     version = f"{name}-v1-{config_hash}"
     out = RESULTS / name
     out.mkdir(parents=True, exist_ok=True)
+    artifact_out = ARTIFACTS / name
+    artifact_out.mkdir(parents=True, exist_ok=True)
 
     train, test = load_partition("train"), load_partition("student_test")
     folds = load_folds()
@@ -119,12 +122,13 @@ def run(name, params, smoke_only=False):
         model.fit(X_tr, y_all[tr])
         fit_s = time.perf_counter() - started
 
-        # Imputer statistics must come from the training fold only (models that
-        # handle NaNs natively have no imputer step).
+        # Imputer statistics must come from the training fold only.
         if "impute" in model.named_steps:
             fold_medians = np.nanmedian(X_tr.to_numpy(dtype=np.float64), axis=0)
             if not np.allclose(model.named_steps["impute"].statistics_, fold_medians, equal_nan=True):
                 raise AssertionError(f"fold {k}: imputer not fitted on the training fold")
+        elif getattr(module, 'IMPUTE_MISSING', True):
+            raise AssertionError('Model must declare how it handles missing features')
 
         p_tr = positive_proba(model, X_tr)
         started = time.perf_counter()
@@ -170,17 +174,17 @@ def run(name, params, smoke_only=False):
                     **top1(tcand, p_test, np.ones(len(tcand), bool), test["obs"], test["align"])}
     pd.DataFrame([test_metrics]).to_csv(out / "student_test_metrics.csv", index=False)
 
-    joblib.dump(final, out / "pipeline.joblib")
-    reloaded = joblib.load(out / "pipeline.joblib")
+    joblib.dump(final, artifact_out / "pipeline.joblib")
+    reloaded = joblib.load(artifact_out / "pipeline.joblib")
     if not np.array_equal(positive_proba(reloaded, tcand[FEATURES]), p_test):
         raise AssertionError("reloaded pipeline does not reproduce student_test predictions")
 
     for filename, frame, p in (("oof_probabilities.parquet", cand, oof),
                                ("student_test_probabilities.parquet", tcand, p_test)):
         frame[KEY].assign(p_model=p, model_name=name, model_version=version)[PROB_COLUMNS] \
-            .to_parquet(out / filename, index=False)
+            .to_parquet(artifact_out / filename, index=False)
 
-    verify_saved_metrics(out, train, test, cv, test_metrics)
+    verify_saved_metrics(out, train, test, cv, test_metrics, artifact_out)
 
     timings.update({"cv_total_fit_s": round(sum(f["fit_s"] for f in timings["folds"]), 3),
                     "refit_s": round(refit_s, 3), "student_test_predict_s": round(test_predict_s, 3),
@@ -192,7 +196,10 @@ def run(name, params, smoke_only=False):
               "estimator": type(final.named_steps["model"]).__name__, "params": params,
               "seed": SEED, "decision_threshold": THRESHOLD,
               "class_imbalance": module.CLASS_IMBALANCE,
-              "preprocessing": {**PREPROCESSING_POLICY, "scaled": module.SCALE_FEATURES},
+              "preprocessing": ({"missing_values": "Native estimator handling; no fitted imputer",
+                                  "scaled": False, "feature_order": "src.common.schema.FEATURES"}
+                                if not getattr(module, 'IMPUTE_MISSING', True)
+                                else {**PREPROCESSING_POLICY, "scaled": module.SCALE_FEATURES}),
               "folds_file": str(FOLDS_PATH.relative_to(PROJECT_ROOT)).replace("\\", "/"),
               "folds_sha256": folds_sha256(), "n_splits": N_SPLITS,
               "command": f"python -m src.training.train_models --model {name}"}
@@ -239,11 +246,11 @@ def run(name, params, smoke_only=False):
     print(f"[{name}] done -> {out}", flush=True)
 
 
-def verify_saved_metrics(out, train, test, cv, test_metrics):
+def verify_saved_metrics(out, train, test, cv, test_metrics, artifact_dir=None):
     """Recompute the student-test and fold metrics from the saved probability files."""
     for filename, data, expected in (("student_test_probabilities.parquet", test, [test_metrics]),
                                      ("oof_probabilities.parquet", train, None)):
-        saved = pd.read_parquet(out / filename)
+        saved = pd.read_parquet((artifact_dir or out) / filename)
         cand = data["cand"]
         if not saved[KEY].reset_index(drop=True).equals(cand[KEY].reset_index(drop=True)):
             raise AssertionError(f"{filename}: keys/order differ from C2")

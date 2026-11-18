@@ -1,5 +1,0 @@
-# Reproduce the LR/DT training environment with Python 3.11.
--r requirements-m1.txt
-scikit-learn==1.7.2
-joblib==1.5.1
-threadpoolctl==3.6.0
