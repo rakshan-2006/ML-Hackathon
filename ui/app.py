@@ -131,7 +131,7 @@ def main() -> None:
     if st.button("Run Prediction", type="primary"):
         try:
             with st.spinner('Processing GPS, scoring candidates and decoding the directed route…'):
-                prediction = post_json("/predict", {"trip_id": selected_trip})
+                st.session_state["pathsnap_prediction"] = post_json("/predict", {"trip_id": selected_trip})
         except requests.HTTPError as exc:
             detail = exc.response.text if exc.response is not None else str(exc)
             st.error(f"Prediction request failed: {detail}")
@@ -140,31 +140,34 @@ def main() -> None:
             st.error(f"Could not contact the prediction API: {exc}")
             st.stop()
 
-        if prediction.get("is_stub"):
-            st.info("Walking-skeleton response: no real prediction was generated.")
-        elif prediction.get('diagnostics',{}).get('deployment_status')=='development_baseline':
-            st.warning('Real development-baseline prediction with an untuned decoder. Final selected model and decoder tuning are pending.')
-        metric_columns=st.columns(3)
-        for col,key,label in zip(metric_columns,['top1_accuracy_classifier','top1_accuracy_hmm','candidate_miss_rate'],
-                                 ['Classifier Top-1','HMM Top-1','Candidate miss rate']):
-            value=prediction.get('metrics',{}).get(key)
-            col.metric(label,f'{value:.2%}' if value is not None else 'Unavailable')
-        st.caption('Top-1 is agreement with derived reference alignment, when server references are available. Reference routes remain server-side.')
-        st.subheader("GPS points and predicted route")
-        render_route_map(prediction)
-        if not prediction.get("route_classifier"):
-            st.caption(
-                "Classifier-only route layer: awaiting Member 2 classification output."
-            )
+    prediction = st.session_state.get("pathsnap_prediction")
+    if not prediction or prediction.get("trip_id") != selected_trip:
+        return
+    if prediction.get("is_stub"):
+        st.info("Walking-skeleton response: no real prediction was generated.")
+    elif prediction.get('diagnostics',{}).get('deployment_status')=='development_baseline':
+        st.warning('Real development-baseline prediction with an untuned decoder. Final selected model and decoder tuning are pending.')
+    metric_columns=st.columns(3)
+    for col,key,label in zip(metric_columns,['top1_accuracy_classifier','top1_accuracy_hmm','candidate_miss_rate'],
+                             ['Classifier Top-1','HMM Top-1','Candidate miss rate']):
+        value=prediction.get('metrics',{}).get(key)
+        col.metric(label,f'{value:.2%}' if value is not None else 'Unavailable')
+    st.caption('Top-1 is agreement with derived reference alignment, when server references are available. Reference routes remain server-side.')
+    st.subheader("GPS points and predicted route")
+    render_route_map(prediction)
+    if not prediction.get("route_classifier"):
+        st.caption(
+            "Classifier-only route layer: awaiting Member 2 classification output."
+        )
 
-        st.subheader("Metrics and diagnostics")
-        if prediction.get("metrics"):
-            st.json(prediction["metrics"])
-        else:
-            st.info("No evaluation metrics are available.")
-        st.json(prediction.get("diagnostics", {}))
-        st.subheader("Stage timings")
-        st.json(prediction.get("timings", {}))
+    st.subheader("Metrics and diagnostics")
+    if prediction.get("metrics"):
+        st.json(prediction["metrics"])
+    else:
+        st.info("No evaluation metrics are available.")
+    st.json(prediction.get("diagnostics", {}))
+    st.subheader("Stage timings")
+    st.json(prediction.get("timings", {}))
 
 
 if __name__ == "__main__":

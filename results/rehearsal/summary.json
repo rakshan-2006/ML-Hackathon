@@ -1,0 +1,16 @@
+{
+  "status": "development_baseline_rehearsal",
+  "trip_count": 10,
+  "partition": "student_test",
+  "all_http_offline_geometry_equal": true,
+  "two_laptop_verified": false,
+  "evaluation_archive_opened": false,
+  "python": "3.11.9",
+  "aggregate": {
+    "top1_classifier": 0.8356871772537796,
+    "top1_hmm": 0.9145150251975362
+  },
+  "api_url": "http://127.0.0.1:8011",
+  "map_selection": "Shortest, median and longest allowed trajectory before observing metrics",
+  "final_model_and_decoder_pending": true
+}
