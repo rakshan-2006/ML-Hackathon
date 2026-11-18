@@ -14,13 +14,12 @@ import joblib
 import numpy as np
 import pandas as pd
 import sklearn
-from sklearn.metrics import (accuracy_score, confusion_matrix, log_loss,
-                             precision_recall_fscore_support)
-from sklearn.model_selection import GroupKFold
 from threadpoolctl import threadpool_limits
 
 from src.common.schema import FEATURES, SCHEMA_VERSION
+from src.evaluation.metrics import candidate_metrics, observation_top1
 from src.models.gradient_boosting import build_model, default_params
+from src.training.cross_validation import FOLDS_PATH, folds_sha256, load_folds
 
 MODEL_NAME = 'gradient_boosting'
 KEYS = ['trip_id', 'obs_idx', 'arc_id']
@@ -49,86 +48,64 @@ def positive_probability(model, X, batch_size=100000):
     return scores
 
 
-def make_folds(groups, path, seed=2026):
-    """Persist one deterministic trip assignment for reuse by all five models.
+def make_folds(groups, path=FOLDS_PATH):
+    """Load the shared trip-to-fold table used by every model (no separate fold file).
 
-    GroupKFold operates on labelled candidate rows (the actual fitting dataset).
-    A pre-existing assignment is used verbatim after coverage validation.
+    Validates that it covers exactly these labelled train trips and that no trip
+    is on both sides of any split.
     """
-    path = Path(path)
     trips = sorted(groups.unique().tolist())
-    if len(trips) < 5:
-        raise ValueError('Five-fold CV needs at least five distinct trips')
-    if path.exists():
-        spec = json.loads(path.read_text(encoding='utf8'))
-        mapping = spec['trip_to_fold']
-        if set(mapping) != set(trips) or set(mapping.values()) != set(range(5)):
-            raise ValueError('Saved fold assignment does not cover these train trips')
-    else:
-        mapping = {}
-        for fold, (_, valid) in enumerate(GroupKFold(n_splits=5).split(
-                np.zeros(len(groups)), groups=groups)):
-            mapping.update({str(t): fold for t in groups.iloc[valid].unique()})
-        spec = dict(scheme='GroupKFold', n_splits=5, shuffle=False,
-                    seed=seed, seed_note='Recorded; nonshuffled GroupKFold uses no RNG',
-                    group_column='trip_id', partition='train',
-                    grouping_rows='candidates with non-null label',
-                    schema_version=SCHEMA_VERSION, trip_to_fold=dict(sorted(mapping.items())))
-        write_json(path, spec)
-    if spec.get('schema_version') != SCHEMA_VERSION:
-        raise ValueError('Fold/schema version mismatch')
+    folds = load_folds(path)
+    mapping = dict(zip(folds.trip_id.astype(str), folds.fold.astype(int)))
+    if set(mapping) != set(trips) or set(mapping.values()) != set(range(5)):
+        raise ValueError('Saved fold assignment does not cover these train trips')
     assignment = groups.map(mapping).to_numpy(dtype=int)
     for fold in range(5):
         train_trips = set(groups[assignment != fold])
         valid_trips = set(groups[assignment == fold])
         if not valid_trips or train_trips & valid_trips:
             raise ValueError('Invalid or leaking group split')
-    return mapping, assignment, hashlib.sha256(path.read_bytes()).hexdigest()
+    return mapping, assignment, folds_sha256(path)
 
 
 def evaluate(candidates, scores, observations, alignment):
-    """Candidate metrics on trusted labels; Top-1 on ALL trusted valid GPS rows.
+    """Shared metrics (src/evaluation/metrics.py) plus a per-trip Top-1 table.
 
-    Argmax is over every candidate, including candidates with nullable targets.
-    Reference misses and zero-candidate observations count as Top-1 failures.
+    Candidate metrics use trusted labels; Top-1 covers ALL trusted valid GPS rows,
+    argmax over every candidate. Reference misses and zero-candidate observations
+    count as Top-1 failures.
     """
     if len(scores) != len(candidates) or not np.isfinite(scores).all():
         raise ValueError('Scores must be finite and aligned with candidates')
     labelled = candidates.label.notna().to_numpy()
-    y = candidates.loc[labelled, 'label'].to_numpy(dtype=np.int8)
-    prob = np.asarray(scores)[labelled]
-    if not len(y):
+    if not labelled.any():
         raise ValueError('No labelled candidates for evaluation')
-    pred = (prob >= 0.5).astype(np.int8)
-    precision, recall, f1, _ = precision_recall_fscore_support(
-        y, pred, labels=[0, 1], average='macro', zero_division=0)
-    p1, r1, f1_positive, _ = precision_recall_fscore_support(
-        y, pred, average='binary', zero_division=0)
-    ranked = candidates[KEYS + ['cand_rank']].copy()
-    ranked['p_model'] = scores
-    best = ranked.sort_values(
+    y = candidates.loc[labelled, 'label'].to_numpy(dtype=np.int8)
+    result = candidate_metrics(y, np.asarray(scores)[labelled])
+    scored = candidates[KEYS + ['cand_rank']].assign(p_model=np.asarray(scores))
+    result.update(observation_top1(scored, observations, alignment))
+    best = scored.sort_values(
         ['trip_id', 'obs_idx', 'p_model', 'cand_rank'],
         ascending=[True, True, False, True], kind='stable').drop_duplicates(['trip_id', 'obs_idx'])
     eligible = alignment.merge(observations[['trip_id', 'obs_idx', 'is_valid']],
                                on=['trip_id', 'obs_idx'], validate='one_to_one')
     eligible = eligible.loc[(eligible.align_status == 'ok') & eligible.is_valid].copy()
     eligible = eligible.merge(best[KEYS], on=['trip_id', 'obs_idx'], how='left',
-                               validate='one_to_one')
+                              validate='one_to_one')
     eligible['correct'] = eligible.arc_id.eq(eligible.ref_arc_id)
     per_trip = eligible.groupby('trip_id', as_index=False).agg(
         top1_correct=('correct', 'sum'), top1_denominator=('correct', 'size'))
     per_trip['top1_accuracy'] = per_trip.top1_correct / per_trip.top1_denominator
-    top1_n = len(eligible)
-    result = dict(labelled_candidates=len(y), positive_candidates=int(y.sum()),
-                  candidate_accuracy=float(accuracy_score(y, pred)),
-                  precision_macro=float(precision), recall_macro=float(recall),
-                  macro_f1=float(f1), precision_positive=float(p1),
-                  recall_positive=float(r1), f1_positive=float(f1_positive),
-                  log_loss=float(log_loss(y, prob, labels=[0, 1])),
-                  confusion_matrix=confusion_matrix(y, pred, labels=[0, 1]).tolist(),
-                  top1_correct=int(eligible.correct.sum()), top1_denominator=top1_n,
-                  top1_accuracy=float(eligible.correct.sum()/top1_n) if top1_n else None)
     return result, per_trip
+
+
+def write_cv_metrics(fold_metrics, path):
+    """Same layout as src/training/train_models.py: fold rows, then mean and std."""
+    cv = pd.DataFrame(fold_metrics)
+    values = cv.drop(columns=['fold', 'split'])
+    summary = [{'fold': stat, 'split': 'validation', **values.agg(stat).to_dict()}
+               for stat in ('mean', 'std')]
+    pd.concat([cv, pd.DataFrame(summary)], ignore_index=True).to_csv(path, index=False)
 
 
 def load_partition(root, partition):
@@ -196,17 +173,17 @@ def run(args):
         t = perf_counter()
         oof[valid_rows] = positive_probability(model, train.loc[valid_rows, FEATURES], args.batch_size)
         predict_s = perf_counter()-t
-        valid_trips = set(train.loc[valid_rows, 'trip_id'])
+        # Evaluated trips come from the fold table, never from available candidates.
+        fold_trips = {t for t, f in mapping.items() if f == fold}
         metrics, _ = evaluate(train.loc[valid_rows], oof[valid_rows],
-                              obs[obs.trip_id.isin(valid_trips)], align[align.trip_id.isin(valid_trips)])
-        fold_metrics.append(dict(fold=fold, train_rows=int(fit_rows.sum()),
-                                 validation_trips=len(valid_trips), fit_s=fit_s,
-                                 predict_s=predict_s, **metrics))
-        timing_rows.append(dict(stage=f'fold_{fold}', fit_s=fit_s, predict_s=predict_s))
-        pd.DataFrame(fold_metrics).to_csv(results/'cv_metrics.csv', index=False)
-        print(f'Fold {fold+1}: macro-F1={metrics["macro_f1"]:.4f}, Top-1={metrics["top1_accuracy"]:.4f}, fit={fit_s:.1f}s', flush=True)
+                              obs[obs.trip_id.isin(fold_trips)], align[align.trip_id.isin(fold_trips)])
+        fold_metrics.append(dict(fold=fold, split='validation', n_trips=len(fold_trips), **metrics))
+        timing_rows.append(dict(stage=f'fold_{fold}', fit_s=fit_s, predict_s=predict_s,
+                                fit_rows=int(fit_rows.sum())))
+        print(f'Fold {fold+1}: macro-F1={metrics["f1_macro"]:.4f}, Top-1={metrics["top1_accuracy"]:.4f}, fit={fit_s:.1f}s', flush=True)
     if not np.isfinite(oof).all():
         raise ValueError('OOF coverage incomplete')
+    write_cv_metrics(fold_metrics, results/'cv_metrics.csv')
     oof_metrics, oof_trips = evaluate(train, oof, obs, align)
     oof_trips.to_csv(results/'train_oof_per_trip.csv', index=False)
     score_export(train, oof, version, all_assignment).to_parquet(artifacts/'scores_train_oof.parquet', index=False)
@@ -225,7 +202,8 @@ def run(args):
     test_scores = positive_probability(reloaded, test[FEATURES], args.batch_size)
     test_predict_s = perf_counter()-t
     test_metrics, test_trips = evaluate(test, test_scores, test_obs, test_align)
-    pd.DataFrame([test_metrics]).to_csv(results/'student_test_metrics.csv', index=False)
+    pd.DataFrame([dict(n_trips=int(test.trip_id.nunique()), **test_metrics)]).to_csv(
+        results/'student_test_metrics.csv', index=False)
     test_trips.to_csv(results/'student_test_per_trip.csv', index=False)
     score_export(test, test_scores, version).to_parquet(artifacts/'scores_student_test.parquet', index=False)
     # OOF scores include ALL candidate rows; fitting still excludes nullable targets.
@@ -233,7 +211,7 @@ def run(args):
     versions = dict(python=platform.python_version(), sklearn=sklearn.__version__,
                     numpy=np.__version__, pandas=pd.__version__, joblib=joblib.__version__)
     cv_mean = {name: float(np.mean([r[name] for r in fold_metrics]))
-               for name in ['macro_f1', 'log_loss', 'top1_accuracy']}
+               for name in ['f1_macro', 'log_loss', 'top1_accuracy']}
     elapsed = perf_counter()-started
     write_json(results/'timings.json', dict(stages=timing_rows, total_s=elapsed, threads=args.threads))
     card = dict(**config, model_version=version, schema_version=SCHEMA_VERSION,
@@ -251,7 +229,7 @@ def run(args):
     write_json(results/'model_card.json', card)
     write_json(artifacts/'model_card.json', card)
     write_json(artifacts/'schema.json', dict(schema_version=SCHEMA_VERSION, features=FEATURES))
-    write_json(artifacts/'cv_folds.json', json.loads(Path(args.folds).read_text()))
+    (artifacts/Path(args.folds).name).write_bytes(Path(args.folds).read_bytes())
     hashes = {p.name: dict(size_bytes=p.stat().st_size,
                            sha256=hashlib.sha256(p.read_bytes()).hexdigest())
               for p in artifacts.iterdir() if p.is_file() and p.name != 'artifact_manifest.json'}
@@ -265,7 +243,7 @@ def main():
     p.add_argument('--processed-root', default='data/processed')
     p.add_argument('--results-root', default='results/models/gradient_boosting')
     p.add_argument('--artifacts-root', default='artifacts/gradient_boosting')
-    p.add_argument('--folds', default='experiments/cv_folds.json')
+    p.add_argument('--folds', default=str(FOLDS_PATH), help='shared trip-to-fold table')
     p.add_argument('--seed', type=int, default=2026)
     p.add_argument('--threads', type=int, default=4)
     p.add_argument('--batch-size', type=int, default=100000)

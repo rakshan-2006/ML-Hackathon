@@ -44,9 +44,10 @@ py -3.11 -m venv .venv-gb
 .venv-gb/Scripts/python -m pytest -q
 ```
 
-The shared model branch currently contains empty scaffolding, so no executable
-shared runner or fold file was available. This implementation isolates the GB
-runner and publishes `experiments/cv_folds.json` for all five models to reuse.
+The GB runner now reads the shared fold table
+`results/models/shared/train_folds_5.csv` (the former `experiments/cv_folds.json`
+held an identical assignment for all 80 trips and remains a release asset of the
+recorded run) and reports metrics through `src/evaluation/metrics.py`.
 Five-fold GroupKFold balances counts of labelled candidate rows and keeps whole
 trips together. Existing fold assignments are validated and reused. There is no
 shuffle; the recorded seed controls the estimator rather than the fold splitter.

@@ -21,22 +21,22 @@ def to_float64(X):
     return X[FEATURES].to_numpy(dtype=np.float64)
 
 
-def preprocessing_steps(scale):
-    steps = [
-        ("to_float", FunctionTransformer(to_float64)),
-        ("impute", SimpleImputer(strategy="median", add_indicator=True)),
-    ]
+def preprocessing_steps(scale, impute=True):
+    steps = [("to_float", FunctionTransformer(to_float64))]
+    if impute:
+        steps.append(("impute", SimpleImputer(strategy="median", add_indicator=True)))
     if scale:
         steps.append(("scale", StandardScaler()))
     return steps
 
 
-def make_pipeline(estimator, scale):
-    return Pipeline(preprocessing_steps(scale) + [("model", estimator)])
+def make_pipeline(estimator, scale, impute=True):
+    return Pipeline(preprocessing_steps(scale, impute) + [("model", estimator)])
 
 
 PREPROCESSING_POLICY = {
     "feature_order": "src.common.schema.FEATURES (exact order)",
-    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only "
+                      "(models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
     "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
 }
