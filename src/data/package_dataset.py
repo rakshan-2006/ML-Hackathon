@@ -13,6 +13,9 @@ def package(processed_root,asset_root,tag,repository='rakshan-2006/ML-Hackathon'
         raise ValueError('Expected complete two-partition matching-schema build')
     assets = Path(asset_root); assets.mkdir(parents=True,exist_ok=True)
     expected = [f'{p}_{k}.parquet' for p in ['train','student_test'] for k in ['observations','candidates','alignment']]
+    allowed = set(expected)|{'manifest.json','data_config.yaml','requirements-m1.txt','schema.json','SHA256SUMS.txt'}
+    if any(p.name not in allowed or not p.is_file() for p in assets.iterdir()):
+        raise ValueError('Release staging directory contains unexpected files; choose a fresh directory')
     if set(manifest['outputs'])!=set(expected):
         raise ValueError('Expected six processed tables')
     for name in expected:

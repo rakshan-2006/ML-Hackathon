@@ -1,5 +1,30 @@
 # Model-ready preprocessing
 
+## Download the ready-to-use datasets
+
+The actual preprocessed files are published as assets of the
+[M1 dataset release](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/m1-preprocessed-2026-11-18).
+`data/dataset_release.json` lists exact sizes, SHA-256 checksums and per-file URLs.
+No raw files are included. From a fresh directory:
+
+```powershell
+git clone --branch m1/data-features-complete https://github.com/rakshan-2006/ML-Hackathon.git pathsnap-m1
+cd pathsnap-m1
+python -m venv .venv-m1
+.venv-m1/Scripts/python -m pip install -r data/requirements-m1.txt
+.venv-m1/Scripts/python -m src.data.download_dataset
+.venv-m1/Scripts/python -m src.data.validate_dataset
+```
+
+The Python downloader verifies every asset's byte count and SHA-256, then installs
+the success manifest last. It needs no token for this public release. Existing
+matching files are reused; mismatching files require `--overwrite`.
+Load the training inputs using the example near the end of this file. Exclude
+null `label` rows, keep `train` and `student_test` separate, and use `trip_id`
+groups for cross-validation within train. No models are trained by these commands.
+
+## Regenerate from the supplied raw data
+
 Run commands from the repository root using Python 3.11 (validated with 3.11.9).
 Install the isolated M1 dependencies without changing the M4-owned requirements:
 
@@ -66,6 +91,14 @@ C2 contains directed candidate keys, exact segment projections, physical feature
 and offline nullable Int8 labels. C3 has one ordered reference-alignment row per
 observation: arc ID, occurrence position, distance, status and membership in C2.
 CSV evidence must be read with `dtype={'trip_id':'string'}` to preserve leading zeros.
+
+Ordered model feature columns (target column is `label`, group is `trip_id`):
+
+```python
+['dist_m', 'cand_rank', 'dist_minus_min', 'heading_diff_deg', 'speed_mps',
+ 'arc_len_m', 'proj_frac', 'n_candidates', 'is_oneway', 'source_degree',
+ 'target_degree', 'prev_dist_m', 'next_dist_m']
+```
 
 Projection uses one network-centred WGS84 azimuthal equidistant transformer per
 trip, shared by graph and observations. Input lon/lat degrees, output x/y metres;
