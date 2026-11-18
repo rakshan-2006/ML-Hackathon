@@ -73,3 +73,29 @@ scores = positive_probability(pipeline, candidate_table[FEATURES])
 Do not apply a second preprocessor or rename this baseline to the shared selected
 `best_model.joblib` before comparing all five models. No production decoder,
 Predictor adapter, route continuity, or sequence metrics are supplied here.
+
+
+## Measured baseline results
+
+| Metric | Five-fold mean | Pooled train OOF | Held-out student-test |
+| --- | ---: | ---: | ---: |
+| Candidate macro-F1 | 0.886149 | 0.886669 | 0.903897 |
+| Candidate log loss | 0.132879 | 0.132908 | 0.117970 |
+| Observation Top-1 | 0.767965 | 0.764218 | 0.835687 |
+
+Top-1 student-test denominator: 16,073; correct: 13,432.
+Total workflow runtime: 211.1 seconds (four CPU threads).
+Evidence: results/models/gradient_boosting/model_card.json, cv_metrics.csv,
+student_test_metrics.csv, per-trip CSVs and timings.json. All 35 repository tests
+passed after adding the four model tests. Fold results vary materially; compare
+per-trip results and identically assigned folds rather than student-test alone.
+
+[Download the pipeline and probability exports](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/gradient-boosting-baseline-2026-11-18). From the model
+branch after installing the documented dependencies, download with:
+
+```powershell
+python -m src.data.download_dataset --metadata data/gradient_boosting_release.json --output-root artifacts/gradient_boosting
+```
+
+This verifies every asset's SHA-256/size. The pipeline is a trusted project
+artifact; load it only in the documented matching environment.
