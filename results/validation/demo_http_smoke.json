@@ -1,0 +1,7 @@
+{
+  "health": 200,
+  "trip_count": 10,
+  "prediction_trip": "00000052",
+  "prediction_status": 200,
+  "real_route": true
+}

@@ -1,17 +1,10 @@
 # PathSnap
 
-Person B's real decoder/API/UI preparation and two-laptop commands are in
-[the runtime runbook](docs/person_b_runbook.md). The working baseline demo uses
-a clearly labelled untuned decoder; final model/OOF tuning and physical deployment
-acceptance remain pending. Keep evaluator data sealed during preparation.
+Working GB classifier + HMM/Viterbi API and Streamlit UI. Five model evaluations
+and the deadline Bayesian search are recorded in docs/reports/data_and_models.md.
+The demo uses the selected GB and explicitly untuned decoder defaults.
 
-GPS candidate scoring and route reconstruction for the PES University ML hackathon.
-Preprocessing and four model baselines (Logistic Regression, Decision Tree,
-Gradient Boosting and Random Forest) are available. The API/UI currently runs as a walking skeleton;
-the production decoder and model-to-API adapter are still required.
-
-KNN is also implemented through the shared factory/trainer. Its full five-fold
-evaluation and comparable accuracy results are pending; see [training](docs/training.md).
+**Two-laptop launch: [Quick demo](docs/QUICK_DEMO.md).**
 
 ## Start here
 
