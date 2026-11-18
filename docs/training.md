@@ -123,3 +123,20 @@ The default root is this repository's data/processed, not a sibling checkout.
 five-fold membership. `get_stratified_cv_splits` is an explicitly separate,
 deterministic experimental helper; it never overwrites configs/cv_folds.csv and
 must not be substituted into comparisons with the published baselines.
+
+## Selected model and Person B handoff
+
+The selected model is the untuned HistGradientBoosting baseline (`hgb-baseline-ac522dfa`),
+chosen on train-CV macro-F1; see [the model report](reports/data_and_models.md).
+Its split deployment bundle, keyed train-OOF scores (with canonical `fold`), keyed
+student-test scores and `final_parameter_oof` manifest are published as the
+[selected-model Release](https://github.com/rakshan-2006/ML-Hackathon/releases/tag/model-selected-hgb-baseline-ac522dfa):
+
+```powershell
+python -m src.data.download_dataset --metadata data/releases/selected_model.json --output-root models
+python -m src.training.export_handoff --name gradient_boosting   # how the assets were produced
+```
+
+`Predictor.load("models").score_candidates(cand_df)` verifies the card checksums and
+reproduces every published student-test score exactly. Person B adds
+`decoder_config.json` and `deployment_manifest.json` after decoder tuning.
