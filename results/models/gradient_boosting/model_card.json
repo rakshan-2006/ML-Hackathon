@@ -1,0 +1,119 @@
+{
+  "model_name": "gradient_boosting",
+  "estimator": "HistGradientBoostingClassifier",
+  "params": {
+    "learning_rate": 0.1,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 30,
+    "l2_regularization": 1.0,
+    "max_bins": 127,
+    "early_stopping": false,
+    "class_weight": null
+  },
+  "seed": 2026,
+  "threads": 4,
+  "prediction_batch_size": 100000,
+  "folds": "experiments/cv_folds.json",
+  "fold_assignment_sha256": "5a29fb78068f245f58f6aca624e032a3e5f5864c9a082ba7e607bd1e05270724",
+  "features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "preprocessing": "Native NaN handling; no scaling or fitted imputation",
+  "class_imbalance": "Natural prevalence, class_weight=None; report macro and positive-class metrics",
+  "early_stopping": "Disabled; no random row-level holdout",
+  "code_revision": "ac522dfae01000911424518e34bac931ef020f47",
+  "code_dirty": true,
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "model_version": "hgb-baseline-ac522dfa",
+  "schema_version": "1.0.0-m1-provisional",
+  "dataset_release": "m1-preprocessed-2026-11-18",
+  "versions": {
+    "python": "3.11.9",
+    "sklearn": "1.7.2",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "joblib": "1.5.1"
+  },
+  "train_trips": 80,
+  "train_rows": 1070140,
+  "train_all_candidate_rows": 1358450,
+  "student_test_all_candidate_rows": 130919,
+  "cv_fold_mean": {
+    "macro_f1": 0.886149400557357,
+    "log_loss": 0.1328788213131129,
+    "top1_accuracy": 0.7679652792476004
+  },
+  "train_oof": {
+    "labelled_candidates": 1070140,
+    "positive_candidates": 156681,
+    "candidate_accuracy": 0.9442643018670455,
+    "precision_macro": 0.8932359629090914,
+    "recall_macro": 0.8804310044325325,
+    "macro_f1": 0.8866687584774102,
+    "precision_positive": 0.8222245835879181,
+    "recall_positive": 0.7901660060888046,
+    "f1_positive": 0.8058765903018034,
+    "log_loss": 0.13290830262074313,
+    "confusion_matrix": [
+      [
+        886691,
+        26768
+      ],
+      [
+        32877,
+        123804
+      ]
+    ],
+    "top1_correct": 127765,
+    "top1_denominator": 167184,
+    "top1_accuracy": 0.7642178677385396
+  },
+  "student_test": {
+    "labelled_candidates": 106730,
+    "positive_candidates": 16025,
+    "candidate_accuracy": 0.9516162278647053,
+    "precision_macro": 0.9096139048555543,
+    "recall_macro": 0.8984235621450656,
+    "macro_f1": 0.9038973060424267,
+    "precision_positive": 0.8504226624507969,
+    "recall_positive": 0.822402496099844,
+    "f1_positive": 0.8361779074931793,
+    "log_loss": 0.11797025639254927,
+    "confusion_matrix": [
+      [
+        88387,
+        2318
+      ],
+      [
+        2846,
+        13179
+      ]
+    ],
+    "top1_correct": 13432,
+    "top1_denominator": 16073,
+    "top1_accuracy": 0.8356871772537796
+  },
+  "artifact": "gradient_boosting_pipeline.joblib",
+  "artifact_reload_identical": true,
+  "feature_contract": "Whole-trip; next_dist_m uses next GPS observation",
+  "limitations": [
+    "Derived alignment is approximate; ambiguous/unaligned labels excluded",
+    "Baseline only; no Bayesian optimisation or calibration",
+    "No independent route/HMM continuity or sequence metrics",
+    "CV fold mapping newly published; teammates must reuse it for comparisons"
+  ],
+  "total_s": 211.06425370000943
+}

@@ -1,0 +1,2 @@
+labelled_candidates,positive_candidates,candidate_accuracy,precision_macro,recall_macro,macro_f1,precision_positive,recall_positive,f1_positive,log_loss,confusion_matrix,top1_correct,top1_denominator,top1_accuracy
+106730,16025,0.9516162278647053,0.9096139048555543,0.8984235621450656,0.9038973060424267,0.8504226624507969,0.822402496099844,0.8361779074931793,0.11797025639254927,"[[88387, 2318], [2846, 13179]]",13432,16073,0.8356871772537796

@@ -1,0 +1,4 @@
+# Install into the M1 Python 3.11 environment after requirements-m1.txt.
+scikit-learn==1.7.2
+joblib==1.5.1
+threadpoolctl==3.6.0
