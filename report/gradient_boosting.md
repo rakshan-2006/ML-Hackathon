@@ -1,5 +1,32 @@
 # Gradient boosting baseline
 
+## Graphs
+
+Generate graphs from the saved results and probability exports, without retraining:
+
+```powershell
+python -m src.evaluation.plot_gradient_boosting
+```
+
+Install the documented dependencies and download both dataset and model artifacts
+first if working from a clean clone. Each figure is saved as PNG and SVG under
+`results/models/gradient_boosting/figures/`:
+
+1. `01_performance_overview`: fold macro-F1/Top-1, pooled OOF vs held-out metrics,
+   student-test per-trip Top-1 and log loss.
+2. `02_confusion_matrices`: counts and row-normalized percentages, threshold 0.5.
+3. `03_per_trip_top1`: every train OOF and student-test trip, sorted by agreement.
+4. `04_runtime`: measured fit/predict time for five folds and final refit.
+5. `05_roc_precision_recall`: empirical candidate ranking curves with full-data
+   ROC AUC and average precision.
+6. `06_probability_calibration`: reliability curves and probability distributions.
+
+The generator checks score keys/order and log loss against the saved model card.
+Its figure manifest records source checksums. ROC/PR rendering uses at most 2000
+points per line to keep vector files small; summary metrics use all trusted rows.
+Top-1 and candidate classification have different denominators, as documented
+below. No artificial epoch/training-loss curves are generated.
+
 This model uses scikit-learn HistGradientBoostingClassifier, the histogram-based
 implementation of the team's Gradient Boosting family. It trains on all trusted
 labelled candidates in the published M1 dataset. It does not sample the training
