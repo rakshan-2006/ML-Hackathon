@@ -1,0 +1,30 @@
+{
+  "generator": "python -m src.evaluation.plot_gradient_boosting",
+  "model_version": "hgb-baseline-ac522dfa",
+  "note": "Empirical ROC/PR displayed with at most 2000 points; AUC/AP use full data. No invented epoch/loss training history.",
+  "source_sha256": {
+    "results\\models\\gradient_boosting\\model_card.json": "cea940437eb2a6f4011798e7720cb149a4b65f00980f99b5c5dd9f1f2556b526",
+    "results\\models\\gradient_boosting\\cv_metrics.csv": "8b49db2c37db74daf23d80c9df6679f10ea8d9fbe0557ca6617feecaad782406",
+    "results\\models\\gradient_boosting\\timings.json": "931e386a5bced89cac458f5e46250150825c2d22010428c7b31a18c130da7b0a",
+    "results\\models\\gradient_boosting\\train_oof_per_trip.csv": "59aea4b311b13d8a161eb12d123f373bdf452064ae3c5333ce72adf425f0f562",
+    "results\\models\\gradient_boosting\\student_test_per_trip.csv": "d513003c0e520989eb5d6517e7414fbbe1849bcad1f896198d25609ea4a92202",
+    "artifacts\\gradient_boosting\\scores_train_oof.parquet": "0f92cbbc9070a122da45aef381d8d8a31173f5e9d5f2188b262798a36eb4e07f",
+    "data\\processed\\train_candidates.parquet": "8c0dfd03bf998a7a40ca3e0b86d9c5044663d7d1af42cff7b0e3e9febacc9285",
+    "artifacts\\gradient_boosting\\scores_student_test.parquet": "6045957eccd0db99a6058b9d77ac6f974ed64515254907e3bf9593f562d3890e",
+    "data\\processed\\student_test_candidates.parquet": "053e15af77bb4b1c5a5d6cb8a82e2ba1b7717e39e2030e9d8e72f17aa6403f19"
+  },
+  "outputs": [
+    "results\\models\\gradient_boosting\\figures\\01_performance_overview.png",
+    "results\\models\\gradient_boosting\\figures\\01_performance_overview.svg",
+    "results\\models\\gradient_boosting\\figures\\02_confusion_matrices.png",
+    "results\\models\\gradient_boosting\\figures\\02_confusion_matrices.svg",
+    "results\\models\\gradient_boosting\\figures\\03_per_trip_top1.png",
+    "results\\models\\gradient_boosting\\figures\\03_per_trip_top1.svg",
+    "results\\models\\gradient_boosting\\figures\\04_runtime.png",
+    "results\\models\\gradient_boosting\\figures\\04_runtime.svg",
+    "results\\models\\gradient_boosting\\figures\\05_roc_precision_recall.png",
+    "results\\models\\gradient_boosting\\figures\\05_roc_precision_recall.svg",
+    "results\\models\\gradient_boosting\\figures\\06_probability_calibration.png",
+    "results\\models\\gradient_boosting\\figures\\06_probability_calibration.svg"
+  ]
+}

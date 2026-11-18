@@ -1,17 +1,17 @@
+"""Compatibility command for full five-fold KNN evaluation and final model saving.
 
-import joblib
+Prefer: python -m src.training.train_models --model knn
+"""
+import sys
+from pathlib import Path
+if __package__ in (None, ''):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.data.model_data import load_model_data
-from src.models.knn import build_knn_model
 
-DATA_PATH = r"..\pathsnap-m1\data\processed"
-MODEL_PATH = "knn_model.joblib"
+def main(argv=None):
+    from src.training.train_models import main as train
+    train(['--model', 'knn', *(sys.argv[1:] if argv is None else argv)])
 
-X, y, groups, keys = load_model_data(DATA_PATH, "train")
 
-model = build_knn_model()
-model.fit(X, y)
-
-joblib.dump(model, MODEL_PATH)
-
-print(f"KNN model saved to {MODEL_PATH}")
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,2 @@
+# Full team/development environment. See requirements/ for smaller installations.
+-r requirements/dev.txt

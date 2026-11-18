@@ -1,0 +1,40 @@
+{
+  "model_name": "gradient_boosting",
+  "estimator": "HistGradientBoostingClassifier",
+  "params": {
+    "learning_rate": 0.1,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 30,
+    "l2_regularization": 1.0,
+    "max_bins": 127,
+    "early_stopping": false,
+    "class_weight": null
+  },
+  "seed": 2026,
+  "threads": 4,
+  "prediction_batch_size": 100000,
+  "folds": "experiments/cv_folds.json",
+  "fold_assignment_sha256": "5a29fb78068f245f58f6aca624e032a3e5f5864c9a082ba7e607bd1e05270724",
+  "features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "preprocessing": "Native NaN handling; no scaling or fitted imputation",
+  "class_imbalance": "Natural prevalence, class_weight=None; report macro and positive-class metrics",
+  "early_stopping": "Disabled; no random row-level holdout",
+  "code_revision": "ac522dfae01000911424518e34bac931ef020f47",
+  "code_dirty": true,
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9"
+}

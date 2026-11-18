@@ -1,0 +1,49 @@
+{
+  "smoke_test": {
+    "train_rows": 20000,
+    "val_rows": 5000,
+    "seconds": 1.717
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "fit_s": 145.8,
+      "predict_s": 0.966,
+      "fit_rows": 855527,
+      "predict_rows": 256633
+    },
+    {
+      "fold": 1,
+      "fit_s": 173.165,
+      "predict_s": 1.542,
+      "fit_rows": 855488,
+      "predict_rows": 248219
+    },
+    {
+      "fold": 2,
+      "fit_s": 191.455,
+      "predict_s": 0.971,
+      "fit_rows": 855323,
+      "predict_rows": 257555
+    },
+    {
+      "fold": 3,
+      "fit_s": 143.993,
+      "predict_s": 1.11,
+      "fit_rows": 857024,
+      "predict_rows": 300375
+    },
+    {
+      "fold": 4,
+      "fit_s": 194.346,
+      "predict_s": 1.71,
+      "fit_rows": 857198,
+      "predict_rows": 295668
+    }
+  ],
+  "cv_total_fit_s": 848.759,
+  "refit_s": 313.405,
+  "student_test_predict_s": 0.587,
+  "student_test_predict_rows": 130919,
+  "student_test_predict_us_per_row": 4.482
+}

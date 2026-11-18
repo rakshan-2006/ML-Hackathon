@@ -1,30 +1,17 @@
+"""Wiring/latency smoke test on 20,000 fit and 5,000 held-out-trip candidate rows.
 
-import time
+This does not publish accuracy results, fit the final model or replace full CV.
+"""
+import sys
+from pathlib import Path
+if __package__ in (None, ''):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.data.model_data import load_model_data
-from src.models.knn import build_knn_model
+
+def main(argv=None):
+    from src.training.train_models import main as train
+    train(['--model', 'knn', '--smoke-only', *(sys.argv[1:] if argv is None else argv)])
 
 
-DATA_PATH = r"..\pathsnap-m1\data\processed"
-
-X, y, groups, keys = load_model_data(DATA_PATH, "train")
-
-# Benchmark using a clearly identified 10,000-row subset.
-X_sample = X.iloc[:10000]
-y_sample = y.iloc[:10000]
-
-model = build_knn_model(n_neighbors=5)
-
-start = time.perf_counter()
-model.fit(X_sample, y_sample)
-fit_time = time.perf_counter() - start
-
-start = time.perf_counter()
-probabilities = model.predict_proba(X_sample.iloc[:1000])
-predict_time = time.perf_counter() - start
-
-print("Benchmark rows:", len(X_sample))
-print("Prediction rows:", 1000)
-print("Fit time (seconds):", round(fit_time, 2))
-print("Prediction time (seconds):", round(predict_time, 2))
-print("Probability shape:", probabilities.shape)
+if __name__ == '__main__':
+    main()
