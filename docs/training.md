@@ -90,3 +90,15 @@ This verifies sizes and SHA-256 hashes. Load with
 `RandomForestPredictor('artifacts/random_forest')` from `src.models.random_forest`,
 or load `pipeline.joblib` through joblib. Fitted preprocessing is already inside.
 See [the RF report](reports/m2_random_forest.md) for the reviewed measurements.
+
+## Shared loading and exploratory splits
+
+`src.training.preprocessing.load_training_data(processed_root=None)` delegates to
+the schema-validated M1 loader and returns all trusted training rows with their
+trip groups. Features still contain NaNs; learned preprocessing stays inside CV.
+The default root is this repository's data/processed, not a sibling checkout.
+
+`src.training.cross_validation.get_cv_splits(X, y, groups)` loads the canonical
+five-fold membership. `get_stratified_cv_splits` is an explicitly separate,
+deterministic experimental helper; it never overwrites configs/cv_folds.csv and
+must not be substituted into comparisons with the published baselines.
