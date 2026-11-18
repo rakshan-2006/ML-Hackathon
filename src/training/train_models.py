@@ -73,7 +73,7 @@ def smoke_test(name, params, data, folds_all):
     va = rng.choice(val_rows, 5000, replace=False)
     model = get_model(name, params, SEED)
     started = time.perf_counter()
-    model.fit(cand.loc[tr, FEATURES], cand.label.to_numpy(dtype=int)[tr])
+    model.fit(cand.loc[tr, FEATURES], cand.label.iloc[tr].to_numpy(dtype=int))
     p = positive_proba(model, cand.loc[va, FEATURES])
     check_probabilities(p, len(va))
     return {"train_rows": 20000, "val_rows": 5000, "seconds": round(time.perf_counter() - started, 3)}
