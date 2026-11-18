@@ -51,6 +51,7 @@ def test_saved_predictor_preserves_order_and_empty_input(tmp_path, fitted, legac
     predictor = RandomForestPredictor(tmp_path)
     # Shuffled observations and feature columns must preserve row correspondence.
     sample = X.iloc[[7, 2, 91]][FEATURES[::-1]]
+    sample = sample.assign(label=[1, 0, 1], ref_arc_id=[999, 998, 997])
     assert np.array_equal(predictor.score_candidates(sample), positive_proba(pipeline, sample))
     assert predictor.score_candidates(X.iloc[:0]).shape == (0,)
     with pytest.raises(ValueError, match='Missing required candidate features'):
@@ -68,6 +69,15 @@ def test_predictor_rejects_schema_and_feature_mismatch(tmp_path):
         RandomForestPredictor(tmp_path)
     with pytest.raises(FileNotFoundError):
         RandomForestPredictor(tmp_path / 'absent')
+
+
+def test_predictor_rejects_disagreeing_legacy_metadata(tmp_path):
+    (tmp_path / 'model_card.json').write_text(json.dumps({
+        'schema_version': SCHEMA_VERSION, 'ordered_features': FEATURES}))
+    (tmp_path / 'features.json').write_text(json.dumps({
+        'schema_version': SCHEMA_VERSION, 'features': FEATURES[::-1]}))
+    with pytest.raises(ValueError, match='disagree'):
+        RandomForestPredictor(tmp_path)
 
 
 def test_legacy_command_rejects_incomparable_three_fold_run():
