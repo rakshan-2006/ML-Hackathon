@@ -40,3 +40,19 @@ PREPROCESSING_POLICY = {
                       "(models with IMPUTE_MISSING = False pass NaNs to an estimator with native support)",
     "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
 }
+
+
+TARGET = 'label'
+GROUP = 'trip_id'
+
+
+def load_training_data(processed_root=None):
+    """Load all trusted training candidates through the canonical M1 loader.
+
+    No imputation or scaling is fitted here; those remain inside model pipelines.
+    """
+    from src.common.paths import PROJECT_ROOT
+    from src.data.model_data import load_model_data
+    root = PROJECT_ROOT / 'data' / 'processed' if processed_root is None else processed_root
+    X, y, groups, _ = load_model_data(root, 'train')
+    return X, y, groups

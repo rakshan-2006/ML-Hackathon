@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 from threadpoolctl import threadpool_limits
 
 from src.common.paths import PROJECT_ROOT
@@ -74,7 +75,12 @@ def test_comparison_reads_all_three_existing_baseline_formats():
     assert np.isclose(table.loc['gradient_boosting','student_test_top1_accuracy'],card['student_test']['top1_accuracy'])
 
 
-def test_shared_runner_trains_native_gb_and_separates_artifacts(tmp_path, monkeypatch):
+@pytest.mark.parametrize('model_name,params', [
+    ('gradient_boosting', {'max_iter': 2, 'min_samples_leaf': 2}),
+    ('random_forest', {'n_estimators': 3, 'max_depth': 3, 'n_jobs': 1}),
+    ('knn', {'n_neighbors': 3, 'n_jobs': 1}),
+])
+def test_shared_runner_trains_and_separates_artifacts(tmp_path, monkeypatch, model_name, params):
     from src.training import train_models as runner
     from src.evaluation import visualizations
     data, results, artifacts = tmp_path/'data', tmp_path/'results', tmp_path/'artifacts'
@@ -108,12 +114,15 @@ def test_shared_runner_trains_native_gb_and_separates_artifacts(tmp_path, monkey
     monkeypatch.setattr(runner,'smoke_test',lambda *a,**kw:{'fixture_smoke':True})
     monkeypatch.setattr(visualizations,'plot_model_accuracy',lambda name:None)
     with threadpool_limits(limits=2):
-        runner.run('gradient_boosting',{'max_iter':2,'min_samples_leaf':2})
-    assert (artifacts/'gradient_boosting/pipeline.joblib').is_file()
+        runner.run(model_name, params)
+    assert (artifacts/model_name/'pipeline.joblib').is_file()
     assert not list(results.rglob('*.joblib'))
     assert not list(results.rglob('*.parquet'))
-    card = json.loads((results/'gradient_boosting/model_card.json').read_text())
+    card = json.loads((results/model_name/'model_card.json').read_text())
     assert card['row_counts']['train_trips'] == 10
-    assert card['preprocessing']['missing_values'].startswith('Native')
-    scores = pd.read_parquet(artifacts/'gradient_boosting/oof_probabilities.parquet')
+    if model_name == 'gradient_boosting':
+        assert card['preprocessing']['missing_values'].startswith('Native')
+    else:
+        assert card['preprocessing']['missing_values'].startswith('SimpleImputer')
+    scores = pd.read_parquet(artifacts/model_name/'oof_probabilities.parquet')
     assert len(scores) == 100 and scores.p_model.between(0,1).all()

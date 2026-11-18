@@ -71,3 +71,43 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def get_cv_splits(X, y, groups, n_splits=5, random_state=42, *, folds_path=FOLDS_PATH):
+    """Return canonical trip folds, preserving comparisons with saved baselines.
+
+    random_state is accepted for compatibility; persisted folds are never shuffled.
+    Use get_stratified_cv_splits explicitly for a separate exploratory experiment.
+    """
+    import numpy as np
+    groups = pd.Series(groups).reset_index(drop=True)
+    if len(X) != len(y) or len(y) != len(groups):
+        raise ValueError('X, y and groups must have equal lengths')
+    if groups.isna().any() or pd.Series(y).isna().any():
+        raise ValueError('Labels and trip groups must not be null')
+    if n_splits != N_SPLITS:
+        raise ValueError('Canonical comparison requires five folds')
+    assigned = fold_of_rows(groups, load_folds(folds_path))
+    splits = [(np.flatnonzero(assigned != k), np.flatnonzero(assigned == k))
+              for k in range(N_SPLITS)]
+    if any(not len(tr) or not len(va) for tr, va in splits):
+        raise ValueError('Every canonical fold must have training and validation rows')
+    return splits
+
+
+def get_stratified_cv_splits(X, y, groups, n_splits=5, random_state=42):
+    """Exploratory stratification only; does not replace the canonical fold file."""
+    from sklearn.model_selection import StratifiedGroupKFold
+    groups = pd.Series(groups).reset_index(drop=True)
+    if len(X) != len(y) or len(y) != len(groups):
+        raise ValueError('X, y and groups must have equal lengths')
+    if groups.isna().any() or pd.Series(y).isna().any():
+        raise ValueError('Labels and trip groups must not be null')
+    if groups.nunique() < n_splits:
+        raise ValueError('Need at least one trip per fold')
+    splits = list(StratifiedGroupKFold(n_splits=n_splits, shuffle=True,
+                    random_state=random_state).split(X, y, groups))
+    for tr, va in splits:
+        if not len(tr) or not len(va) or set(groups.iloc[tr]) & set(groups.iloc[va]):
+            raise ValueError('Empty fold or trip leakage detected')
+    return splits
