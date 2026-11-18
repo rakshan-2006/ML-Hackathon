@@ -110,7 +110,14 @@ def tune(raw_root,processed,scores_path,manifest_path,model_card,output):
         n_trusted=int(trusted.sum())
         for trial,cfg in enumerate(configs):
             started=perf_counter()
-            hmm,base=decode_tables(obs,cand,p,graph,cfg)
+            try:
+                hmm,base=decode_tables(obs,cand,p,graph,cfg)
+            except Exception as exc:
+                pd.DataFrame(rows).to_csv(out/'per_trip.csv',index=False)
+                failure=dict(status='aborted',trip_id=tid,trial=trial,config=asdict(cfg),
+                             error_type=type(exc).__name__,error=str(exc))
+                (out/'failure.json').write_text(json.dumps(failure,indent=2),encoding='utf8')
+                raise
             for name,result in [('hmm',hmm),('classifier',base)]:
                 metrics=evaluate_trip(raw/tid,obs,result,graph,data,alignment=aligned)
                 rows.append(dict(trial=trial,trip_id=tid,method=name,**metrics,

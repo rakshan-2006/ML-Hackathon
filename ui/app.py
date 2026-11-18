@@ -37,6 +37,8 @@ def post_json(path: str, payload: dict[str, Any]) -> Any:
 
 def render_route_map(prediction: dict[str, Any]) -> None:
     gps_points = prediction.get("gps_coordinates", [])
+    st.caption(f"Raw observations: {prediction.get('n_obs',0)}; renderable GPS coordinates: {len(gps_points)}. "
+               'Orange: GPS; blue: HMM; green: classifier. Layer controls are on the map.')
     route_groups = [
         ("HMM route", prediction.get("route_hmm") or [], "blue"),
         (
@@ -56,6 +58,9 @@ def render_route_map(prediction: dict[str, Any]) -> None:
         zoom = 2
 
     route_map = folium.Map(location=center, zoom_start=zoom)
+    if gps_points:
+        route_map.fit_bounds([[min(p['latitude'] for p in gps_points),min(p['longitude'] for p in gps_points)],
+                              [max(p['latitude'] for p in gps_points),max(p['longitude'] for p in gps_points)]])
     gps_layer=folium.FeatureGroup(name='GPS observations').add_to(route_map)
     stride=max(1,(len(gps_points)+1999)//2000)
     if stride>1:
@@ -81,9 +86,6 @@ def render_route_map(prediction: dict[str, Any]) -> None:
                     coordinates, color=color, weight=4, tooltip=label
                 ).add_to(layer)
     folium.LayerControl().add_to(route_map)
-    route_map.get_root().html.add_child(folium.Element('<div style="position:fixed;bottom:25px;left:20px;background:white;padding:10px;z-index:9999">'
-        '<b>PathSnap layers</b><br><span style="color:orange">●</span> GPS observations<br>'
-        '<span style="color:blue">━</span> HMM route<br><span style="color:green">━</span> Classifier route</div>'))
 
     st_folium(route_map, use_container_width=True, height=500)
     if not gps_points and not any(group[1] for group in route_groups):
@@ -95,7 +97,7 @@ def main() -> None:
     st.title("PathSnap")
     st.write(
         "Distributed map-matching and route reconstruction — "
-        "Member 4 evaluator dashboard."
+        "Evaluator dashboard."
     )
     st.caption(f"API: {api_base_url()}")
 
@@ -157,7 +159,7 @@ def main() -> None:
     render_route_map(prediction)
     if not prediction.get("route_classifier"):
         st.caption(
-            "Classifier-only route layer: awaiting Member 2 classification output."
+            "No classifier-only route geometry is available for this trip."
         )
 
     st.subheader("Metrics and diagnostics")
