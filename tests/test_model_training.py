@@ -10,6 +10,7 @@ from src.evaluation.metrics import candidate_metrics, observation_top1, positive
 from src.models.model_factory import get_model, model_params
 from src.training.cross_validation import FOLDS_PATH, assign_folds, load_folds
 from src.training.preprocessing import make_pipeline, to_float64
+from src.training.train_models import top1
 
 
 def table(rows, columns):
@@ -45,6 +46,20 @@ def test_candidate_metrics_known_values():
     assert m["f1_macro"] == 0.5
     assert (m["tn"], m["fp"], m["fn"], m["tp"]) == (1, 1, 1, 1)
     assert np.isfinite(m["log_loss"])
+
+
+def test_runner_top1_includes_entire_zero_candidate_trip():
+    cand = table([('a', 0, 10, 0)], ['trip_id', 'obs_idx', 'arc_id', 'cand_rank'])
+    obs = table([('a', 0, True), ('empty', 0, True), ('other_fold', 0, True)],
+                ['trip_id', 'obs_idx', 'is_valid'])
+    align = table([('a', 0, 'ok', 10), ('empty', 0, 'ok', 20), ('other_fold', 0, 'ok', 30)],
+                  ['trip_id', 'obs_idx', 'align_status', 'ref_arc_id'])
+    score = top1(cand, np.array([0.9]), np.array([True]), obs, align,
+                 trip_ids=['a', 'empty'])
+    assert score['n_trusted_obs'] == 2
+    assert score['n_top1_correct'] == 1
+    assert score['n_zero_candidate_trusted'] == 1
+    assert score['top1_accuracy'] == 0.5
 
 
 def test_positive_proba_uses_classes_mapping():

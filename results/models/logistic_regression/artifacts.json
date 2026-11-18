@@ -1,0 +1,25 @@
+{
+  "release_tag": "models-logistic-regression-v1",
+  "release_url": "https://github.com/rakshan-2006/ML-Hackathon/releases/tag/models-logistic-regression-v1",
+  "note": "Large artifacts are GitHub Release assets; place them in this folder to reproduce/verify.",
+  "assets": [
+    {
+      "name": "pipeline.joblib",
+      "size_bytes": 3169,
+      "sha256": "de7074f3f2c4e6f622229afd015c9ca5b5edd26e8b321b93aca1c1bf0367dcb0",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-logistic-regression-v1/pipeline.joblib"
+    },
+    {
+      "name": "oof_probabilities.parquet",
+      "size_bytes": 14844481,
+      "sha256": "0ce315e5355d89b7fd8cf0e39b2e702bf5b5a930baef41bf8f64aba2c4ae1075",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-logistic-regression-v1/oof_probabilities.parquet"
+    },
+    {
+      "name": "student_test_probabilities.parquet",
+      "size_bytes": 1619752,
+      "sha256": "95d4edd75cb6f436638f3fd4b10ec900a6793d8fe613b13647e5f694608637d1",
+      "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-logistic-regression-v1/student_test_probabilities.parquet"
+    }
+  ]
+}

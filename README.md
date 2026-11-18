@@ -23,6 +23,25 @@ in one install command. The shared schema version is defined only in
 
 ## Project structure
 
+### Train candidate models
+
+Use a separate Python 3.11 environment for training; do not combine its historical
+Folium/pytest pins with the API/UI requirements in one install command.
+
+```powershell
+py -3.11 -m venv .venv-train
+.venv-train/Scripts/python -m pip install -r data/requirements-training.txt
+.venv-train/Scripts/python -m src.data.download_dataset
+.venv-train/Scripts/python -m src.data.validate_dataset
+.venv-train/Scripts/python -m src.training.train_models --model logistic_regression
+```
+
+Use the committed `results/models/shared/train_folds_5.csv` for all models.
+Large fitted pipelines and probability exports are Release assets; each model's
+`results/models/<name>/artifacts.json` records download URLs, sizes and checksums.
+Never train on student-test or evaluator data. Missing feature values are handled
+inside each fold's fitted pipeline.
+
 ```text
 data/
   raw/                 # Local-only source data

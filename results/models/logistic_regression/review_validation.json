@@ -1,0 +1,46 @@
+{
+  "model": "logistic_regression",
+  "all_five_folds_match_saved_metrics": true,
+  "folds_identical_to_gradient_boosting": true,
+  "student_test_reload_tolerance": 1e-12,
+  "checks": {
+    "train_fold_0": {
+      "metrics_match": true,
+      "top1": 0.7737492035559331,
+      "macro_f1": 0.8532011934506699
+    },
+    "train_fold_1": {
+      "metrics_match": true,
+      "top1": 0.776256318365382,
+      "macro_f1": 0.8557965735838571
+    },
+    "train_fold_2": {
+      "metrics_match": true,
+      "top1": 0.8327749310208908,
+      "macro_f1": 0.8819058379023732
+    },
+    "train_fold_3": {
+      "metrics_match": true,
+      "top1": 0.8611657258831737,
+      "macro_f1": 0.9161344018937039
+    },
+    "train_fold_4": {
+      "metrics_match": true,
+      "top1": 0.5520426899242599,
+      "macro_f1": 0.8292066497431627
+    },
+    "student_test_fold_None": {
+      "metrics_match": true,
+      "top1": 0.8279101598954769,
+      "macro_f1": 0.8894505022504844
+    },
+    "artifact_reload": {
+      "max_absolute_error": 5.551115123125783e-16,
+      "threshold_changes": 0,
+      "top1_correct_unchanged": true,
+      "rows": 130919,
+      "all_heldout_probabilities_match_within_tolerance": true
+    }
+  },
+  "tests_passed": 41
+}

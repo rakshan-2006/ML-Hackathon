@@ -53,10 +53,14 @@ def load_partition(partition):
             "obs": obs, "align": align, "n_trips": int(groups.nunique())}
 
 
-def top1(cand, p, mask, obs, align):
+def top1(cand, p, mask, obs, align, trip_ids=None):
     scored = cand.loc[mask, ["trip_id", "obs_idx", "arc_id", "cand_rank"]].assign(p_model=p)
-    trips = set(scored.trip_id)
-    return observation_top1(scored, obs[obs.trip_id.isin(trips)], align[align.trip_id.isin(trips)])
+    # Select evaluated trips explicitly, never infer them from available candidates:
+    # an entirely zero-candidate trip still contributes trusted failures.
+    if trip_ids is not None:
+        obs = obs[obs.trip_id.isin(trip_ids)]
+        align = align[align.trip_id.isin(trip_ids)]
+    return observation_top1(scored, obs, align)
 
 
 def check_probabilities(p, n):
@@ -129,7 +133,8 @@ def run(name, params, smoke_only=False):
 
         va_lab = va_all & lab
         val = {**candidate_metrics(y_all[va_lab], oof[va_lab], THRESHOLD),
-               **top1(cand, p_va, va_all, train["obs"], train["align"])}
+               **top1(cand, p_va, va_all, train["obs"], train["align"],
+                      trip_ids=folds.loc[folds.fold == k, "trip_id"])}
         trn = candidate_metrics(y_all[tr], p_tr, THRESHOLD)
         n_val_trips = int(cand.loc[va_all, "trip_id"].nunique())
         rows.append({"fold": k, "split": "train", "n_trips": int(cand.loc[tr, "trip_id"].nunique()), **trn})
@@ -250,7 +255,8 @@ def verify_saved_metrics(out, train, test, cv, test_metrics):
             y = np.full(len(cand), -1)
             y[data["labelled"]] = data["y"]
             got = candidate_metrics(y[mask & data["labelled"]], p[mask & data["labelled"]], THRESHOLD)
-            got.update(top1(cand, p[mask], mask, data["obs"], data["align"]))
+            got.update(top1(cand, p[mask], mask, data["obs"], data["align"],
+                            trip_ids=load_folds().query('fold == 0').trip_id))
             expected = [cv[(cv.fold == 0) & (cv.split == "validation")].iloc[0].to_dict()]
         for key, value in got.items():
             if not np.isclose(value, float(expected[0][key]), equal_nan=True):
