@@ -24,26 +24,22 @@ Learned imputation and scaling are fitted inside each training fold.
 | Decision Tree | 94.88% | 83.16% |
 | Histogram Gradient Boosting | 95.16% | 83.57% |
 | Random Forest | 94.24% | 83.77% |
-| KNN | Pending | Pending |
+| KNN | 94.18% | 81.02% |
 
 Candidate accuracy measures binary candidate classification. Top-1 chooses one
 road per trusted valid observation; missing reference candidates and zero-candidate
 observations count as failures. These are classifier metrics, not route accuracy.
 
-Five model implementations are integrated. Four have completed measured baseline
-reports. The full KNN run is active; [KNN status](knn.md) records its preliminary
-fold results and execution method. It has not yet completed student-test scoring.
+All five models have completed measured evaluations; see [KNN results](knn.md) and the
+five-model comparison in `results/models/comparison/five_model/`.
 
-## Implemented and remaining work
+## Implemented work
 
-Completed: dataset preparation, candidate features, common model factory, frozen
-trip folds, five classifier implementations, four baseline evaluations, saved
-artifact workflows, API/UI foundation, and automated integration checks.
-
-Pending: final KNN evaluation, Bayesian hyperparameter optimization, HMM/Viterbi
-route reconstruction, classifier-versus-decoder comparison, real inference adapter,
-and full two-laptop end-to-end verification. The API currently remains a stub
-foundation. No finished route-reconstruction or deployment result is claimed.
+Dataset preparation, candidate features, common model factory, frozen trip folds,
+five evaluated classifiers, Bayesian optimisation (Optuna TPE), HMM/Viterbi route
+reconstruction with classifier-only vs HMM comparison, the real inference pipeline,
+FastAPI service and Streamlit dashboard for the two-laptop deployment. The final
+technical report is `output/pdf/PathSnap_Team84_Technical_Report.pdf`.
 
 ## Evidence and limitations
 
@@ -54,5 +50,3 @@ results/eda. See [training documentation](../training.md),
 candidate accuracy insufficient; compare Top-1, macro-F1 and probability quality.
 No evaluator-test data was used for training or selecting model settings.
 
-This is an honest progress report, not a declaration that all deliverables are
-finished. Replace pending sections with measured outcomes after their checks pass.

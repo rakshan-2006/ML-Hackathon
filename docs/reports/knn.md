@@ -1,17 +1,9 @@
 # KNN evaluation status and handoff
 
-## Status at handoff
+## Final measured results
 
-The full evaluation is running. Four of five canonical trip-grouped validation
-folds have completed. Code fold 4 (the fifth fold) is active. The process retains
-the completed scores in memory. Do not start a duplicate run or stop this one.
-
-Final aggregate CV metrics and student-test results are pending. No final KNN
-accuracy or completed end-to-end system result is claimed here.
-
-## Observed preliminary results
-
-These values are rounded readings from completed fold logs, not final averages.
+The full five-fold run and the student-test evaluation are complete
+(`results/models/knn/`, audited in `results/validation/knn_audit.json`).
 
 | Code fold | Candidate accuracy | Macro-F1 | Observation Top-1 |
 | --- | ---: | ---: | ---: |
@@ -19,12 +11,13 @@ These values are rounded readings from completed fold logs, not final averages.
 | 1 | 91.62% | 85.33% | 76.40% |
 | 2 | 94.04% | 87.56% | 79.63% |
 | 3 | 95.40% | 90.60% | 83.49% |
-| 4 | Pending | Pending | Pending |
+| 4 | 91.49% | 80.87% | 53.59% |
+| **Mean** | **92.95%** | **85.79%** | **73.58%** |
 
-All held-out candidate rows are queried normally. Fit data includes all trusted
-labelled rows from the other training trips in each fold. The final fit will use
-all 1,070,140 eligible labelled rows across the 80 training trips, followed by
-all-candidate scoring on the ten student-test trips.
+Student-test (10 trips): candidate accuracy 94.18%, macro-F1 0.8848, Top-1 81.02%,
+log loss 0.7103. KNN has the lowest CV macro-F1 of the five models; distance-weighted
+votes of five neighbours give coarse probabilities, hence the high log loss. See the
+five-model comparison in `results/models/comparison/five_model/`.
 
 ## Reproduction
 
@@ -48,16 +41,7 @@ Outputs after successful completion:
 - artifacts/knn/oof_probabilities.parquet
 - artifacts/knn/student_test_probabilities.parquet
 
-## Person A can continue
-
-Continue HMM/Viterbi route reconstruction and model/API integration on a separate
-branch or worktree. Preserve the shared 13-feature schema, candidate-to-arc keys,
-canonical fold membership and reference-read boundary. Use existing verified
-model outputs to develop the interface. Do not restart KNN or change this run's
-inputs, settings or output files. KNN final metrics will be added once verified.
-
 ## Runner verification
 
-The committed runner and repository suite passed 81 tests. The complete KNN
-accuracy evaluation remains a separate long-running computation; its pending
-results are not inferred from the test count.
+The committed runner and repository tests pass. The measured results above come
+from the completed evaluation run, not from the test suite.
