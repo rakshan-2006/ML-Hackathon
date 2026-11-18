@@ -105,6 +105,27 @@ python -m pytest
 Tests use temporary directories and synthetic trip IDs. They do not open or use
 evaluator data.
 
+## Member 2 Random Forest
+
+The official M1 release `m1-preprocessed-2026-11-18` is downloaded and validated
+with:
+
+```powershell
+python -m src.data.download_dataset
+python -m src.data.validate_dataset
+```
+
+Train and evaluate the Random Forest with:
+
+```powershell
+python -m src.models.train_random_forest --folds 3
+```
+
+The implementation is isolated under `src/models/`, writes only the dedicated
+`models/random_forest_v1/` artifact directory and reports results under
+`experiments/random_forest/`. It does not use `student_test` for CV or
+hyperparameter selection.
+
 ## Integration still awaited
 
 - **Member 1:** input data-processing/preprocessing outputs and the documented

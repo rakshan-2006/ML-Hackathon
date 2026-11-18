@@ -3,6 +3,8 @@ data/raw/*
 !data/raw/.gitkeep
 data/evaluation/*
 !data/evaluation/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 *.route
 
 # Generated outputs and logs
@@ -18,6 +20,8 @@ experiments/*
 # Model artifacts are local until an explicit distribution policy is agreed
 models/*.joblib
 models/*.pkl
+models/random_forest_v1/*
+!models/random_forest_v1/.gitkeep
 
 # Python environments, bytecode, and test/tool caches
 .venv/
