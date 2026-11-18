@@ -5,8 +5,8 @@
   "assets": [
     {
       "name": "pipeline.joblib",
-      "size_bytes": 196336594,
-      "sha256": "665ae18c46750d49e220ab3076f429c9930427b952bdb5058d783fbf9c424f9a",
+      "size_bytes": 58005196,
+      "sha256": "42e35c279eb7b069aab8622f95863c3cd93dbf6d269f09a2df7a01694e29595c",
       "url": "https://github.com/rakshan-2006/ML-Hackathon/releases/download/models-random-forest-v1/pipeline.joblib"
     },
     {

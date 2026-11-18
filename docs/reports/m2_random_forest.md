@@ -71,7 +71,8 @@ See [training documentation](../training.md) for dependencies, metrics and downl
 
 The reviewed five-fold run fitted every trusted labelled candidate row from all
 80 training trips (1,070,140 rows), then evaluated on the 10 held-out student-test
-trips. No resampling or truncation was used to shorten this run.
+trips. No dataset subsampling was used to shorten this run; the estimator retains
+its standard bootstrap sampling internally.
 
 | Metric | Mean five-fold validation | Student test |
 | --- | ---: | ---: |
@@ -101,3 +102,7 @@ Download the fitted pipeline and scores from the
 ```powershell
 python -m src.data.download_dataset --metadata results/models/random_forest/artifacts.json --output-root artifacts/random_forest
 ```
+
+The published pipeline uses joblib compression level 3 (58,005,196 bytes instead
+of 196,336,594 bytes). The compressed file was reloaded and verified against all
+student-test scores; fitted weights and reported results are unchanged.

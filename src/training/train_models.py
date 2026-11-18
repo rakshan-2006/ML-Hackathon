@@ -176,7 +176,7 @@ def run(name, params, smoke_only=False):
                     **top1(tcand, p_test, np.ones(len(tcand), bool), test["obs"], test["align"])}
     pd.DataFrame([test_metrics]).to_csv(out / "student_test_metrics.csv", index=False)
 
-    joblib.dump(final, artifact_out / "pipeline.joblib")
+    joblib.dump(final, artifact_out / "pipeline.joblib", compress=3)
     reloaded = joblib.load(artifact_out / "pipeline.joblib")
     # Parallel tree probability reduction can change the last floating-point bits.
     if not np.allclose(positive_proba(reloaded, tcand[FEATURES]), p_test,
