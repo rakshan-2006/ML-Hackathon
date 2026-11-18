@@ -1,0 +1,27 @@
+{
+  "model_name": "decision_tree",
+  "model_version": "decision_tree-v1-3b01452c34",
+  "family": "Tree-based",
+  "estimator": "DecisionTreeClassifier",
+  "params": {
+    "criterion": "gini",
+    "max_depth": 12,
+    "min_samples_leaf": 50,
+    "min_samples_split": 2,
+    "max_features": null,
+    "class_weight": null
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "No reweighting or resampling (class_weight=None), so leaf probabilities stay empirical class frequencies. Imbalance is addressed in evaluation through positive-class precision/recall, macro-F1 and observation Top-1.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": false
+  },
+  "folds_file": "results/models/shared/train_folds_5.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "command": "python -m src.training.train_models --model decision_tree"
+}

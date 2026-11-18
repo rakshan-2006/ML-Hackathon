@@ -52,9 +52,11 @@ tmp/
 !results/eda/**
 !tests/fixtures/**/*.route
 
-# Gradient boosting: small results tracked, large artifacts distributed by Release
+# Model results: small measured outputs are versioned; large artifacts go to GitHub Releases
+# (gradient boosting additionally keeps its local artifacts/ folder out of Git)
 artifacts/
 !experiments/cv_folds.json
 !results/models/
-!results/models/gradient_boosting/
-!results/models/gradient_boosting/**
+!results/models/**
+results/models/**/*.parquet
+results/models/**/*.joblib

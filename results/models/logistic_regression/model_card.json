@@ -1,0 +1,88 @@
+{
+  "model_name": "logistic_regression",
+  "model_version": "logistic_regression-v1-6029591206",
+  "family": "Linear and probabilistic",
+  "estimator": "LogisticRegression",
+  "params": {
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 1000,
+    "tol": 0.0001,
+    "class_weight": null
+  },
+  "seed": 2026,
+  "decision_threshold": 0.5,
+  "class_imbalance": "No reweighting or resampling (class_weight=None): keeps predicted probabilities calibrated for log loss and for use as HMM emissions. Imbalance is addressed in evaluation through positive-class precision/recall, macro-F1 and observation Top-1.",
+  "preprocessing": {
+    "feature_order": "src.common.schema.FEATURES (exact order)",
+    "missing_values": "SimpleImputer(strategy='median', add_indicator=True), fitted on training-fold rows only",
+    "scaling": "StandardScaler fitted on training-fold rows (only models that request scaling)",
+    "scaled": true
+  },
+  "folds_file": "results/models/shared/train_folds_5.csv",
+  "folds_sha256": "17db171e43dfc173d92dd89c5a4f7d3d62f418b8eb43670a5fb8f9df03d989ff",
+  "n_splits": 5,
+  "schema_version": "1.0.0-m1-provisional",
+  "ordered_features": [
+    "dist_m",
+    "cand_rank",
+    "dist_minus_min",
+    "heading_diff_deg",
+    "speed_mps",
+    "arc_len_m",
+    "proj_frac",
+    "n_candidates",
+    "is_oneway",
+    "source_degree",
+    "target_degree",
+    "prev_dist_m",
+    "next_dist_m"
+  ],
+  "dataset_release": "m1-preprocessed-2026-11-18",
+  "dataset_manifest_sha256": "fff85ca43fe6467c30a26177001726c930aa8e100686098629ab6704f7bcd6f9",
+  "dataset_schema_version": "1.0.0-m1-provisional",
+  "label_policy": "Fit on trusted labelled C2 rows only (label not null; ambiguous/unaligned observations excluded). Scores produced for all candidate rows.",
+  "row_counts": {
+    "train_labelled": 1070140,
+    "train_candidates": 1358450,
+    "train_trips": 80,
+    "student_test_labelled": 106730,
+    "student_test_candidates": 130919,
+    "student_test_trips": 10
+  },
+  "probability_coverage": {
+    "oof_rows_scored": 1358450,
+    "student_test_rows_scored": 130919
+  },
+  "results": {
+    "cv_mean": {
+      "candidate_accuracy": 0.9356770569014046,
+      "precision_pos": 0.7960366422396171,
+      "recall_pos": 0.7498963493842652,
+      "f1_macro": 0.8672489313147533,
+      "log_loss": 0.16783417251297184,
+      "top1_accuracy": 0.7591977737499279
+    },
+    "student_test": {
+      "candidate_accuracy": 0.944439239201724,
+      "precision_pos": 0.8271012896118204,
+      "recall_pos": 0.796443057722309,
+      "f1_macro": 0.8894505022504844,
+      "log_loss": 0.15264085375966965,
+      "top1_accuracy": 0.8279101598954769
+    }
+  },
+  "metric_definitions": "src/evaluation/metrics.py (candidate metrics at threshold 0.5; precision/recall *_pos = positive class, f1_macro = unweighted mean over both classes; Top-1 over trusted observations)",
+  "library_versions": {
+    "python": "3.11.9",
+    "sklearn": "1.7.2",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3"
+  },
+  "limitations": [
+    "Linear decision boundary in the imputed, standardised features; feature interactions (e.g. distance x heading) are not modelled.",
+    "Decision threshold 0.5 is not tuned; positive-class recall depends on it.",
+    "Labels come from M1's derived reference alignment, not verified ground truth.",
+    "Candidate/observation metrics only; no HMM or route-level result."
+  ]
+}
