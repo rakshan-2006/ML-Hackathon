@@ -40,10 +40,13 @@ $env:PATHSNAP_API_BASE_URL = 'http://127.0.0.1:8000'
 
 Relative server paths resolve from the repository root. Real mode requires
 `best_model.joblib`, `preprocessing.joblib`, `model_card.json`, and
-`decoder_config.json`, with the shared schema version. The selected bundle and
-model-to-decoder inference adapter are still required; downloading an individual
-baseline does not make real prediction available automatically. Stub mode reads
-no trip contents and produces no fake predictions or metrics.
+`decoder_config.json`, with the shared schema version. The real scorer/HMM adapter
+is implemented. Prepare the verified development GB bundle using
+`python -m src.inference.development_baseline`, then set `PATHSNAP_MODE=real` and
+`PATHSNAP_ARTIFACTS_DIR=models/development`, with the input root pointing to the
+permitted `student_test` folder. See the [runtime runbook](person_b_runbook.md)
+for complete commands, measurements and final-model gates. Stub mode reads no
+trip contents and produces no fake predictions or metrics.
 
 ## Two laptops
 
@@ -52,7 +55,8 @@ no trip contents and produces no fake predictions or metrics.
 3. Bind Uvicorn with `--host 0.0.0.0 --port 8000`.
 4. Allow inbound port 8000 on that trusted local network.
 5. On the dashboard laptop, set `PATHSNAP_API_BASE_URL` to the API laptop's IP.
-6. Verify `/health`, `/trips`, and the explicit stub response before integration.
+6. Verify `/health`, `/trips` and every real prediction against the frozen bundle.
+   Actual second-machine evidence remains pending; see the runtime runbook.
 
 Keep evaluator data and reference routes server-side. Never open evaluator data
 during model development or return its reference geometry to the dashboard.

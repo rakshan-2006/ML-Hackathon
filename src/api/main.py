@@ -2,6 +2,7 @@
 
 from contextlib import asynccontextmanager
 from time import perf_counter
+from uuid import uuid4
 from typing import AsyncIterator
 
 from fastapi import FastAPI, HTTPException, Request
@@ -33,7 +34,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         if runtime_settings.mode == "real":
             try:
-                ArtifactLoader(runtime_settings.artifacts_dir).load()
+                service.startup()
             except ArtifactUnavailableError as exc:
                 logger.error("Real-mode startup failed: %s", exc)
                 raise RuntimeError(f"Real-mode startup failed: {exc}") from exc
@@ -52,11 +53,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.middleware("http")
     async def log_request(request: Request, call_next):
         started = perf_counter()
+        request.state.request_id=uuid4().hex
         client_ip = request.client.host if request.client else None
         error = None
         status_code = 500
         try:
             response = await call_next(request)
+            response.headers['X-Request-ID']=request.state.request_id
             status_code = response.status_code
             if status_code >= 400:
                 error = f"HTTP {status_code}"
@@ -73,6 +76,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 stage=f"request:{request.method}:{request.url.path}:{status_code}",
                 timings={"total": round(elapsed_ms, 3)},
                 error=error,
+                request_id=request.state.request_id,
             )
 
     @app.get("/health", response_model=HealthResponse)
@@ -82,7 +86,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 runtime_settings.model_name, runtime_settings.model_version
             )
         try:
-            bundle = service.artifact_loader.load()
+            service.startup()
+            bundle = service.bundle
         except ArtifactUnavailableError:
             return HealthResponse(
                 status="degraded",
@@ -92,7 +97,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 decoder_config_version="unknown",
             )
         return HealthResponse(
-            status="degraded",
+            status='development' if bundle.model_card.get('status')=='development_baseline' else 'ok',
             model_name=str(
                 bundle.model_card.get("model_name", runtime_settings.model_name)
             ),
@@ -146,6 +151,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             )
             raise HTTPException(status_code=503, detail=str(exc)) from exc
         except PipelineFailureError as exc:
+            logger.exception('Pipeline failed for trip %s request %s',payload.trip_id,request.state.request_id)
             log_event(
                 logger,
                 client_ip=client_ip,
@@ -160,12 +166,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
         elapsed_ms = round((perf_counter() - started) * 1000, 3)
         result.timings["total"] = elapsed_ms
+        result.diagnostics['request_id']=request.state.request_id
         log_event(
             logger,
             client_ip=client_ip,
             trip_id=payload.trip_id,
             stage="inference",
-            timings={"total": elapsed_ms},
+            timings=result.timings,
+            request_id=request.state.request_id,
+            details={k:result.diagnostics[k] for k in ['model_version','decoder_version','deployment_status','n_candidates','n_segments'] if k in result.diagnostics},
         )
         return result
 

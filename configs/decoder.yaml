@@ -1,0 +1,13 @@
+schema_version: 1.0.0-m1-provisional
+version: development-untuned-v1
+status: development_untuned
+notes: Fixed defaults for baseline integration; final tuning waits for Person A.
+emission_eps: 0.000001
+emission_weight: 1.0
+beta_m: 10.0
+max_speed_mps: 50.0
+dist_slack_m: 50.0
+max_route_dist_m: 2000.0
+same_arc_backtrack_m: 15.0
+gap_split_s: 300.0
+fill_route_gaps: true
