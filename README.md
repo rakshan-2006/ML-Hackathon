@@ -1,5 +1,10 @@
 # PathSnap
 
+Person B's real decoder/API/UI preparation and two-laptop commands are in
+[the runtime runbook](docs/person_b_runbook.md). The working baseline demo uses
+a clearly labelled untuned decoder; final model/OOF tuning and physical deployment
+acceptance remain pending. Keep evaluator data sealed during preparation.
+
 GPS candidate scoring and route reconstruction for the PES University ML hackathon.
 Preprocessing and four model baselines (Logistic Regression, Decision Tree,
 Gradient Boosting and Random Forest) are available. The API/UI currently runs as a walking skeleton;

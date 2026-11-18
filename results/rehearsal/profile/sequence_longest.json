@@ -1,0 +1,32 @@
+{
+  "status": "development_baseline_sequence_profile",
+  "partition": "train",
+  "trip_id": "00000054",
+  "n_obs": 19313,
+  "selection": "Longest permitted raw track from inventory",
+  "scope": "Sequence comparison only, not final accuracy or OOF tuning",
+  "results": [
+    {
+      "method": "classifier",
+      "sequence_metric_ms": 8.08889999461826,
+      "arc_precision": 0.6696428571428571,
+      "arc_recall": 0.8886255924170616,
+      "arc_f1": 0.7637474541751528,
+      "lcs_length": 373,
+      "lcs_similarity": 0.07722567287784679,
+      "len_pred": 9238,
+      "len_ref": 422
+    },
+    {
+      "method": "hmm",
+      "sequence_metric_ms": 2.4396999942837283,
+      "arc_precision": 0.7113752122241087,
+      "arc_recall": 0.9928909952606635,
+      "arc_f1": 0.8288822947576657,
+      "lcs_length": 419,
+      "lcs_similarity": 0.269280205655527,
+      "len_pred": 2690,
+      "len_ref": 422
+    }
+  ]
+}

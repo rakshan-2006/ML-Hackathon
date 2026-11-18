@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "clean_clone": true,
+  "tests_passed": 125,
+  "warning": "One upstream Starlette/AnyIO deprecation",
+  "fresh_download_assets_verified": 7,
+  "downloaded_pipeline_probability_parity": "exact",
+  "fresh_real_api_status": 200,
+  "trip_id": "00000052",
+  "n_obs": 262,
+  "pdf_checkout_bytes_equal": true,
+  "evaluator_archive_opened": false,
+  "final_model_and_physical_two_laptop_pending": true
+}

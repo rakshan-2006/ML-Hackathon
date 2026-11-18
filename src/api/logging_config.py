@@ -43,6 +43,8 @@ def log_event(
     stage: str,
     timings: Mapping[str, float] | None = None,
     error: str | None = None,
+    request_id: str | None = None,
+    details: Mapping | None = None,
 ) -> None:
     """Emit the requested request/inference fields in a structured log message."""
     payload = {
@@ -52,5 +54,7 @@ def log_event(
         "processing_stage": stage,
         "stage_timings_ms": dict(timings or {}),
         "error": error,
+        'request_id':request_id,
+        'details':dict(details or {}),
     }
     logger.info("%s", json.dumps(payload, sort_keys=True))

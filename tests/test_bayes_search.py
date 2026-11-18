@@ -9,6 +9,21 @@ from src.common.paths import PROJECT_ROOT
 from src.models.model_factory import model_params
 from src.optimization.bayes_search import suggest, trial_table
 
+
+def test_resume_rejects_changed_experiment_and_unbound_old_trials():
+    from src.optimization.bayes_search import bind_study
+    study = _study()
+    contract = {'objective':'f1_macro','folds':'fixed','data':'v1'}
+    fingerprint = bind_study(study,contract)
+    study.optimize(lambda t: .5,n_trials=1)
+    assert bind_study(study,contract)==fingerprint
+    with pytest.raises(ValueError,match='changed'):
+        bind_study(study,{**contract,'objective':'top1_accuracy'})
+    unbound = _study()
+    unbound.optimize(lambda t: .5,n_trials=1)
+    with pytest.raises(ValueError,match='no experiment fingerprint'):
+        bind_study(unbound,contract)
+
 SPACE = yaml.safe_load((PROJECT_ROOT / "configs" / "optimisation.yaml").read_text())
 
 

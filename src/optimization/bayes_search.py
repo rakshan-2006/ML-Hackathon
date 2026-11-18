@@ -31,10 +31,24 @@ from src.common.schema import FEATURES
 from src.evaluation.metrics import candidate_metrics, positive_proba
 from src.models.model_factory import get_model, model_params
 from src.training.cross_validation import N_SPLITS, fold_of_rows, folds_sha256, load_folds
-from src.training.train_models import ARTIFACTS, SEED, THRESHOLD, load_partition, top1
+from src.training.train_models import ARTIFACTS, DATA, SEED, THRESHOLD, load_partition, top1
 
 CONFIG = PROJECT_ROOT / "configs" / "optimisation.yaml"
 RESULTS = PROJECT_ROOT / "results" / "optimization"
+
+
+def bind_study(study, contract):
+    """Resume only the same experiment; never mix objectives/data/search spaces."""
+    fingerprint = hashlib.sha256(json.dumps(contract, sort_keys=True).encode()).hexdigest()
+    previous = study.user_attrs.get('experiment_sha256')
+    if previous is None:
+        if study.trials:
+            raise ValueError('Existing study has no experiment fingerprint; use a new study name')
+        study.set_user_attr('experiment_sha256', fingerprint)
+        study.set_user_attr('experiment_contract', contract)
+    elif previous != fingerprint:
+        raise ValueError('Study configuration/data/folds changed; use a new study name')
+    return fingerprint
 
 
 def suggest(trial, space):
@@ -189,6 +203,11 @@ def main(argv=None):
     study = optuna.create_study(study_name=name, storage=f"sqlite:///{db.as_posix()}",
                                 sampler=sampler, pruner=pruner, direction=direction,
                                 load_if_exists=True)
+    # The trial budget may grow on resume; all experiment semantics stay frozen.
+    contract = {k: v for k, v in cfg.items() if k != 'n_trials'}
+    contract.update(folds_sha256=folds_sha256(), dataset_manifest_sha256=
+                    hashlib.sha256((DATA / 'manifest.json').read_bytes()).hexdigest())
+    experiment_sha256 = bind_study(study, contract)
     objective = FoldObjective(model, cfg["objective"]["metric"], cfg["threads"])
     space = cfg["search_space"][model]
 
@@ -222,6 +241,7 @@ def main(argv=None):
         "method": "Optuna TPESampler (multivariate, grouped conditional space), seeded; "
                   "first n_startup_trials finished trials are random startup, later trials adaptive",
         "optuna_version": optuna.__version__, "model": model, "study": name, "seed": seed,
+        "experiment_sha256": experiment_sha256,
         "configured_trials": cfg["n_trials"], "requested_trials": n_trials,
         "trials_by_state": table.state.value_counts().to_dict(),
         "trials_by_phase": table.phase.value_counts().to_dict(),

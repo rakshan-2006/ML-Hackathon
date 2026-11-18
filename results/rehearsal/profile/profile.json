@@ -1,0 +1,112 @@
+{
+  "status": "development_fixed_untuned_profile",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "processor": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "logical_cpus": 12,
+  "omp_num_threads": "4",
+  "cold_definition": "Fresh process/model, uncached application graph; OS file cache not flushed",
+  "warm_definition": "Same model and graph; features/candidates/decoding recomputed",
+  "scope": "Route-free pipeline only, excludes optional reference evaluation and HTTP",
+  "results": [
+    {
+      "cold_graph": {
+        "wall_ms": 8894.807,
+        "load_graph": 1634.679,
+        "clean_track": 88.894,
+        "candidates": 2025.452,
+        "features": 160.764,
+        "score": 268.488,
+        "decoder_graph": 51.822,
+        "decode": 4627.233
+      },
+      "warm_graph": {
+        "wall_ms": 6107.532,
+        "load_graph": 0.0,
+        "clean_track": 102.381,
+        "candidates": 2030.683,
+        "features": 155.278,
+        "score": 350.645,
+        "decoder_graph": 48.155,
+        "decode": 3390.704
+      },
+      "trip_id": "00000054",
+      "n_obs": 19313,
+      "n_arcs": 116916,
+      "n_candidates": 72582,
+      "model_startup_ms": 2570.201399998041,
+      "peak_process_working_set_bytes": 317640704,
+      "memory_method": "OS process lifetime peak resident working set; fresh child per case",
+      "n_breaks_time": 0,
+      "n_breaks_no_transition": 409,
+      "criterion": "n_obs",
+      "partition": "train"
+    },
+    {
+      "cold_graph": {
+        "wall_ms": 5825.609,
+        "load_graph": 3974.519,
+        "clean_track": 16.241,
+        "candidates": 822.169,
+        "features": 62.99,
+        "score": 70.217,
+        "decoder_graph": 282.041,
+        "decode": 584.11
+      },
+      "warm_graph": {
+        "wall_ms": 3413.451,
+        "load_graph": 0.0,
+        "clean_track": 15.7,
+        "candidates": 1369.094,
+        "features": 82.203,
+        "score": 180.685,
+        "decoder_graph": 236.622,
+        "decode": 1484.855
+      },
+      "trip_id": "00000013",
+      "n_obs": 2580,
+      "n_arcs": 307392,
+      "n_candidates": 18847,
+      "model_startup_ms": 2018.5297999996692,
+      "peak_process_working_set_bytes": 349499392,
+      "memory_method": "OS process lifetime peak resident working set; fresh child per case",
+      "n_breaks_time": 0,
+      "n_breaks_no_transition": 5,
+      "criterion": "n_arcs",
+      "partition": "train"
+    },
+    {
+      "cold_graph": {
+        "wall_ms": 2236.149,
+        "load_graph": 407.894,
+        "clean_track": 32.669,
+        "candidates": 472.51,
+        "features": 78.329,
+        "score": 371.43,
+        "decoder_graph": 5.7,
+        "decode": 860.789
+      },
+      "warm_graph": {
+        "wall_ms": 1717.338,
+        "load_graph": 0.0,
+        "clean_track": 33.54,
+        "candidates": 323.176,
+        "features": 65.557,
+        "score": 359.65,
+        "decoder_graph": 97.179,
+        "decode": 834.704
+      },
+      "trip_id": "00000090",
+      "n_obs": 536,
+      "n_arcs": 7942,
+      "n_candidates": 4254,
+      "model_startup_ms": 5337.944400002016,
+      "peak_process_working_set_bytes": 194670592,
+      "memory_method": "OS process lifetime peak resident working set; fresh child per case",
+      "n_breaks_time": 0,
+      "n_breaks_no_transition": 0,
+      "criterion": "max_gap_s",
+      "partition": "train"
+    }
+  ]
+}
